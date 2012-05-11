@@ -1,9 +1,9 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
-<suite name="AIMSTUB basic unit tests" verbose="1">
-    <test name="Basic unit tests">
+<suite name="AIMSTUB basic integration tests" verbose="1">
+    <test name="Basic integration tests" enabled="false">
         <groups>
             <run>
-                <include name="test-basic" />
+                <include name="it-basic" />
             </run>
         </groups>
         <packages>

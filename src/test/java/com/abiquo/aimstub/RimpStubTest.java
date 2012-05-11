@@ -19,7 +19,7 @@
  * Boston, MA 02111-1307, USA.
  */
 
-package com.abiquo;
+package com.abiquo.aimstub;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
@@ -37,16 +37,14 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.abiquo.aimstub.Datastore;
-import com.abiquo.aimstub.NetInterface;
-import com.abiquo.aimstub.RimpException;
-import com.abiquo.aimstub.TTransportProxy;
 import com.abiquo.aimstub.Aim.Iface;
+import com.abiquo.testng.TestConfig;
 
 /**
  * To run the test : an instance of ''AIM'' agent MUST be running on ''host'':''port'' and assure
  * its configuration have the same values for ''datastore'' and ''repository''.
  */
+@Test(groups = TestConfig.ALL_INTEGRATION_TESTS)
 public class RimpStubTest
 {
 
