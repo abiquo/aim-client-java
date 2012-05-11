@@ -48,7 +48,7 @@
         </dependency>
         <dependency>
             <groupId>com.abiquo</groupId>
-            <artifactId>model</artifactId>
+            <artifactId>api-model</artifactId>
             <version>${abiquo.version}</version>
             <classifier>tests</classifier>
             <scope>test</scope>
