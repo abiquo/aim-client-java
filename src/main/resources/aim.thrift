@@ -26,11 +26,15 @@ exception VLanException
     1:string description;
 }
 
+exception StorageException
+{
+    1:string description;
+}
+
 service Aim
 {
     # Rimp procedures
     void checkRimpConfiguration() throws (1:RimpException re),
-    i64 getDatastoreSize() throws (1:RimpException re),
     i64 getDiskFileSize(1:string virtualImageDatastorePath) throws (1:RimpException re),
     list<Datastore> getDatastores() throws (1:RimpException re),
     list<NetInterface> getNetInterfaces() throws (1:RimpException re),    
@@ -43,6 +47,7 @@ service Aim
     void deleteVLAN (1:i32 vlanTag, 2:string vlanInterface, 3:string bridgeInterface) throws (1:VLanException ve),
     void checkVLANConfiguration() throws (1:VLanException ve),
 
-    # Node configuration procedures
-    string getInitiatorIQN()
+    # Storage configuration procedures
+    string getInitiatorIQN() throws (1:StorageException se),
+    void rescanISCSI(1:list<string> targets) throws (1:StorageException se)
 }

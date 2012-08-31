@@ -45,10 +45,10 @@ import org.apache.thrift.protocol.TProtocolUtil;
 import org.apache.thrift.protocol.TStruct;
 import org.apache.thrift.protocol.TType;
 
-public class VLanException extends Exception implements TBase<VLanException._Fields>,
-    java.io.Serializable, Cloneable, Comparable<VLanException>
+public class StorageException extends Exception implements TBase<StorageException._Fields>,
+    java.io.Serializable, Cloneable, Comparable<StorageException>
 {
-    private static final TStruct STRUCT_DESC = new TStruct("VLanException");
+    private static final TStruct STRUCT_DESC = new TStruct("StorageException");
 
     private static final TField DESCRIPTION_FIELD_DESC = new TField("description",
         TType.STRING,
@@ -143,14 +143,14 @@ public class VLanException extends Exception implements TBase<VLanException._Fie
 
     static
     {
-        FieldMetaData.addStructMetaDataMap(VLanException.class, metaDataMap);
+        FieldMetaData.addStructMetaDataMap(StorageException.class, metaDataMap);
     }
 
-    public VLanException()
+    public StorageException()
     {
     }
 
-    public VLanException(final String description)
+    public StorageException(final String description)
     {
         this();
         this.description = description;
@@ -159,7 +159,7 @@ public class VLanException extends Exception implements TBase<VLanException._Fie
     /**
      * Performs a deep copy on <i>other</i>.
      */
-    public VLanException(final VLanException other)
+    public StorageException(final StorageException other)
     {
         if (other.isSetDescription())
         {
@@ -168,16 +168,16 @@ public class VLanException extends Exception implements TBase<VLanException._Fie
     }
 
     @Override
-    public VLanException deepCopy()
+    public StorageException deepCopy()
     {
-        return new VLanException(this);
+        return new StorageException(this);
     }
 
     @Override
     @Deprecated
-    public VLanException clone()
+    public StorageException clone()
     {
-        return new VLanException(this);
+        return new StorageException(this);
     }
 
     public String getDescription()
@@ -185,7 +185,7 @@ public class VLanException extends Exception implements TBase<VLanException._Fie
         return this.description;
     }
 
-    public VLanException setDescription(final String description)
+    public StorageException setDescription(final String description)
     {
         this.description = description;
         return this;
@@ -281,14 +281,14 @@ public class VLanException extends Exception implements TBase<VLanException._Fie
         {
             return false;
         }
-        if (that instanceof VLanException)
+        if (that instanceof StorageException)
         {
-            return this.equals((VLanException) that);
+            return this.equals((StorageException) that);
         }
         return false;
     }
 
-    public boolean equals(final VLanException that)
+    public boolean equals(final StorageException that)
     {
         if (that == null)
         {
@@ -319,7 +319,7 @@ public class VLanException extends Exception implements TBase<VLanException._Fie
     }
 
     @Override
-    public int compareTo(final VLanException other)
+    public int compareTo(final StorageException other)
     {
         if (!getClass().equals(other.getClass()))
         {
@@ -327,7 +327,7 @@ public class VLanException extends Exception implements TBase<VLanException._Fie
         }
 
         int lastComparison = 0;
-        VLanException typedOther = other;
+        StorageException typedOther = other;
 
         lastComparison = Boolean.valueOf(isSetDescription()).compareTo(isSetDescription());
         if (lastComparison != 0)
@@ -403,7 +403,7 @@ public class VLanException extends Exception implements TBase<VLanException._Fie
     @Override
     public String toString()
     {
-        StringBuilder sb = new StringBuilder("VLanException(");
+        StringBuilder sb = new StringBuilder("StorageException(");
         boolean first = true;
 
         sb.append("description:");

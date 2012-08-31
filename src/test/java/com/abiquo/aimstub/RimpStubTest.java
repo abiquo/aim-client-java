@@ -196,17 +196,6 @@ public class RimpStubTest
     }
 
     @Test
-    public void testGetDatastireSize() throws RimpException, TException
-    {
-        Long expectedAvailableKb = new File(datastore).getUsableSpace() / 1024l;
-        Long availableKb = 0l;
-
-        availableKb = aimclient.getDatastoreSize();
-
-        assertEquals(expectedAvailableKb, availableKb);
-    }
-
-    @Test
     public void testGetDatastores() throws RimpException, TException
     {
         List<Datastore> stores = aimclient.getDatastores();
