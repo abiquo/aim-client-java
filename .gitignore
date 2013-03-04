@@ -6,3 +6,4 @@ build
 .classpath
 *~
 *.swp
+velocity.log
