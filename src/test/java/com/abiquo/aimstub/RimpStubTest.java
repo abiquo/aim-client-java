@@ -17,6 +17,11 @@ import java.io.RandomAccessFile;
 import java.util.List;
 
 import org.apache.thrift.TException;
+import org.apache.thrift.protocol.TBinaryProtocol;
+import org.apache.thrift.protocol.TProtocol;
+import org.apache.thrift.transport.TSocket;
+import org.apache.thrift.transport.TTransport;
+import org.apache.thrift.transport.TTransportException;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -54,11 +59,18 @@ public class RimpStubTest
 
     private static String datastoreDefault = "";
 
-    private Iface aimclient = TTransportProxy.getInstance(host, port);
+    TTransport transport = new TSocket(host, port);
+
+    private Iface aimclient;
 
     @BeforeMethod
-    public void setUp()
+    public void setUp() throws TTransportException
     {
+        transport.open();
+
+        TProtocol protocol = new TBinaryProtocol(transport);
+        aimclient = new Aim.Client(protocol);
+
         createFolder(reposirory);
         createVirtualImageFile(reposirory);
 
@@ -70,6 +82,7 @@ public class RimpStubTest
     @AfterMethod
     public void tearDown()
     {
+        transport.close();
         clearVirtualImageFile(reposirory);
         clearFolder(reposirory);
 
