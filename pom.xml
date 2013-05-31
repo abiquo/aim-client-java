@@ -26,8 +26,8 @@
             <artifactId>slf4j-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.apache</groupId>
-            <artifactId>thrift</artifactId>
+            <groupId>org.apache.thrift</groupId>
+            <artifactId>libthrift</artifactId>
         </dependency>
         <!-- Testing -->
         <dependency>

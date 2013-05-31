@@ -1,5 +1,7 @@
 # aim.thrift
 
+namespace java com.abiquo.aimstub
+
 struct Datastore
 {
     1:string device;
@@ -16,6 +18,33 @@ struct NetInterface
     3:string physicalAddress;    	
 }
 
+struct NodeInfo
+{
+    1:string name;
+    2:i64 version;
+    3:i32 cores;
+    4:i32 sockets;
+    5:double memory;
+}
+
+enum DomainState
+{
+    ON = 1,
+    OFF = 2,
+    PAUSED = 3,
+    UNKNOWN = 4,
+}
+
+struct DomainInfo
+{
+    1:string name;
+    2:string uuid;
+    3:DomainState state
+    4:i32 numberVirtCpu;
+    5:double memory;
+    6:string xmlDesc;
+}
+
 exception RimpException
 {
     1:string description;
@@ -29,6 +58,19 @@ exception VLanException
 exception StorageException
 {
     1:string description;
+}
+
+exception LibvirtException
+{
+    1:i32 code;
+    2:i32 domain;
+    3:string msg;
+    4:i32 level;
+    5:string str1;
+    6:string str2;
+    7:string str3;
+    8:i32 int1;
+    9:i32 int2;
 }
 
 service Aim
@@ -49,5 +91,22 @@ service Aim
 
     # Storage configuration procedures
     string getInitiatorIQN() throws (1:StorageException se),
-    void rescanISCSI(1:list<string> targets) throws (1:StorageException se)
+    void rescanISCSI(1:list<string> targets) throws (1:StorageException se),
+
+    # Libvirt procedures
+    NodeInfo getNodeInfo() throws (1:LibvirtException libvirtException),
+    list<DomainInfo> getDomains() throws (1:LibvirtException libvirtException),
+    void defineDomain(1:string xmlDesc) throws (1:LibvirtException libvirtException),
+    void undefineDomain(1:string domainName) throws (1:LibvirtException libvirtException),
+    bool existDomain(1:string domainName),
+    DomainState getDomainState(1:string domainName) throws (1:LibvirtException libvirtException),
+    DomainInfo getDomainInfo(1:string domainName) throws (1:LibvirtException libvirtException),
+    void powerOn(1:string domainName) throws (1:LibvirtException libvirtException),
+    void powerOff(1:string domainName) throws (1:LibvirtException libvirtException),
+    void reset(1:string domainName) throws (1:LibvirtException libvirtException),
+    void pause(1:string domainName) throws (1:LibvirtException libvirtException),
+    void resume(1:string domainName) throws (1:LibvirtException libvirtException),
+    bool isStoragePoolAlreadyCreated(1:string poolName) throws (1:LibvirtException libvirtException),
+    void createStoragePool(1:string xmlDesc) throws (1:LibvirtException libvirtException),
+    void resizeDisk(1:string domainName, 2:string diskPath, 3:double diskSizeInKb) throws (1:LibvirtException libvirtException)
 }
