@@ -106,6 +106,7 @@ service Aim
     void reset(1:string domainName) throws (1:LibvirtException libvirtException),
     void pause(1:string domainName) throws (1:LibvirtException libvirtException),
     void resume(1:string domainName) throws (1:LibvirtException libvirtException),
-    void createStoragePool(1:string xmlDesc) throws (1:LibvirtException libvirtException),
+    void createISCSIStoragePool(1:string xmlDesc) throws (1:LibvirtException libvirtException),
+    void createNFSStoragePool(1:string xmlDesc) throws (1:LibvirtException libvirtException),
     void resizeDisk(1:string domainName, 2:string diskPath, 3:double diskSizeInKb) throws (1:LibvirtException libvirtException)
 }
