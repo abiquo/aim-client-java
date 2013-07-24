@@ -88,7 +88,9 @@ public class Aim {
 
     public void resume(String domainName) throws LibvirtException, org.apache.thrift.TException;
 
-    public void createStoragePool(String xmlDesc) throws LibvirtException, org.apache.thrift.TException;
+    public void createISCSIStoragePool(String xmlDesc) throws LibvirtException, org.apache.thrift.TException;
+
+    public void createNFSStoragePool(String xmlDesc) throws LibvirtException, org.apache.thrift.TException;
 
     public void resizeDisk(String domainName, String diskPath, double diskSizeInKb) throws LibvirtException, org.apache.thrift.TException;
 
@@ -144,7 +146,9 @@ public class Aim {
 
     public void resume(String domainName, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.resume_call> resultHandler) throws org.apache.thrift.TException;
 
-    public void createStoragePool(String xmlDesc, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.createStoragePool_call> resultHandler) throws org.apache.thrift.TException;
+    public void createISCSIStoragePool(String xmlDesc, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.createISCSIStoragePool_call> resultHandler) throws org.apache.thrift.TException;
+
+    public void createNFSStoragePool(String xmlDesc, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.createNFSStoragePool_call> resultHandler) throws org.apache.thrift.TException;
 
     public void resizeDisk(String domainName, String diskPath, double diskSizeInKb, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.resizeDisk_call> resultHandler) throws org.apache.thrift.TException;
 
@@ -749,23 +753,46 @@ public class Aim {
       return;
     }
 
-    public void createStoragePool(String xmlDesc) throws LibvirtException, org.apache.thrift.TException
+    public void createISCSIStoragePool(String xmlDesc) throws LibvirtException, org.apache.thrift.TException
     {
-      send_createStoragePool(xmlDesc);
-      recv_createStoragePool();
+      send_createISCSIStoragePool(xmlDesc);
+      recv_createISCSIStoragePool();
     }
 
-    public void send_createStoragePool(String xmlDesc) throws org.apache.thrift.TException
+    public void send_createISCSIStoragePool(String xmlDesc) throws org.apache.thrift.TException
     {
-      createStoragePool_args args = new createStoragePool_args();
+      createISCSIStoragePool_args args = new createISCSIStoragePool_args();
       args.setXmlDesc(xmlDesc);
-      sendBase("createStoragePool", args);
+      sendBase("createISCSIStoragePool", args);
     }
 
-    public void recv_createStoragePool() throws LibvirtException, org.apache.thrift.TException
+    public void recv_createISCSIStoragePool() throws LibvirtException, org.apache.thrift.TException
     {
-      createStoragePool_result result = new createStoragePool_result();
-      receiveBase(result, "createStoragePool");
+      createISCSIStoragePool_result result = new createISCSIStoragePool_result();
+      receiveBase(result, "createISCSIStoragePool");
+      if (result.libvirtException != null) {
+        throw result.libvirtException;
+      }
+      return;
+    }
+
+    public void createNFSStoragePool(String xmlDesc) throws LibvirtException, org.apache.thrift.TException
+    {
+      send_createNFSStoragePool(xmlDesc);
+      recv_createNFSStoragePool();
+    }
+
+    public void send_createNFSStoragePool(String xmlDesc) throws org.apache.thrift.TException
+    {
+      createNFSStoragePool_args args = new createNFSStoragePool_args();
+      args.setXmlDesc(xmlDesc);
+      sendBase("createNFSStoragePool", args);
+    }
+
+    public void recv_createNFSStoragePool() throws LibvirtException, org.apache.thrift.TException
+    {
+      createNFSStoragePool_result result = new createNFSStoragePool_result();
+      receiveBase(result, "createNFSStoragePool");
       if (result.libvirtException != null) {
         throw result.libvirtException;
       }
@@ -1592,23 +1619,23 @@ public class Aim {
       }
     }
 
-    public void createStoragePool(String xmlDesc, org.apache.thrift.async.AsyncMethodCallback<createStoragePool_call> resultHandler) throws org.apache.thrift.TException {
+    public void createISCSIStoragePool(String xmlDesc, org.apache.thrift.async.AsyncMethodCallback<createISCSIStoragePool_call> resultHandler) throws org.apache.thrift.TException {
       checkReady();
-      createStoragePool_call method_call = new createStoragePool_call(xmlDesc, resultHandler, this, ___protocolFactory, ___transport);
+      createISCSIStoragePool_call method_call = new createISCSIStoragePool_call(xmlDesc, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
 
-    public static class createStoragePool_call extends org.apache.thrift.async.TAsyncMethodCall {
+    public static class createISCSIStoragePool_call extends org.apache.thrift.async.TAsyncMethodCall {
       private String xmlDesc;
-      public createStoragePool_call(String xmlDesc, org.apache.thrift.async.AsyncMethodCallback<createStoragePool_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      public createISCSIStoragePool_call(String xmlDesc, org.apache.thrift.async.AsyncMethodCallback<createISCSIStoragePool_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.xmlDesc = xmlDesc;
       }
 
       public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
-        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("createStoragePool", org.apache.thrift.protocol.TMessageType.CALL, 0));
-        createStoragePool_args args = new createStoragePool_args();
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("createISCSIStoragePool", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        createISCSIStoragePool_args args = new createISCSIStoragePool_args();
         args.setXmlDesc(xmlDesc);
         args.write(prot);
         prot.writeMessageEnd();
@@ -1620,7 +1647,39 @@ public class Aim {
         }
         org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
         org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
-        (new Client(prot)).recv_createStoragePool();
+        (new Client(prot)).recv_createISCSIStoragePool();
+      }
+    }
+
+    public void createNFSStoragePool(String xmlDesc, org.apache.thrift.async.AsyncMethodCallback<createNFSStoragePool_call> resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      createNFSStoragePool_call method_call = new createNFSStoragePool_call(xmlDesc, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class createNFSStoragePool_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private String xmlDesc;
+      public createNFSStoragePool_call(String xmlDesc, org.apache.thrift.async.AsyncMethodCallback<createNFSStoragePool_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.xmlDesc = xmlDesc;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("createNFSStoragePool", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        createNFSStoragePool_args args = new createNFSStoragePool_args();
+        args.setXmlDesc(xmlDesc);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public void getResult() throws LibvirtException, org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        (new Client(prot)).recv_createNFSStoragePool();
       }
     }
 
@@ -1699,7 +1758,8 @@ public class Aim {
       processMap.put("reset", new reset());
       processMap.put("pause", new pause());
       processMap.put("resume", new resume());
-      processMap.put("createStoragePool", new createStoragePool());
+      processMap.put("createISCSIStoragePool", new createISCSIStoragePool());
+      processMap.put("createNFSStoragePool", new createNFSStoragePool());
       processMap.put("resizeDisk", new resizeDisk());
       return processMap;
     }
@@ -2278,23 +2338,47 @@ public class Aim {
       }
     }
 
-    public static class createStoragePool<I extends Iface> extends org.apache.thrift.ProcessFunction<I, createStoragePool_args> {
-      public createStoragePool() {
-        super("createStoragePool");
+    public static class createISCSIStoragePool<I extends Iface> extends org.apache.thrift.ProcessFunction<I, createISCSIStoragePool_args> {
+      public createISCSIStoragePool() {
+        super("createISCSIStoragePool");
       }
 
-      public createStoragePool_args getEmptyArgsInstance() {
-        return new createStoragePool_args();
+      public createISCSIStoragePool_args getEmptyArgsInstance() {
+        return new createISCSIStoragePool_args();
       }
 
       protected boolean isOneway() {
         return false;
       }
 
-      public createStoragePool_result getResult(I iface, createStoragePool_args args) throws org.apache.thrift.TException {
-        createStoragePool_result result = new createStoragePool_result();
+      public createISCSIStoragePool_result getResult(I iface, createISCSIStoragePool_args args) throws org.apache.thrift.TException {
+        createISCSIStoragePool_result result = new createISCSIStoragePool_result();
         try {
-          iface.createStoragePool(args.xmlDesc);
+          iface.createISCSIStoragePool(args.xmlDesc);
+        } catch (LibvirtException libvirtException) {
+          result.libvirtException = libvirtException;
+        }
+        return result;
+      }
+    }
+
+    public static class createNFSStoragePool<I extends Iface> extends org.apache.thrift.ProcessFunction<I, createNFSStoragePool_args> {
+      public createNFSStoragePool() {
+        super("createNFSStoragePool");
+      }
+
+      public createNFSStoragePool_args getEmptyArgsInstance() {
+        return new createNFSStoragePool_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public createNFSStoragePool_result getResult(I iface, createNFSStoragePool_args args) throws org.apache.thrift.TException {
+        createNFSStoragePool_result result = new createNFSStoragePool_result();
+        try {
+          iface.createNFSStoragePool(args.xmlDesc);
         } catch (LibvirtException libvirtException) {
           result.libvirtException = libvirtException;
         }
@@ -20646,15 +20730,15 @@ public class Aim {
 
   }
 
-  public static class createStoragePool_args implements org.apache.thrift.TBase<createStoragePool_args, createStoragePool_args._Fields>, java.io.Serializable, Cloneable   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("createStoragePool_args");
+  public static class createISCSIStoragePool_args implements org.apache.thrift.TBase<createISCSIStoragePool_args, createISCSIStoragePool_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("createISCSIStoragePool_args");
 
     private static final org.apache.thrift.protocol.TField XML_DESC_FIELD_DESC = new org.apache.thrift.protocol.TField("xmlDesc", org.apache.thrift.protocol.TType.STRING, (short)1);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
-      schemes.put(StandardScheme.class, new createStoragePool_argsStandardSchemeFactory());
-      schemes.put(TupleScheme.class, new createStoragePool_argsTupleSchemeFactory());
+      schemes.put(StandardScheme.class, new createISCSIStoragePool_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new createISCSIStoragePool_argsTupleSchemeFactory());
     }
 
     public String xmlDesc; // required
@@ -20724,13 +20808,13 @@ public class Aim {
       tmpMap.put(_Fields.XML_DESC, new org.apache.thrift.meta_data.FieldMetaData("xmlDesc", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(createStoragePool_args.class, metaDataMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(createISCSIStoragePool_args.class, metaDataMap);
     }
 
-    public createStoragePool_args() {
+    public createISCSIStoragePool_args() {
     }
 
-    public createStoragePool_args(
+    public createISCSIStoragePool_args(
       String xmlDesc)
     {
       this();
@@ -20740,14 +20824,14 @@ public class Aim {
     /**
      * Performs a deep copy on <i>other</i>.
      */
-    public createStoragePool_args(createStoragePool_args other) {
+    public createISCSIStoragePool_args(createISCSIStoragePool_args other) {
       if (other.isSetXmlDesc()) {
         this.xmlDesc = other.xmlDesc;
       }
     }
 
-    public createStoragePool_args deepCopy() {
-      return new createStoragePool_args(this);
+    public createISCSIStoragePool_args deepCopy() {
+      return new createISCSIStoragePool_args(this);
     }
 
     @Override
@@ -20759,7 +20843,7 @@ public class Aim {
       return this.xmlDesc;
     }
 
-    public createStoragePool_args setXmlDesc(String xmlDesc) {
+    public createISCSIStoragePool_args setXmlDesc(String xmlDesc) {
       this.xmlDesc = xmlDesc;
       return this;
     }
@@ -20818,12 +20902,12 @@ public class Aim {
     public boolean equals(Object that) {
       if (that == null)
         return false;
-      if (that instanceof createStoragePool_args)
-        return this.equals((createStoragePool_args)that);
+      if (that instanceof createISCSIStoragePool_args)
+        return this.equals((createISCSIStoragePool_args)that);
       return false;
     }
 
-    public boolean equals(createStoragePool_args that) {
+    public boolean equals(createISCSIStoragePool_args that) {
       if (that == null)
         return false;
 
@@ -20844,13 +20928,13 @@ public class Aim {
       return 0;
     }
 
-    public int compareTo(createStoragePool_args other) {
+    public int compareTo(createISCSIStoragePool_args other) {
       if (!getClass().equals(other.getClass())) {
         return getClass().getName().compareTo(other.getClass().getName());
       }
 
       int lastComparison = 0;
-      createStoragePool_args typedOther = (createStoragePool_args)other;
+      createISCSIStoragePool_args typedOther = (createISCSIStoragePool_args)other;
 
       lastComparison = Boolean.valueOf(isSetXmlDesc()).compareTo(typedOther.isSetXmlDesc());
       if (lastComparison != 0) {
@@ -20879,7 +20963,7 @@ public class Aim {
 
     @Override
     public String toString() {
-      StringBuilder sb = new StringBuilder("createStoragePool_args(");
+      StringBuilder sb = new StringBuilder("createISCSIStoragePool_args(");
       boolean first = true;
 
       sb.append("xmlDesc:");
@@ -20914,15 +20998,15 @@ public class Aim {
       }
     }
 
-    private static class createStoragePool_argsStandardSchemeFactory implements SchemeFactory {
-      public createStoragePool_argsStandardScheme getScheme() {
-        return new createStoragePool_argsStandardScheme();
+    private static class createISCSIStoragePool_argsStandardSchemeFactory implements SchemeFactory {
+      public createISCSIStoragePool_argsStandardScheme getScheme() {
+        return new createISCSIStoragePool_argsStandardScheme();
       }
     }
 
-    private static class createStoragePool_argsStandardScheme extends StandardScheme<createStoragePool_args> {
+    private static class createISCSIStoragePool_argsStandardScheme extends StandardScheme<createISCSIStoragePool_args> {
 
-      public void read(org.apache.thrift.protocol.TProtocol iprot, createStoragePool_args struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol iprot, createISCSIStoragePool_args struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TField schemeField;
         iprot.readStructBegin();
         while (true)
@@ -20951,7 +21035,7 @@ public class Aim {
         struct.validate();
       }
 
-      public void write(org.apache.thrift.protocol.TProtocol oprot, createStoragePool_args struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol oprot, createISCSIStoragePool_args struct) throws org.apache.thrift.TException {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
@@ -20966,16 +21050,16 @@ public class Aim {
 
     }
 
-    private static class createStoragePool_argsTupleSchemeFactory implements SchemeFactory {
-      public createStoragePool_argsTupleScheme getScheme() {
-        return new createStoragePool_argsTupleScheme();
+    private static class createISCSIStoragePool_argsTupleSchemeFactory implements SchemeFactory {
+      public createISCSIStoragePool_argsTupleScheme getScheme() {
+        return new createISCSIStoragePool_argsTupleScheme();
       }
     }
 
-    private static class createStoragePool_argsTupleScheme extends TupleScheme<createStoragePool_args> {
+    private static class createISCSIStoragePool_argsTupleScheme extends TupleScheme<createISCSIStoragePool_args> {
 
       @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, createStoragePool_args struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol prot, createISCSIStoragePool_args struct) throws org.apache.thrift.TException {
         TTupleProtocol oprot = (TTupleProtocol) prot;
         BitSet optionals = new BitSet();
         if (struct.isSetXmlDesc()) {
@@ -20988,7 +21072,7 @@ public class Aim {
       }
 
       @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, createStoragePool_args struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol prot, createISCSIStoragePool_args struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
@@ -21000,15 +21084,15 @@ public class Aim {
 
   }
 
-  public static class createStoragePool_result implements org.apache.thrift.TBase<createStoragePool_result, createStoragePool_result._Fields>, java.io.Serializable, Cloneable   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("createStoragePool_result");
+  public static class createISCSIStoragePool_result implements org.apache.thrift.TBase<createISCSIStoragePool_result, createISCSIStoragePool_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("createISCSIStoragePool_result");
 
     private static final org.apache.thrift.protocol.TField LIBVIRT_EXCEPTION_FIELD_DESC = new org.apache.thrift.protocol.TField("libvirtException", org.apache.thrift.protocol.TType.STRUCT, (short)1);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
-      schemes.put(StandardScheme.class, new createStoragePool_resultStandardSchemeFactory());
-      schemes.put(TupleScheme.class, new createStoragePool_resultTupleSchemeFactory());
+      schemes.put(StandardScheme.class, new createISCSIStoragePool_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new createISCSIStoragePool_resultTupleSchemeFactory());
     }
 
     public LibvirtException libvirtException; // required
@@ -21078,13 +21162,13 @@ public class Aim {
       tmpMap.put(_Fields.LIBVIRT_EXCEPTION, new org.apache.thrift.meta_data.FieldMetaData("libvirtException", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(createStoragePool_result.class, metaDataMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(createISCSIStoragePool_result.class, metaDataMap);
     }
 
-    public createStoragePool_result() {
+    public createISCSIStoragePool_result() {
     }
 
-    public createStoragePool_result(
+    public createISCSIStoragePool_result(
       LibvirtException libvirtException)
     {
       this();
@@ -21094,14 +21178,14 @@ public class Aim {
     /**
      * Performs a deep copy on <i>other</i>.
      */
-    public createStoragePool_result(createStoragePool_result other) {
+    public createISCSIStoragePool_result(createISCSIStoragePool_result other) {
       if (other.isSetLibvirtException()) {
         this.libvirtException = new LibvirtException(other.libvirtException);
       }
     }
 
-    public createStoragePool_result deepCopy() {
-      return new createStoragePool_result(this);
+    public createISCSIStoragePool_result deepCopy() {
+      return new createISCSIStoragePool_result(this);
     }
 
     @Override
@@ -21113,7 +21197,7 @@ public class Aim {
       return this.libvirtException;
     }
 
-    public createStoragePool_result setLibvirtException(LibvirtException libvirtException) {
+    public createISCSIStoragePool_result setLibvirtException(LibvirtException libvirtException) {
       this.libvirtException = libvirtException;
       return this;
     }
@@ -21172,12 +21256,12 @@ public class Aim {
     public boolean equals(Object that) {
       if (that == null)
         return false;
-      if (that instanceof createStoragePool_result)
-        return this.equals((createStoragePool_result)that);
+      if (that instanceof createISCSIStoragePool_result)
+        return this.equals((createISCSIStoragePool_result)that);
       return false;
     }
 
-    public boolean equals(createStoragePool_result that) {
+    public boolean equals(createISCSIStoragePool_result that) {
       if (that == null)
         return false;
 
@@ -21198,13 +21282,13 @@ public class Aim {
       return 0;
     }
 
-    public int compareTo(createStoragePool_result other) {
+    public int compareTo(createISCSIStoragePool_result other) {
       if (!getClass().equals(other.getClass())) {
         return getClass().getName().compareTo(other.getClass().getName());
       }
 
       int lastComparison = 0;
-      createStoragePool_result typedOther = (createStoragePool_result)other;
+      createISCSIStoragePool_result typedOther = (createISCSIStoragePool_result)other;
 
       lastComparison = Boolean.valueOf(isSetLibvirtException()).compareTo(typedOther.isSetLibvirtException());
       if (lastComparison != 0) {
@@ -21233,7 +21317,7 @@ public class Aim {
 
     @Override
     public String toString() {
-      StringBuilder sb = new StringBuilder("createStoragePool_result(");
+      StringBuilder sb = new StringBuilder("createISCSIStoragePool_result(");
       boolean first = true;
 
       sb.append("libvirtException:");
@@ -21268,15 +21352,15 @@ public class Aim {
       }
     }
 
-    private static class createStoragePool_resultStandardSchemeFactory implements SchemeFactory {
-      public createStoragePool_resultStandardScheme getScheme() {
-        return new createStoragePool_resultStandardScheme();
+    private static class createISCSIStoragePool_resultStandardSchemeFactory implements SchemeFactory {
+      public createISCSIStoragePool_resultStandardScheme getScheme() {
+        return new createISCSIStoragePool_resultStandardScheme();
       }
     }
 
-    private static class createStoragePool_resultStandardScheme extends StandardScheme<createStoragePool_result> {
+    private static class createISCSIStoragePool_resultStandardScheme extends StandardScheme<createISCSIStoragePool_result> {
 
-      public void read(org.apache.thrift.protocol.TProtocol iprot, createStoragePool_result struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol iprot, createISCSIStoragePool_result struct) throws org.apache.thrift.TException {
         org.apache.thrift.protocol.TField schemeField;
         iprot.readStructBegin();
         while (true)
@@ -21306,7 +21390,7 @@ public class Aim {
         struct.validate();
       }
 
-      public void write(org.apache.thrift.protocol.TProtocol oprot, createStoragePool_result struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol oprot, createISCSIStoragePool_result struct) throws org.apache.thrift.TException {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
@@ -21321,16 +21405,16 @@ public class Aim {
 
     }
 
-    private static class createStoragePool_resultTupleSchemeFactory implements SchemeFactory {
-      public createStoragePool_resultTupleScheme getScheme() {
-        return new createStoragePool_resultTupleScheme();
+    private static class createISCSIStoragePool_resultTupleSchemeFactory implements SchemeFactory {
+      public createISCSIStoragePool_resultTupleScheme getScheme() {
+        return new createISCSIStoragePool_resultTupleScheme();
       }
     }
 
-    private static class createStoragePool_resultTupleScheme extends TupleScheme<createStoragePool_result> {
+    private static class createISCSIStoragePool_resultTupleScheme extends TupleScheme<createISCSIStoragePool_result> {
 
       @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, createStoragePool_result struct) throws org.apache.thrift.TException {
+      public void write(org.apache.thrift.protocol.TProtocol prot, createISCSIStoragePool_result struct) throws org.apache.thrift.TException {
         TTupleProtocol oprot = (TTupleProtocol) prot;
         BitSet optionals = new BitSet();
         if (struct.isSetLibvirtException()) {
@@ -21343,7 +21427,717 @@ public class Aim {
       }
 
       @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, createStoragePool_result struct) throws org.apache.thrift.TException {
+      public void read(org.apache.thrift.protocol.TProtocol prot, createISCSIStoragePool_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.libvirtException = new LibvirtException();
+          struct.libvirtException.read(iprot);
+          struct.setLibvirtExceptionIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class createNFSStoragePool_args implements org.apache.thrift.TBase<createNFSStoragePool_args, createNFSStoragePool_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("createNFSStoragePool_args");
+
+    private static final org.apache.thrift.protocol.TField XML_DESC_FIELD_DESC = new org.apache.thrift.protocol.TField("xmlDesc", org.apache.thrift.protocol.TType.STRING, (short)1);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new createNFSStoragePool_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new createNFSStoragePool_argsTupleSchemeFactory());
+    }
+
+    public String xmlDesc; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      XML_DESC((short)1, "xmlDesc");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // XML_DESC
+            return XML_DESC;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.XML_DESC, new org.apache.thrift.meta_data.FieldMetaData("xmlDesc", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(createNFSStoragePool_args.class, metaDataMap);
+    }
+
+    public createNFSStoragePool_args() {
+    }
+
+    public createNFSStoragePool_args(
+      String xmlDesc)
+    {
+      this();
+      this.xmlDesc = xmlDesc;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public createNFSStoragePool_args(createNFSStoragePool_args other) {
+      if (other.isSetXmlDesc()) {
+        this.xmlDesc = other.xmlDesc;
+      }
+    }
+
+    public createNFSStoragePool_args deepCopy() {
+      return new createNFSStoragePool_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.xmlDesc = null;
+    }
+
+    public String getXmlDesc() {
+      return this.xmlDesc;
+    }
+
+    public createNFSStoragePool_args setXmlDesc(String xmlDesc) {
+      this.xmlDesc = xmlDesc;
+      return this;
+    }
+
+    public void unsetXmlDesc() {
+      this.xmlDesc = null;
+    }
+
+    /** Returns true if field xmlDesc is set (has been assigned a value) and false otherwise */
+    public boolean isSetXmlDesc() {
+      return this.xmlDesc != null;
+    }
+
+    public void setXmlDescIsSet(boolean value) {
+      if (!value) {
+        this.xmlDesc = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case XML_DESC:
+        if (value == null) {
+          unsetXmlDesc();
+        } else {
+          setXmlDesc((String)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case XML_DESC:
+        return getXmlDesc();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case XML_DESC:
+        return isSetXmlDesc();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof createNFSStoragePool_args)
+        return this.equals((createNFSStoragePool_args)that);
+      return false;
+    }
+
+    public boolean equals(createNFSStoragePool_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_xmlDesc = true && this.isSetXmlDesc();
+      boolean that_present_xmlDesc = true && that.isSetXmlDesc();
+      if (this_present_xmlDesc || that_present_xmlDesc) {
+        if (!(this_present_xmlDesc && that_present_xmlDesc))
+          return false;
+        if (!this.xmlDesc.equals(that.xmlDesc))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(createNFSStoragePool_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      createNFSStoragePool_args typedOther = (createNFSStoragePool_args)other;
+
+      lastComparison = Boolean.valueOf(isSetXmlDesc()).compareTo(typedOther.isSetXmlDesc());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetXmlDesc()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.xmlDesc, typedOther.xmlDesc);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("createNFSStoragePool_args(");
+      boolean first = true;
+
+      sb.append("xmlDesc:");
+      if (this.xmlDesc == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.xmlDesc);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class createNFSStoragePool_argsStandardSchemeFactory implements SchemeFactory {
+      public createNFSStoragePool_argsStandardScheme getScheme() {
+        return new createNFSStoragePool_argsStandardScheme();
+      }
+    }
+
+    private static class createNFSStoragePool_argsStandardScheme extends StandardScheme<createNFSStoragePool_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, createNFSStoragePool_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // XML_DESC
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.xmlDesc = iprot.readString();
+                struct.setXmlDescIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, createNFSStoragePool_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.xmlDesc != null) {
+          oprot.writeFieldBegin(XML_DESC_FIELD_DESC);
+          oprot.writeString(struct.xmlDesc);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class createNFSStoragePool_argsTupleSchemeFactory implements SchemeFactory {
+      public createNFSStoragePool_argsTupleScheme getScheme() {
+        return new createNFSStoragePool_argsTupleScheme();
+      }
+    }
+
+    private static class createNFSStoragePool_argsTupleScheme extends TupleScheme<createNFSStoragePool_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, createNFSStoragePool_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetXmlDesc()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetXmlDesc()) {
+          oprot.writeString(struct.xmlDesc);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, createNFSStoragePool_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.xmlDesc = iprot.readString();
+          struct.setXmlDescIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class createNFSStoragePool_result implements org.apache.thrift.TBase<createNFSStoragePool_result, createNFSStoragePool_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("createNFSStoragePool_result");
+
+    private static final org.apache.thrift.protocol.TField LIBVIRT_EXCEPTION_FIELD_DESC = new org.apache.thrift.protocol.TField("libvirtException", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new createNFSStoragePool_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new createNFSStoragePool_resultTupleSchemeFactory());
+    }
+
+    public LibvirtException libvirtException; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      LIBVIRT_EXCEPTION((short)1, "libvirtException");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // LIBVIRT_EXCEPTION
+            return LIBVIRT_EXCEPTION;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.LIBVIRT_EXCEPTION, new org.apache.thrift.meta_data.FieldMetaData("libvirtException", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(createNFSStoragePool_result.class, metaDataMap);
+    }
+
+    public createNFSStoragePool_result() {
+    }
+
+    public createNFSStoragePool_result(
+      LibvirtException libvirtException)
+    {
+      this();
+      this.libvirtException = libvirtException;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public createNFSStoragePool_result(createNFSStoragePool_result other) {
+      if (other.isSetLibvirtException()) {
+        this.libvirtException = new LibvirtException(other.libvirtException);
+      }
+    }
+
+    public createNFSStoragePool_result deepCopy() {
+      return new createNFSStoragePool_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.libvirtException = null;
+    }
+
+    public LibvirtException getLibvirtException() {
+      return this.libvirtException;
+    }
+
+    public createNFSStoragePool_result setLibvirtException(LibvirtException libvirtException) {
+      this.libvirtException = libvirtException;
+      return this;
+    }
+
+    public void unsetLibvirtException() {
+      this.libvirtException = null;
+    }
+
+    /** Returns true if field libvirtException is set (has been assigned a value) and false otherwise */
+    public boolean isSetLibvirtException() {
+      return this.libvirtException != null;
+    }
+
+    public void setLibvirtExceptionIsSet(boolean value) {
+      if (!value) {
+        this.libvirtException = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case LIBVIRT_EXCEPTION:
+        if (value == null) {
+          unsetLibvirtException();
+        } else {
+          setLibvirtException((LibvirtException)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case LIBVIRT_EXCEPTION:
+        return getLibvirtException();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case LIBVIRT_EXCEPTION:
+        return isSetLibvirtException();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof createNFSStoragePool_result)
+        return this.equals((createNFSStoragePool_result)that);
+      return false;
+    }
+
+    public boolean equals(createNFSStoragePool_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_libvirtException = true && this.isSetLibvirtException();
+      boolean that_present_libvirtException = true && that.isSetLibvirtException();
+      if (this_present_libvirtException || that_present_libvirtException) {
+        if (!(this_present_libvirtException && that_present_libvirtException))
+          return false;
+        if (!this.libvirtException.equals(that.libvirtException))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(createNFSStoragePool_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      createNFSStoragePool_result typedOther = (createNFSStoragePool_result)other;
+
+      lastComparison = Boolean.valueOf(isSetLibvirtException()).compareTo(typedOther.isSetLibvirtException());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetLibvirtException()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.libvirtException, typedOther.libvirtException);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("createNFSStoragePool_result(");
+      boolean first = true;
+
+      sb.append("libvirtException:");
+      if (this.libvirtException == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.libvirtException);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class createNFSStoragePool_resultStandardSchemeFactory implements SchemeFactory {
+      public createNFSStoragePool_resultStandardScheme getScheme() {
+        return new createNFSStoragePool_resultStandardScheme();
+      }
+    }
+
+    private static class createNFSStoragePool_resultStandardScheme extends StandardScheme<createNFSStoragePool_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, createNFSStoragePool_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // LIBVIRT_EXCEPTION
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.libvirtException = new LibvirtException();
+                struct.libvirtException.read(iprot);
+                struct.setLibvirtExceptionIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, createNFSStoragePool_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.libvirtException != null) {
+          oprot.writeFieldBegin(LIBVIRT_EXCEPTION_FIELD_DESC);
+          struct.libvirtException.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class createNFSStoragePool_resultTupleSchemeFactory implements SchemeFactory {
+      public createNFSStoragePool_resultTupleScheme getScheme() {
+        return new createNFSStoragePool_resultTupleScheme();
+      }
+    }
+
+    private static class createNFSStoragePool_resultTupleScheme extends TupleScheme<createNFSStoragePool_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, createNFSStoragePool_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetLibvirtException()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetLibvirtException()) {
+          struct.libvirtException.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, createNFSStoragePool_result struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
