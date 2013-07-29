@@ -40,6 +40,9 @@ public class Aim {
 
   public interface Iface {
 
+    /**
+     * Rimp procedures
+     */
     public void checkRimpConfiguration() throws RimpException, org.apache.thrift.TException;
 
     public long getDiskFileSize(String virtualImageDatastorePath) throws RimpException, org.apache.thrift.TException;
@@ -54,19 +57,30 @@ public class Aim {
 
     public void copyFromDatastoreToRepository(String virtualMachineUUID, String snapshot, String destinationRepositoryPath, String sourceDatastorePath) throws RimpException, org.apache.thrift.TException;
 
+    /**
+     * VLan procedures
+     * 
+     * @param vlanTag
+     * @param vlanInterface
+     * @param bridgeInterface
+     */
     public void createVLAN(int vlanTag, String vlanInterface, String bridgeInterface) throws VLanException, org.apache.thrift.TException;
 
     public void deleteVLAN(int vlanTag, String vlanInterface, String bridgeInterface) throws VLanException, org.apache.thrift.TException;
 
     public void checkVLANConfiguration() throws VLanException, org.apache.thrift.TException;
 
+    /**
+     * Storage configuration procedures
+     */
     public String getInitiatorIQN() throws StorageException, org.apache.thrift.TException;
 
     public void rescanISCSI(List<String> targets) throws StorageException, org.apache.thrift.TException;
 
+    /**
+     * Libvirt procedures
+     */
     public NodeInfo getNodeInfo() throws LibvirtException, org.apache.thrift.TException;
-
-    public List<DomainInfo> getDomains() throws LibvirtException, org.apache.thrift.TException;
 
     public void defineDomain(String xmlDesc) throws LibvirtException, org.apache.thrift.TException;
 
@@ -78,6 +92,8 @@ public class Aim {
 
     public DomainInfo getDomainInfo(String domainName) throws LibvirtException, org.apache.thrift.TException;
 
+    public List<DomainInfo> getDomains() throws LibvirtException, org.apache.thrift.TException;
+
     public void powerOn(String domainName) throws LibvirtException, org.apache.thrift.TException;
 
     public void powerOff(String domainName) throws LibvirtException, org.apache.thrift.TException;
@@ -88,9 +104,17 @@ public class Aim {
 
     public void resume(String domainName) throws LibvirtException, org.apache.thrift.TException;
 
-    public void createISCSIStoragePool(String xmlDesc) throws LibvirtException, org.apache.thrift.TException;
+    public void createISCSIStoragePool(String name, String host, String iqn, String targetPath) throws LibvirtException, org.apache.thrift.TException;
 
-    public void createNFSStoragePool(String xmlDesc) throws LibvirtException, org.apache.thrift.TException;
+    public void createNFSStoragePool(String name, String host, String dir, String targetPath) throws LibvirtException, org.apache.thrift.TException;
+
+    public void createDirStoragePool(String name, String targetPath) throws LibvirtException, org.apache.thrift.TException;
+
+    public void createDisk(String poolName, String name, double capacityInKb, double allocationInKb, String format) throws LibvirtException, org.apache.thrift.TException;
+
+    public void deleteDisk(String poolName, String name) throws LibvirtException, org.apache.thrift.TException;
+
+    public void resizeVol(String poolName, String name, double capacityInKb) throws LibvirtException, org.apache.thrift.TException;
 
     public void resizeDisk(String domainName, String diskPath, double diskSizeInKb) throws LibvirtException, org.apache.thrift.TException;
 
@@ -124,8 +148,6 @@ public class Aim {
 
     public void getNodeInfo(org.apache.thrift.async.AsyncMethodCallback<AsyncClient.getNodeInfo_call> resultHandler) throws org.apache.thrift.TException;
 
-    public void getDomains(org.apache.thrift.async.AsyncMethodCallback<AsyncClient.getDomains_call> resultHandler) throws org.apache.thrift.TException;
-
     public void defineDomain(String xmlDesc, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.defineDomain_call> resultHandler) throws org.apache.thrift.TException;
 
     public void undefineDomain(String domainName, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.undefineDomain_call> resultHandler) throws org.apache.thrift.TException;
@@ -135,6 +157,8 @@ public class Aim {
     public void getDomainState(String domainName, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.getDomainState_call> resultHandler) throws org.apache.thrift.TException;
 
     public void getDomainInfo(String domainName, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.getDomainInfo_call> resultHandler) throws org.apache.thrift.TException;
+
+    public void getDomains(org.apache.thrift.async.AsyncMethodCallback<AsyncClient.getDomains_call> resultHandler) throws org.apache.thrift.TException;
 
     public void powerOn(String domainName, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.powerOn_call> resultHandler) throws org.apache.thrift.TException;
 
@@ -146,9 +170,17 @@ public class Aim {
 
     public void resume(String domainName, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.resume_call> resultHandler) throws org.apache.thrift.TException;
 
-    public void createISCSIStoragePool(String xmlDesc, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.createISCSIStoragePool_call> resultHandler) throws org.apache.thrift.TException;
+    public void createISCSIStoragePool(String name, String host, String iqn, String targetPath, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.createISCSIStoragePool_call> resultHandler) throws org.apache.thrift.TException;
 
-    public void createNFSStoragePool(String xmlDesc, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.createNFSStoragePool_call> resultHandler) throws org.apache.thrift.TException;
+    public void createNFSStoragePool(String name, String host, String dir, String targetPath, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.createNFSStoragePool_call> resultHandler) throws org.apache.thrift.TException;
+
+    public void createDirStoragePool(String name, String targetPath, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.createDirStoragePool_call> resultHandler) throws org.apache.thrift.TException;
+
+    public void createDisk(String poolName, String name, double capacityInKb, double allocationInKb, String format, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.createDisk_call> resultHandler) throws org.apache.thrift.TException;
+
+    public void deleteDisk(String poolName, String name, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.deleteDisk_call> resultHandler) throws org.apache.thrift.TException;
+
+    public void resizeVol(String poolName, String name, double capacityInKb, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.resizeVol_call> resultHandler) throws org.apache.thrift.TException;
 
     public void resizeDisk(String domainName, String diskPath, double diskSizeInKb, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.resizeDisk_call> resultHandler) throws org.apache.thrift.TException;
 
@@ -492,31 +524,6 @@ public class Aim {
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "getNodeInfo failed: unknown result");
     }
 
-    public List<DomainInfo> getDomains() throws LibvirtException, org.apache.thrift.TException
-    {
-      send_getDomains();
-      return recv_getDomains();
-    }
-
-    public void send_getDomains() throws org.apache.thrift.TException
-    {
-      getDomains_args args = new getDomains_args();
-      sendBase("getDomains", args);
-    }
-
-    public List<DomainInfo> recv_getDomains() throws LibvirtException, org.apache.thrift.TException
-    {
-      getDomains_result result = new getDomains_result();
-      receiveBase(result, "getDomains");
-      if (result.isSetSuccess()) {
-        return result.success;
-      }
-      if (result.libvirtException != null) {
-        throw result.libvirtException;
-      }
-      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "getDomains failed: unknown result");
-    }
-
     public void defineDomain(String xmlDesc) throws LibvirtException, org.apache.thrift.TException
     {
       send_defineDomain(xmlDesc);
@@ -638,6 +645,31 @@ public class Aim {
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "getDomainInfo failed: unknown result");
     }
 
+    public List<DomainInfo> getDomains() throws LibvirtException, org.apache.thrift.TException
+    {
+      send_getDomains();
+      return recv_getDomains();
+    }
+
+    public void send_getDomains() throws org.apache.thrift.TException
+    {
+      getDomains_args args = new getDomains_args();
+      sendBase("getDomains", args);
+    }
+
+    public List<DomainInfo> recv_getDomains() throws LibvirtException, org.apache.thrift.TException
+    {
+      getDomains_result result = new getDomains_result();
+      receiveBase(result, "getDomains");
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      if (result.libvirtException != null) {
+        throw result.libvirtException;
+      }
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "getDomains failed: unknown result");
+    }
+
     public void powerOn(String domainName) throws LibvirtException, org.apache.thrift.TException
     {
       send_powerOn(domainName);
@@ -753,16 +785,19 @@ public class Aim {
       return;
     }
 
-    public void createISCSIStoragePool(String xmlDesc) throws LibvirtException, org.apache.thrift.TException
+    public void createISCSIStoragePool(String name, String host, String iqn, String targetPath) throws LibvirtException, org.apache.thrift.TException
     {
-      send_createISCSIStoragePool(xmlDesc);
+      send_createISCSIStoragePool(name, host, iqn, targetPath);
       recv_createISCSIStoragePool();
     }
 
-    public void send_createISCSIStoragePool(String xmlDesc) throws org.apache.thrift.TException
+    public void send_createISCSIStoragePool(String name, String host, String iqn, String targetPath) throws org.apache.thrift.TException
     {
       createISCSIStoragePool_args args = new createISCSIStoragePool_args();
-      args.setXmlDesc(xmlDesc);
+      args.setName(name);
+      args.setHost(host);
+      args.setIqn(iqn);
+      args.setTargetPath(targetPath);
       sendBase("createISCSIStoragePool", args);
     }
 
@@ -776,16 +811,19 @@ public class Aim {
       return;
     }
 
-    public void createNFSStoragePool(String xmlDesc) throws LibvirtException, org.apache.thrift.TException
+    public void createNFSStoragePool(String name, String host, String dir, String targetPath) throws LibvirtException, org.apache.thrift.TException
     {
-      send_createNFSStoragePool(xmlDesc);
+      send_createNFSStoragePool(name, host, dir, targetPath);
       recv_createNFSStoragePool();
     }
 
-    public void send_createNFSStoragePool(String xmlDesc) throws org.apache.thrift.TException
+    public void send_createNFSStoragePool(String name, String host, String dir, String targetPath) throws org.apache.thrift.TException
     {
       createNFSStoragePool_args args = new createNFSStoragePool_args();
-      args.setXmlDesc(xmlDesc);
+      args.setName(name);
+      args.setHost(host);
+      args.setDir(dir);
+      args.setTargetPath(targetPath);
       sendBase("createNFSStoragePool", args);
     }
 
@@ -793,6 +831,106 @@ public class Aim {
     {
       createNFSStoragePool_result result = new createNFSStoragePool_result();
       receiveBase(result, "createNFSStoragePool");
+      if (result.libvirtException != null) {
+        throw result.libvirtException;
+      }
+      return;
+    }
+
+    public void createDirStoragePool(String name, String targetPath) throws LibvirtException, org.apache.thrift.TException
+    {
+      send_createDirStoragePool(name, targetPath);
+      recv_createDirStoragePool();
+    }
+
+    public void send_createDirStoragePool(String name, String targetPath) throws org.apache.thrift.TException
+    {
+      createDirStoragePool_args args = new createDirStoragePool_args();
+      args.setName(name);
+      args.setTargetPath(targetPath);
+      sendBase("createDirStoragePool", args);
+    }
+
+    public void recv_createDirStoragePool() throws LibvirtException, org.apache.thrift.TException
+    {
+      createDirStoragePool_result result = new createDirStoragePool_result();
+      receiveBase(result, "createDirStoragePool");
+      if (result.libvirtException != null) {
+        throw result.libvirtException;
+      }
+      return;
+    }
+
+    public void createDisk(String poolName, String name, double capacityInKb, double allocationInKb, String format) throws LibvirtException, org.apache.thrift.TException
+    {
+      send_createDisk(poolName, name, capacityInKb, allocationInKb, format);
+      recv_createDisk();
+    }
+
+    public void send_createDisk(String poolName, String name, double capacityInKb, double allocationInKb, String format) throws org.apache.thrift.TException
+    {
+      createDisk_args args = new createDisk_args();
+      args.setPoolName(poolName);
+      args.setName(name);
+      args.setCapacityInKb(capacityInKb);
+      args.setAllocationInKb(allocationInKb);
+      args.setFormat(format);
+      sendBase("createDisk", args);
+    }
+
+    public void recv_createDisk() throws LibvirtException, org.apache.thrift.TException
+    {
+      createDisk_result result = new createDisk_result();
+      receiveBase(result, "createDisk");
+      if (result.libvirtException != null) {
+        throw result.libvirtException;
+      }
+      return;
+    }
+
+    public void deleteDisk(String poolName, String name) throws LibvirtException, org.apache.thrift.TException
+    {
+      send_deleteDisk(poolName, name);
+      recv_deleteDisk();
+    }
+
+    public void send_deleteDisk(String poolName, String name) throws org.apache.thrift.TException
+    {
+      deleteDisk_args args = new deleteDisk_args();
+      args.setPoolName(poolName);
+      args.setName(name);
+      sendBase("deleteDisk", args);
+    }
+
+    public void recv_deleteDisk() throws LibvirtException, org.apache.thrift.TException
+    {
+      deleteDisk_result result = new deleteDisk_result();
+      receiveBase(result, "deleteDisk");
+      if (result.libvirtException != null) {
+        throw result.libvirtException;
+      }
+      return;
+    }
+
+    public void resizeVol(String poolName, String name, double capacityInKb) throws LibvirtException, org.apache.thrift.TException
+    {
+      send_resizeVol(poolName, name, capacityInKb);
+      recv_resizeVol();
+    }
+
+    public void send_resizeVol(String poolName, String name, double capacityInKb) throws org.apache.thrift.TException
+    {
+      resizeVol_args args = new resizeVol_args();
+      args.setPoolName(poolName);
+      args.setName(name);
+      args.setCapacityInKb(capacityInKb);
+      sendBase("resizeVol", args);
+    }
+
+    public void recv_resizeVol() throws LibvirtException, org.apache.thrift.TException
+    {
+      resizeVol_result result = new resizeVol_result();
+      receiveBase(result, "resizeVol");
       if (result.libvirtException != null) {
         throw result.libvirtException;
       }
@@ -1270,35 +1408,6 @@ public class Aim {
       }
     }
 
-    public void getDomains(org.apache.thrift.async.AsyncMethodCallback<getDomains_call> resultHandler) throws org.apache.thrift.TException {
-      checkReady();
-      getDomains_call method_call = new getDomains_call(resultHandler, this, ___protocolFactory, ___transport);
-      this.___currentMethod = method_call;
-      ___manager.call(method_call);
-    }
-
-    public static class getDomains_call extends org.apache.thrift.async.TAsyncMethodCall {
-      public getDomains_call(org.apache.thrift.async.AsyncMethodCallback<getDomains_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
-        super(client, protocolFactory, transport, resultHandler, false);
-      }
-
-      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
-        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("getDomains", org.apache.thrift.protocol.TMessageType.CALL, 0));
-        getDomains_args args = new getDomains_args();
-        args.write(prot);
-        prot.writeMessageEnd();
-      }
-
-      public List<DomainInfo> getResult() throws LibvirtException, org.apache.thrift.TException {
-        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
-          throw new IllegalStateException("Method call not finished!");
-        }
-        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
-        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
-        return (new Client(prot)).recv_getDomains();
-      }
-    }
-
     public void defineDomain(String xmlDesc, org.apache.thrift.async.AsyncMethodCallback<defineDomain_call> resultHandler) throws org.apache.thrift.TException {
       checkReady();
       defineDomain_call method_call = new defineDomain_call(xmlDesc, resultHandler, this, ___protocolFactory, ___transport);
@@ -1456,6 +1565,35 @@ public class Aim {
         org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
         org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
         return (new Client(prot)).recv_getDomainInfo();
+      }
+    }
+
+    public void getDomains(org.apache.thrift.async.AsyncMethodCallback<getDomains_call> resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      getDomains_call method_call = new getDomains_call(resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class getDomains_call extends org.apache.thrift.async.TAsyncMethodCall {
+      public getDomains_call(org.apache.thrift.async.AsyncMethodCallback<getDomains_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("getDomains", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        getDomains_args args = new getDomains_args();
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public List<DomainInfo> getResult() throws LibvirtException, org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_getDomains();
       }
     }
 
@@ -1619,24 +1757,33 @@ public class Aim {
       }
     }
 
-    public void createISCSIStoragePool(String xmlDesc, org.apache.thrift.async.AsyncMethodCallback<createISCSIStoragePool_call> resultHandler) throws org.apache.thrift.TException {
+    public void createISCSIStoragePool(String name, String host, String iqn, String targetPath, org.apache.thrift.async.AsyncMethodCallback<createISCSIStoragePool_call> resultHandler) throws org.apache.thrift.TException {
       checkReady();
-      createISCSIStoragePool_call method_call = new createISCSIStoragePool_call(xmlDesc, resultHandler, this, ___protocolFactory, ___transport);
+      createISCSIStoragePool_call method_call = new createISCSIStoragePool_call(name, host, iqn, targetPath, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
 
     public static class createISCSIStoragePool_call extends org.apache.thrift.async.TAsyncMethodCall {
-      private String xmlDesc;
-      public createISCSIStoragePool_call(String xmlDesc, org.apache.thrift.async.AsyncMethodCallback<createISCSIStoragePool_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      private String name;
+      private String host;
+      private String iqn;
+      private String targetPath;
+      public createISCSIStoragePool_call(String name, String host, String iqn, String targetPath, org.apache.thrift.async.AsyncMethodCallback<createISCSIStoragePool_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
-        this.xmlDesc = xmlDesc;
+        this.name = name;
+        this.host = host;
+        this.iqn = iqn;
+        this.targetPath = targetPath;
       }
 
       public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
         prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("createISCSIStoragePool", org.apache.thrift.protocol.TMessageType.CALL, 0));
         createISCSIStoragePool_args args = new createISCSIStoragePool_args();
-        args.setXmlDesc(xmlDesc);
+        args.setName(name);
+        args.setHost(host);
+        args.setIqn(iqn);
+        args.setTargetPath(targetPath);
         args.write(prot);
         prot.writeMessageEnd();
       }
@@ -1651,24 +1798,33 @@ public class Aim {
       }
     }
 
-    public void createNFSStoragePool(String xmlDesc, org.apache.thrift.async.AsyncMethodCallback<createNFSStoragePool_call> resultHandler) throws org.apache.thrift.TException {
+    public void createNFSStoragePool(String name, String host, String dir, String targetPath, org.apache.thrift.async.AsyncMethodCallback<createNFSStoragePool_call> resultHandler) throws org.apache.thrift.TException {
       checkReady();
-      createNFSStoragePool_call method_call = new createNFSStoragePool_call(xmlDesc, resultHandler, this, ___protocolFactory, ___transport);
+      createNFSStoragePool_call method_call = new createNFSStoragePool_call(name, host, dir, targetPath, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
 
     public static class createNFSStoragePool_call extends org.apache.thrift.async.TAsyncMethodCall {
-      private String xmlDesc;
-      public createNFSStoragePool_call(String xmlDesc, org.apache.thrift.async.AsyncMethodCallback<createNFSStoragePool_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      private String name;
+      private String host;
+      private String dir;
+      private String targetPath;
+      public createNFSStoragePool_call(String name, String host, String dir, String targetPath, org.apache.thrift.async.AsyncMethodCallback<createNFSStoragePool_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
-        this.xmlDesc = xmlDesc;
+        this.name = name;
+        this.host = host;
+        this.dir = dir;
+        this.targetPath = targetPath;
       }
 
       public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
         prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("createNFSStoragePool", org.apache.thrift.protocol.TMessageType.CALL, 0));
         createNFSStoragePool_args args = new createNFSStoragePool_args();
-        args.setXmlDesc(xmlDesc);
+        args.setName(name);
+        args.setHost(host);
+        args.setDir(dir);
+        args.setTargetPath(targetPath);
         args.write(prot);
         prot.writeMessageEnd();
       }
@@ -1680,6 +1836,158 @@ public class Aim {
         org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
         org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
         (new Client(prot)).recv_createNFSStoragePool();
+      }
+    }
+
+    public void createDirStoragePool(String name, String targetPath, org.apache.thrift.async.AsyncMethodCallback<createDirStoragePool_call> resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      createDirStoragePool_call method_call = new createDirStoragePool_call(name, targetPath, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class createDirStoragePool_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private String name;
+      private String targetPath;
+      public createDirStoragePool_call(String name, String targetPath, org.apache.thrift.async.AsyncMethodCallback<createDirStoragePool_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.name = name;
+        this.targetPath = targetPath;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("createDirStoragePool", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        createDirStoragePool_args args = new createDirStoragePool_args();
+        args.setName(name);
+        args.setTargetPath(targetPath);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public void getResult() throws LibvirtException, org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        (new Client(prot)).recv_createDirStoragePool();
+      }
+    }
+
+    public void createDisk(String poolName, String name, double capacityInKb, double allocationInKb, String format, org.apache.thrift.async.AsyncMethodCallback<createDisk_call> resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      createDisk_call method_call = new createDisk_call(poolName, name, capacityInKb, allocationInKb, format, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class createDisk_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private String poolName;
+      private String name;
+      private double capacityInKb;
+      private double allocationInKb;
+      private String format;
+      public createDisk_call(String poolName, String name, double capacityInKb, double allocationInKb, String format, org.apache.thrift.async.AsyncMethodCallback<createDisk_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.poolName = poolName;
+        this.name = name;
+        this.capacityInKb = capacityInKb;
+        this.allocationInKb = allocationInKb;
+        this.format = format;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("createDisk", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        createDisk_args args = new createDisk_args();
+        args.setPoolName(poolName);
+        args.setName(name);
+        args.setCapacityInKb(capacityInKb);
+        args.setAllocationInKb(allocationInKb);
+        args.setFormat(format);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public void getResult() throws LibvirtException, org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        (new Client(prot)).recv_createDisk();
+      }
+    }
+
+    public void deleteDisk(String poolName, String name, org.apache.thrift.async.AsyncMethodCallback<deleteDisk_call> resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      deleteDisk_call method_call = new deleteDisk_call(poolName, name, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class deleteDisk_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private String poolName;
+      private String name;
+      public deleteDisk_call(String poolName, String name, org.apache.thrift.async.AsyncMethodCallback<deleteDisk_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.poolName = poolName;
+        this.name = name;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("deleteDisk", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        deleteDisk_args args = new deleteDisk_args();
+        args.setPoolName(poolName);
+        args.setName(name);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public void getResult() throws LibvirtException, org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        (new Client(prot)).recv_deleteDisk();
+      }
+    }
+
+    public void resizeVol(String poolName, String name, double capacityInKb, org.apache.thrift.async.AsyncMethodCallback<resizeVol_call> resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      resizeVol_call method_call = new resizeVol_call(poolName, name, capacityInKb, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class resizeVol_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private String poolName;
+      private String name;
+      private double capacityInKb;
+      public resizeVol_call(String poolName, String name, double capacityInKb, org.apache.thrift.async.AsyncMethodCallback<resizeVol_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.poolName = poolName;
+        this.name = name;
+        this.capacityInKb = capacityInKb;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("resizeVol", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        resizeVol_args args = new resizeVol_args();
+        args.setPoolName(poolName);
+        args.setName(name);
+        args.setCapacityInKb(capacityInKb);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public void getResult() throws LibvirtException, org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        (new Client(prot)).recv_resizeVol();
       }
     }
 
@@ -1747,12 +2055,12 @@ public class Aim {
       processMap.put("getInitiatorIQN", new getInitiatorIQN());
       processMap.put("rescanISCSI", new rescanISCSI());
       processMap.put("getNodeInfo", new getNodeInfo());
-      processMap.put("getDomains", new getDomains());
       processMap.put("defineDomain", new defineDomain());
       processMap.put("undefineDomain", new undefineDomain());
       processMap.put("existDomain", new existDomain());
       processMap.put("getDomainState", new getDomainState());
       processMap.put("getDomainInfo", new getDomainInfo());
+      processMap.put("getDomains", new getDomains());
       processMap.put("powerOn", new powerOn());
       processMap.put("powerOff", new powerOff());
       processMap.put("reset", new reset());
@@ -1760,6 +2068,10 @@ public class Aim {
       processMap.put("resume", new resume());
       processMap.put("createISCSIStoragePool", new createISCSIStoragePool());
       processMap.put("createNFSStoragePool", new createNFSStoragePool());
+      processMap.put("createDirStoragePool", new createDirStoragePool());
+      processMap.put("createDisk", new createDisk());
+      processMap.put("deleteDisk", new deleteDisk());
+      processMap.put("resizeVol", new resizeVol());
       processMap.put("resizeDisk", new resizeDisk());
       return processMap;
     }
@@ -2077,30 +2389,6 @@ public class Aim {
       }
     }
 
-    public static class getDomains<I extends Iface> extends org.apache.thrift.ProcessFunction<I, getDomains_args> {
-      public getDomains() {
-        super("getDomains");
-      }
-
-      public getDomains_args getEmptyArgsInstance() {
-        return new getDomains_args();
-      }
-
-      protected boolean isOneway() {
-        return false;
-      }
-
-      public getDomains_result getResult(I iface, getDomains_args args) throws org.apache.thrift.TException {
-        getDomains_result result = new getDomains_result();
-        try {
-          result.success = iface.getDomains();
-        } catch (LibvirtException libvirtException) {
-          result.libvirtException = libvirtException;
-        }
-        return result;
-      }
-    }
-
     public static class defineDomain<I extends Iface> extends org.apache.thrift.ProcessFunction<I, defineDomain_args> {
       public defineDomain() {
         super("defineDomain");
@@ -2211,6 +2499,30 @@ public class Aim {
         getDomainInfo_result result = new getDomainInfo_result();
         try {
           result.success = iface.getDomainInfo(args.domainName);
+        } catch (LibvirtException libvirtException) {
+          result.libvirtException = libvirtException;
+        }
+        return result;
+      }
+    }
+
+    public static class getDomains<I extends Iface> extends org.apache.thrift.ProcessFunction<I, getDomains_args> {
+      public getDomains() {
+        super("getDomains");
+      }
+
+      public getDomains_args getEmptyArgsInstance() {
+        return new getDomains_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public getDomains_result getResult(I iface, getDomains_args args) throws org.apache.thrift.TException {
+        getDomains_result result = new getDomains_result();
+        try {
+          result.success = iface.getDomains();
         } catch (LibvirtException libvirtException) {
           result.libvirtException = libvirtException;
         }
@@ -2354,7 +2666,7 @@ public class Aim {
       public createISCSIStoragePool_result getResult(I iface, createISCSIStoragePool_args args) throws org.apache.thrift.TException {
         createISCSIStoragePool_result result = new createISCSIStoragePool_result();
         try {
-          iface.createISCSIStoragePool(args.xmlDesc);
+          iface.createISCSIStoragePool(args.name, args.host, args.iqn, args.targetPath);
         } catch (LibvirtException libvirtException) {
           result.libvirtException = libvirtException;
         }
@@ -2378,7 +2690,103 @@ public class Aim {
       public createNFSStoragePool_result getResult(I iface, createNFSStoragePool_args args) throws org.apache.thrift.TException {
         createNFSStoragePool_result result = new createNFSStoragePool_result();
         try {
-          iface.createNFSStoragePool(args.xmlDesc);
+          iface.createNFSStoragePool(args.name, args.host, args.dir, args.targetPath);
+        } catch (LibvirtException libvirtException) {
+          result.libvirtException = libvirtException;
+        }
+        return result;
+      }
+    }
+
+    public static class createDirStoragePool<I extends Iface> extends org.apache.thrift.ProcessFunction<I, createDirStoragePool_args> {
+      public createDirStoragePool() {
+        super("createDirStoragePool");
+      }
+
+      public createDirStoragePool_args getEmptyArgsInstance() {
+        return new createDirStoragePool_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public createDirStoragePool_result getResult(I iface, createDirStoragePool_args args) throws org.apache.thrift.TException {
+        createDirStoragePool_result result = new createDirStoragePool_result();
+        try {
+          iface.createDirStoragePool(args.name, args.targetPath);
+        } catch (LibvirtException libvirtException) {
+          result.libvirtException = libvirtException;
+        }
+        return result;
+      }
+    }
+
+    public static class createDisk<I extends Iface> extends org.apache.thrift.ProcessFunction<I, createDisk_args> {
+      public createDisk() {
+        super("createDisk");
+      }
+
+      public createDisk_args getEmptyArgsInstance() {
+        return new createDisk_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public createDisk_result getResult(I iface, createDisk_args args) throws org.apache.thrift.TException {
+        createDisk_result result = new createDisk_result();
+        try {
+          iface.createDisk(args.poolName, args.name, args.capacityInKb, args.allocationInKb, args.format);
+        } catch (LibvirtException libvirtException) {
+          result.libvirtException = libvirtException;
+        }
+        return result;
+      }
+    }
+
+    public static class deleteDisk<I extends Iface> extends org.apache.thrift.ProcessFunction<I, deleteDisk_args> {
+      public deleteDisk() {
+        super("deleteDisk");
+      }
+
+      public deleteDisk_args getEmptyArgsInstance() {
+        return new deleteDisk_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public deleteDisk_result getResult(I iface, deleteDisk_args args) throws org.apache.thrift.TException {
+        deleteDisk_result result = new deleteDisk_result();
+        try {
+          iface.deleteDisk(args.poolName, args.name);
+        } catch (LibvirtException libvirtException) {
+          result.libvirtException = libvirtException;
+        }
+        return result;
+      }
+    }
+
+    public static class resizeVol<I extends Iface> extends org.apache.thrift.ProcessFunction<I, resizeVol_args> {
+      public resizeVol() {
+        super("resizeVol");
+      }
+
+      public resizeVol_args getEmptyArgsInstance() {
+        return new resizeVol_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public resizeVol_result getResult(I iface, resizeVol_args args) throws org.apache.thrift.TException {
+        resizeVol_result result = new resizeVol_result();
+        try {
+          iface.resizeVol(args.poolName, args.name, args.capacityInKb);
         } catch (LibvirtException libvirtException) {
           result.libvirtException = libvirtException;
         }
@@ -12655,762 +13063,6 @@ public class Aim {
 
   }
 
-  public static class getDomains_args implements org.apache.thrift.TBase<getDomains_args, getDomains_args._Fields>, java.io.Serializable, Cloneable   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getDomains_args");
-
-
-    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
-    static {
-      schemes.put(StandardScheme.class, new getDomains_argsStandardSchemeFactory());
-      schemes.put(TupleScheme.class, new getDomains_argsTupleSchemeFactory());
-    }
-
-
-    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
-    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-;
-
-      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
-
-      static {
-        for (_Fields field : EnumSet.allOf(_Fields.class)) {
-          byName.put(field.getFieldName(), field);
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, or null if its not found.
-       */
-      public static _Fields findByThriftId(int fieldId) {
-        switch(fieldId) {
-          default:
-            return null;
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, throwing an exception
-       * if it is not found.
-       */
-      public static _Fields findByThriftIdOrThrow(int fieldId) {
-        _Fields fields = findByThriftId(fieldId);
-        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
-        return fields;
-      }
-
-      /**
-       * Find the _Fields constant that matches name, or null if its not found.
-       */
-      public static _Fields findByName(String name) {
-        return byName.get(name);
-      }
-
-      private final short _thriftId;
-      private final String _fieldName;
-
-      _Fields(short thriftId, String fieldName) {
-        _thriftId = thriftId;
-        _fieldName = fieldName;
-      }
-
-      public short getThriftFieldId() {
-        return _thriftId;
-      }
-
-      public String getFieldName() {
-        return _fieldName;
-      }
-    }
-    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
-    static {
-      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-      metaDataMap = Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getDomains_args.class, metaDataMap);
-    }
-
-    public getDomains_args() {
-    }
-
-    /**
-     * Performs a deep copy on <i>other</i>.
-     */
-    public getDomains_args(getDomains_args other) {
-    }
-
-    public getDomains_args deepCopy() {
-      return new getDomains_args(this);
-    }
-
-    @Override
-    public void clear() {
-    }
-
-    public void setFieldValue(_Fields field, Object value) {
-      switch (field) {
-      }
-    }
-
-    public Object getFieldValue(_Fields field) {
-      switch (field) {
-      }
-      throw new IllegalStateException();
-    }
-
-    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
-    public boolean isSet(_Fields field) {
-      if (field == null) {
-        throw new IllegalArgumentException();
-      }
-
-      switch (field) {
-      }
-      throw new IllegalStateException();
-    }
-
-    @Override
-    public boolean equals(Object that) {
-      if (that == null)
-        return false;
-      if (that instanceof getDomains_args)
-        return this.equals((getDomains_args)that);
-      return false;
-    }
-
-    public boolean equals(getDomains_args that) {
-      if (that == null)
-        return false;
-
-      return true;
-    }
-
-    @Override
-    public int hashCode() {
-      return 0;
-    }
-
-    public int compareTo(getDomains_args other) {
-      if (!getClass().equals(other.getClass())) {
-        return getClass().getName().compareTo(other.getClass().getName());
-      }
-
-      int lastComparison = 0;
-      getDomains_args typedOther = (getDomains_args)other;
-
-      return 0;
-    }
-
-    public _Fields fieldForId(int fieldId) {
-      return _Fields.findByThriftId(fieldId);
-    }
-
-    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
-      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
-    }
-
-    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
-      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
-    }
-
-    @Override
-    public String toString() {
-      StringBuilder sb = new StringBuilder("getDomains_args(");
-      boolean first = true;
-
-      sb.append(")");
-      return sb.toString();
-    }
-
-    public void validate() throws org.apache.thrift.TException {
-      // check for required fields
-      // check for sub-struct validity
-    }
-
-    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
-      try {
-        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
-      } catch (org.apache.thrift.TException te) {
-        throw new java.io.IOException(te);
-      }
-    }
-
-    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
-      try {
-        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
-      } catch (org.apache.thrift.TException te) {
-        throw new java.io.IOException(te);
-      }
-    }
-
-    private static class getDomains_argsStandardSchemeFactory implements SchemeFactory {
-      public getDomains_argsStandardScheme getScheme() {
-        return new getDomains_argsStandardScheme();
-      }
-    }
-
-    private static class getDomains_argsStandardScheme extends StandardScheme<getDomains_args> {
-
-      public void read(org.apache.thrift.protocol.TProtocol iprot, getDomains_args struct) throws org.apache.thrift.TException {
-        org.apache.thrift.protocol.TField schemeField;
-        iprot.readStructBegin();
-        while (true)
-        {
-          schemeField = iprot.readFieldBegin();
-          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
-            break;
-          }
-          switch (schemeField.id) {
-            default:
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-          }
-          iprot.readFieldEnd();
-        }
-        iprot.readStructEnd();
-
-        // check for required fields of primitive type, which can't be checked in the validate method
-        struct.validate();
-      }
-
-      public void write(org.apache.thrift.protocol.TProtocol oprot, getDomains_args struct) throws org.apache.thrift.TException {
-        struct.validate();
-
-        oprot.writeStructBegin(STRUCT_DESC);
-        oprot.writeFieldStop();
-        oprot.writeStructEnd();
-      }
-
-    }
-
-    private static class getDomains_argsTupleSchemeFactory implements SchemeFactory {
-      public getDomains_argsTupleScheme getScheme() {
-        return new getDomains_argsTupleScheme();
-      }
-    }
-
-    private static class getDomains_argsTupleScheme extends TupleScheme<getDomains_args> {
-
-      @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, getDomains_args struct) throws org.apache.thrift.TException {
-        TTupleProtocol oprot = (TTupleProtocol) prot;
-      }
-
-      @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, getDomains_args struct) throws org.apache.thrift.TException {
-        TTupleProtocol iprot = (TTupleProtocol) prot;
-      }
-    }
-
-  }
-
-  public static class getDomains_result implements org.apache.thrift.TBase<getDomains_result, getDomains_result._Fields>, java.io.Serializable, Cloneable   {
-    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getDomains_result");
-
-    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.LIST, (short)0);
-    private static final org.apache.thrift.protocol.TField LIBVIRT_EXCEPTION_FIELD_DESC = new org.apache.thrift.protocol.TField("libvirtException", org.apache.thrift.protocol.TType.STRUCT, (short)1);
-
-    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
-    static {
-      schemes.put(StandardScheme.class, new getDomains_resultStandardSchemeFactory());
-      schemes.put(TupleScheme.class, new getDomains_resultTupleSchemeFactory());
-    }
-
-    public List<DomainInfo> success; // required
-    public LibvirtException libvirtException; // required
-
-    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
-    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-      SUCCESS((short)0, "success"),
-      LIBVIRT_EXCEPTION((short)1, "libvirtException");
-
-      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
-
-      static {
-        for (_Fields field : EnumSet.allOf(_Fields.class)) {
-          byName.put(field.getFieldName(), field);
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, or null if its not found.
-       */
-      public static _Fields findByThriftId(int fieldId) {
-        switch(fieldId) {
-          case 0: // SUCCESS
-            return SUCCESS;
-          case 1: // LIBVIRT_EXCEPTION
-            return LIBVIRT_EXCEPTION;
-          default:
-            return null;
-        }
-      }
-
-      /**
-       * Find the _Fields constant that matches fieldId, throwing an exception
-       * if it is not found.
-       */
-      public static _Fields findByThriftIdOrThrow(int fieldId) {
-        _Fields fields = findByThriftId(fieldId);
-        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
-        return fields;
-      }
-
-      /**
-       * Find the _Fields constant that matches name, or null if its not found.
-       */
-      public static _Fields findByName(String name) {
-        return byName.get(name);
-      }
-
-      private final short _thriftId;
-      private final String _fieldName;
-
-      _Fields(short thriftId, String fieldName) {
-        _thriftId = thriftId;
-        _fieldName = fieldName;
-      }
-
-      public short getThriftFieldId() {
-        return _thriftId;
-      }
-
-      public String getFieldName() {
-        return _fieldName;
-      }
-    }
-
-    // isset id assignments
-    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
-    static {
-      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
-              new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, DomainInfo.class))));
-      tmpMap.put(_Fields.LIBVIRT_EXCEPTION, new org.apache.thrift.meta_data.FieldMetaData("libvirtException", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
-      metaDataMap = Collections.unmodifiableMap(tmpMap);
-      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getDomains_result.class, metaDataMap);
-    }
-
-    public getDomains_result() {
-    }
-
-    public getDomains_result(
-      List<DomainInfo> success,
-      LibvirtException libvirtException)
-    {
-      this();
-      this.success = success;
-      this.libvirtException = libvirtException;
-    }
-
-    /**
-     * Performs a deep copy on <i>other</i>.
-     */
-    public getDomains_result(getDomains_result other) {
-      if (other.isSetSuccess()) {
-        List<DomainInfo> __this__success = new ArrayList<DomainInfo>();
-        for (DomainInfo other_element : other.success) {
-          __this__success.add(new DomainInfo(other_element));
-        }
-        this.success = __this__success;
-      }
-      if (other.isSetLibvirtException()) {
-        this.libvirtException = new LibvirtException(other.libvirtException);
-      }
-    }
-
-    public getDomains_result deepCopy() {
-      return new getDomains_result(this);
-    }
-
-    @Override
-    public void clear() {
-      this.success = null;
-      this.libvirtException = null;
-    }
-
-    public int getSuccessSize() {
-      return (this.success == null) ? 0 : this.success.size();
-    }
-
-    public java.util.Iterator<DomainInfo> getSuccessIterator() {
-      return (this.success == null) ? null : this.success.iterator();
-    }
-
-    public void addToSuccess(DomainInfo elem) {
-      if (this.success == null) {
-        this.success = new ArrayList<DomainInfo>();
-      }
-      this.success.add(elem);
-    }
-
-    public List<DomainInfo> getSuccess() {
-      return this.success;
-    }
-
-    public getDomains_result setSuccess(List<DomainInfo> success) {
-      this.success = success;
-      return this;
-    }
-
-    public void unsetSuccess() {
-      this.success = null;
-    }
-
-    /** Returns true if field success is set (has been assigned a value) and false otherwise */
-    public boolean isSetSuccess() {
-      return this.success != null;
-    }
-
-    public void setSuccessIsSet(boolean value) {
-      if (!value) {
-        this.success = null;
-      }
-    }
-
-    public LibvirtException getLibvirtException() {
-      return this.libvirtException;
-    }
-
-    public getDomains_result setLibvirtException(LibvirtException libvirtException) {
-      this.libvirtException = libvirtException;
-      return this;
-    }
-
-    public void unsetLibvirtException() {
-      this.libvirtException = null;
-    }
-
-    /** Returns true if field libvirtException is set (has been assigned a value) and false otherwise */
-    public boolean isSetLibvirtException() {
-      return this.libvirtException != null;
-    }
-
-    public void setLibvirtExceptionIsSet(boolean value) {
-      if (!value) {
-        this.libvirtException = null;
-      }
-    }
-
-    public void setFieldValue(_Fields field, Object value) {
-      switch (field) {
-      case SUCCESS:
-        if (value == null) {
-          unsetSuccess();
-        } else {
-          setSuccess((List<DomainInfo>)value);
-        }
-        break;
-
-      case LIBVIRT_EXCEPTION:
-        if (value == null) {
-          unsetLibvirtException();
-        } else {
-          setLibvirtException((LibvirtException)value);
-        }
-        break;
-
-      }
-    }
-
-    public Object getFieldValue(_Fields field) {
-      switch (field) {
-      case SUCCESS:
-        return getSuccess();
-
-      case LIBVIRT_EXCEPTION:
-        return getLibvirtException();
-
-      }
-      throw new IllegalStateException();
-    }
-
-    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
-    public boolean isSet(_Fields field) {
-      if (field == null) {
-        throw new IllegalArgumentException();
-      }
-
-      switch (field) {
-      case SUCCESS:
-        return isSetSuccess();
-      case LIBVIRT_EXCEPTION:
-        return isSetLibvirtException();
-      }
-      throw new IllegalStateException();
-    }
-
-    @Override
-    public boolean equals(Object that) {
-      if (that == null)
-        return false;
-      if (that instanceof getDomains_result)
-        return this.equals((getDomains_result)that);
-      return false;
-    }
-
-    public boolean equals(getDomains_result that) {
-      if (that == null)
-        return false;
-
-      boolean this_present_success = true && this.isSetSuccess();
-      boolean that_present_success = true && that.isSetSuccess();
-      if (this_present_success || that_present_success) {
-        if (!(this_present_success && that_present_success))
-          return false;
-        if (!this.success.equals(that.success))
-          return false;
-      }
-
-      boolean this_present_libvirtException = true && this.isSetLibvirtException();
-      boolean that_present_libvirtException = true && that.isSetLibvirtException();
-      if (this_present_libvirtException || that_present_libvirtException) {
-        if (!(this_present_libvirtException && that_present_libvirtException))
-          return false;
-        if (!this.libvirtException.equals(that.libvirtException))
-          return false;
-      }
-
-      return true;
-    }
-
-    @Override
-    public int hashCode() {
-      return 0;
-    }
-
-    public int compareTo(getDomains_result other) {
-      if (!getClass().equals(other.getClass())) {
-        return getClass().getName().compareTo(other.getClass().getName());
-      }
-
-      int lastComparison = 0;
-      getDomains_result typedOther = (getDomains_result)other;
-
-      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(typedOther.isSetSuccess());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetSuccess()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, typedOther.success);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
-      lastComparison = Boolean.valueOf(isSetLibvirtException()).compareTo(typedOther.isSetLibvirtException());
-      if (lastComparison != 0) {
-        return lastComparison;
-      }
-      if (isSetLibvirtException()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.libvirtException, typedOther.libvirtException);
-        if (lastComparison != 0) {
-          return lastComparison;
-        }
-      }
-      return 0;
-    }
-
-    public _Fields fieldForId(int fieldId) {
-      return _Fields.findByThriftId(fieldId);
-    }
-
-    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
-      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
-    }
-
-    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
-      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
-      }
-
-    @Override
-    public String toString() {
-      StringBuilder sb = new StringBuilder("getDomains_result(");
-      boolean first = true;
-
-      sb.append("success:");
-      if (this.success == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.success);
-      }
-      first = false;
-      if (!first) sb.append(", ");
-      sb.append("libvirtException:");
-      if (this.libvirtException == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.libvirtException);
-      }
-      first = false;
-      sb.append(")");
-      return sb.toString();
-    }
-
-    public void validate() throws org.apache.thrift.TException {
-      // check for required fields
-      // check for sub-struct validity
-    }
-
-    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
-      try {
-        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
-      } catch (org.apache.thrift.TException te) {
-        throw new java.io.IOException(te);
-      }
-    }
-
-    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
-      try {
-        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
-      } catch (org.apache.thrift.TException te) {
-        throw new java.io.IOException(te);
-      }
-    }
-
-    private static class getDomains_resultStandardSchemeFactory implements SchemeFactory {
-      public getDomains_resultStandardScheme getScheme() {
-        return new getDomains_resultStandardScheme();
-      }
-    }
-
-    private static class getDomains_resultStandardScheme extends StandardScheme<getDomains_result> {
-
-      public void read(org.apache.thrift.protocol.TProtocol iprot, getDomains_result struct) throws org.apache.thrift.TException {
-        org.apache.thrift.protocol.TField schemeField;
-        iprot.readStructBegin();
-        while (true)
-        {
-          schemeField = iprot.readFieldBegin();
-          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
-            break;
-          }
-          switch (schemeField.id) {
-            case 0: // SUCCESS
-              if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
-                {
-                  org.apache.thrift.protocol.TList _list24 = iprot.readListBegin();
-                  struct.success = new ArrayList<DomainInfo>(_list24.size);
-                  for (int _i25 = 0; _i25 < _list24.size; ++_i25)
-                  {
-                    DomainInfo _elem26; // required
-                    _elem26 = new DomainInfo();
-                    _elem26.read(iprot);
-                    struct.success.add(_elem26);
-                  }
-                  iprot.readListEnd();
-                }
-                struct.setSuccessIsSet(true);
-              } else { 
-                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-              }
-              break;
-            case 1: // LIBVIRT_EXCEPTION
-              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-                struct.libvirtException = new LibvirtException();
-                struct.libvirtException.read(iprot);
-                struct.setLibvirtExceptionIsSet(true);
-              } else { 
-                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-              }
-              break;
-            default:
-              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
-          }
-          iprot.readFieldEnd();
-        }
-        iprot.readStructEnd();
-
-        // check for required fields of primitive type, which can't be checked in the validate method
-        struct.validate();
-      }
-
-      public void write(org.apache.thrift.protocol.TProtocol oprot, getDomains_result struct) throws org.apache.thrift.TException {
-        struct.validate();
-
-        oprot.writeStructBegin(STRUCT_DESC);
-        if (struct.success != null) {
-          oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
-          {
-            oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
-            for (DomainInfo _iter27 : struct.success)
-            {
-              _iter27.write(oprot);
-            }
-            oprot.writeListEnd();
-          }
-          oprot.writeFieldEnd();
-        }
-        if (struct.libvirtException != null) {
-          oprot.writeFieldBegin(LIBVIRT_EXCEPTION_FIELD_DESC);
-          struct.libvirtException.write(oprot);
-          oprot.writeFieldEnd();
-        }
-        oprot.writeFieldStop();
-        oprot.writeStructEnd();
-      }
-
-    }
-
-    private static class getDomains_resultTupleSchemeFactory implements SchemeFactory {
-      public getDomains_resultTupleScheme getScheme() {
-        return new getDomains_resultTupleScheme();
-      }
-    }
-
-    private static class getDomains_resultTupleScheme extends TupleScheme<getDomains_result> {
-
-      @Override
-      public void write(org.apache.thrift.protocol.TProtocol prot, getDomains_result struct) throws org.apache.thrift.TException {
-        TTupleProtocol oprot = (TTupleProtocol) prot;
-        BitSet optionals = new BitSet();
-        if (struct.isSetSuccess()) {
-          optionals.set(0);
-        }
-        if (struct.isSetLibvirtException()) {
-          optionals.set(1);
-        }
-        oprot.writeBitSet(optionals, 2);
-        if (struct.isSetSuccess()) {
-          {
-            oprot.writeI32(struct.success.size());
-            for (DomainInfo _iter28 : struct.success)
-            {
-              _iter28.write(oprot);
-            }
-          }
-        }
-        if (struct.isSetLibvirtException()) {
-          struct.libvirtException.write(oprot);
-        }
-      }
-
-      @Override
-      public void read(org.apache.thrift.protocol.TProtocol prot, getDomains_result struct) throws org.apache.thrift.TException {
-        TTupleProtocol iprot = (TTupleProtocol) prot;
-        BitSet incoming = iprot.readBitSet(2);
-        if (incoming.get(0)) {
-          {
-            org.apache.thrift.protocol.TList _list29 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-            struct.success = new ArrayList<DomainInfo>(_list29.size);
-            for (int _i30 = 0; _i30 < _list29.size; ++_i30)
-            {
-              DomainInfo _elem31; // required
-              _elem31 = new DomainInfo();
-              _elem31.read(iprot);
-              struct.success.add(_elem31);
-            }
-          }
-          struct.setSuccessIsSet(true);
-        }
-        if (incoming.get(1)) {
-          struct.libvirtException = new LibvirtException();
-          struct.libvirtException.read(iprot);
-          struct.setLibvirtExceptionIsSet(true);
-        }
-      }
-    }
-
-  }
-
   public static class defineDomain_args implements org.apache.thrift.TBase<defineDomain_args, defineDomain_args._Fields>, java.io.Serializable, Cloneable   {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("defineDomain_args");
 
@@ -17180,6 +16832,762 @@ public class Aim {
 
   }
 
+  public static class getDomains_args implements org.apache.thrift.TBase<getDomains_args, getDomains_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getDomains_args");
+
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new getDomains_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new getDomains_argsTupleSchemeFactory());
+    }
+
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+;
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getDomains_args.class, metaDataMap);
+    }
+
+    public getDomains_args() {
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public getDomains_args(getDomains_args other) {
+    }
+
+    public getDomains_args deepCopy() {
+      return new getDomains_args(this);
+    }
+
+    @Override
+    public void clear() {
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof getDomains_args)
+        return this.equals((getDomains_args)that);
+      return false;
+    }
+
+    public boolean equals(getDomains_args that) {
+      if (that == null)
+        return false;
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(getDomains_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      getDomains_args typedOther = (getDomains_args)other;
+
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("getDomains_args(");
+      boolean first = true;
+
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class getDomains_argsStandardSchemeFactory implements SchemeFactory {
+      public getDomains_argsStandardScheme getScheme() {
+        return new getDomains_argsStandardScheme();
+      }
+    }
+
+    private static class getDomains_argsStandardScheme extends StandardScheme<getDomains_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, getDomains_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, getDomains_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class getDomains_argsTupleSchemeFactory implements SchemeFactory {
+      public getDomains_argsTupleScheme getScheme() {
+        return new getDomains_argsTupleScheme();
+      }
+    }
+
+    private static class getDomains_argsTupleScheme extends TupleScheme<getDomains_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, getDomains_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, getDomains_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+      }
+    }
+
+  }
+
+  public static class getDomains_result implements org.apache.thrift.TBase<getDomains_result, getDomains_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getDomains_result");
+
+    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.LIST, (short)0);
+    private static final org.apache.thrift.protocol.TField LIBVIRT_EXCEPTION_FIELD_DESC = new org.apache.thrift.protocol.TField("libvirtException", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new getDomains_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new getDomains_resultTupleSchemeFactory());
+    }
+
+    public List<DomainInfo> success; // required
+    public LibvirtException libvirtException; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      SUCCESS((short)0, "success"),
+      LIBVIRT_EXCEPTION((short)1, "libvirtException");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
+          case 1: // LIBVIRT_EXCEPTION
+            return LIBVIRT_EXCEPTION;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
+              new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, DomainInfo.class))));
+      tmpMap.put(_Fields.LIBVIRT_EXCEPTION, new org.apache.thrift.meta_data.FieldMetaData("libvirtException", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getDomains_result.class, metaDataMap);
+    }
+
+    public getDomains_result() {
+    }
+
+    public getDomains_result(
+      List<DomainInfo> success,
+      LibvirtException libvirtException)
+    {
+      this();
+      this.success = success;
+      this.libvirtException = libvirtException;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public getDomains_result(getDomains_result other) {
+      if (other.isSetSuccess()) {
+        List<DomainInfo> __this__success = new ArrayList<DomainInfo>();
+        for (DomainInfo other_element : other.success) {
+          __this__success.add(new DomainInfo(other_element));
+        }
+        this.success = __this__success;
+      }
+      if (other.isSetLibvirtException()) {
+        this.libvirtException = new LibvirtException(other.libvirtException);
+      }
+    }
+
+    public getDomains_result deepCopy() {
+      return new getDomains_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.success = null;
+      this.libvirtException = null;
+    }
+
+    public int getSuccessSize() {
+      return (this.success == null) ? 0 : this.success.size();
+    }
+
+    public java.util.Iterator<DomainInfo> getSuccessIterator() {
+      return (this.success == null) ? null : this.success.iterator();
+    }
+
+    public void addToSuccess(DomainInfo elem) {
+      if (this.success == null) {
+        this.success = new ArrayList<DomainInfo>();
+      }
+      this.success.add(elem);
+    }
+
+    public List<DomainInfo> getSuccess() {
+      return this.success;
+    }
+
+    public getDomains_result setSuccess(List<DomainInfo> success) {
+      this.success = success;
+      return this;
+    }
+
+    public void unsetSuccess() {
+      this.success = null;
+    }
+
+    /** Returns true if field success is set (has been assigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return this.success != null;
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      if (!value) {
+        this.success = null;
+      }
+    }
+
+    public LibvirtException getLibvirtException() {
+      return this.libvirtException;
+    }
+
+    public getDomains_result setLibvirtException(LibvirtException libvirtException) {
+      this.libvirtException = libvirtException;
+      return this;
+    }
+
+    public void unsetLibvirtException() {
+      this.libvirtException = null;
+    }
+
+    /** Returns true if field libvirtException is set (has been assigned a value) and false otherwise */
+    public boolean isSetLibvirtException() {
+      return this.libvirtException != null;
+    }
+
+    public void setLibvirtExceptionIsSet(boolean value) {
+      if (!value) {
+        this.libvirtException = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((List<DomainInfo>)value);
+        }
+        break;
+
+      case LIBVIRT_EXCEPTION:
+        if (value == null) {
+          unsetLibvirtException();
+        } else {
+          setLibvirtException((LibvirtException)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SUCCESS:
+        return getSuccess();
+
+      case LIBVIRT_EXCEPTION:
+        return getLibvirtException();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
+      case LIBVIRT_EXCEPTION:
+        return isSetLibvirtException();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof getDomains_result)
+        return this.equals((getDomains_result)that);
+      return false;
+    }
+
+    public boolean equals(getDomains_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_success = true && this.isSetSuccess();
+      boolean that_present_success = true && that.isSetSuccess();
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (!this.success.equals(that.success))
+          return false;
+      }
+
+      boolean this_present_libvirtException = true && this.isSetLibvirtException();
+      boolean that_present_libvirtException = true && that.isSetLibvirtException();
+      if (this_present_libvirtException || that_present_libvirtException) {
+        if (!(this_present_libvirtException && that_present_libvirtException))
+          return false;
+        if (!this.libvirtException.equals(that.libvirtException))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(getDomains_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      getDomains_result typedOther = (getDomains_result)other;
+
+      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(typedOther.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, typedOther.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetLibvirtException()).compareTo(typedOther.isSetLibvirtException());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetLibvirtException()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.libvirtException, typedOther.libvirtException);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("getDomains_result(");
+      boolean first = true;
+
+      sb.append("success:");
+      if (this.success == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.success);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("libvirtException:");
+      if (this.libvirtException == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.libvirtException);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class getDomains_resultStandardSchemeFactory implements SchemeFactory {
+      public getDomains_resultStandardScheme getScheme() {
+        return new getDomains_resultStandardScheme();
+      }
+    }
+
+    private static class getDomains_resultStandardScheme extends StandardScheme<getDomains_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, getDomains_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 0: // SUCCESS
+              if (schemeField.type == org.apache.thrift.protocol.TType.LIST) {
+                {
+                  org.apache.thrift.protocol.TList _list24 = iprot.readListBegin();
+                  struct.success = new ArrayList<DomainInfo>(_list24.size);
+                  for (int _i25 = 0; _i25 < _list24.size; ++_i25)
+                  {
+                    DomainInfo _elem26; // required
+                    _elem26 = new DomainInfo();
+                    _elem26.read(iprot);
+                    struct.success.add(_elem26);
+                  }
+                  iprot.readListEnd();
+                }
+                struct.setSuccessIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 1: // LIBVIRT_EXCEPTION
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.libvirtException = new LibvirtException();
+                struct.libvirtException.read(iprot);
+                struct.setLibvirtExceptionIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, getDomains_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.success != null) {
+          oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+          {
+            oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
+            for (DomainInfo _iter27 : struct.success)
+            {
+              _iter27.write(oprot);
+            }
+            oprot.writeListEnd();
+          }
+          oprot.writeFieldEnd();
+        }
+        if (struct.libvirtException != null) {
+          oprot.writeFieldBegin(LIBVIRT_EXCEPTION_FIELD_DESC);
+          struct.libvirtException.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class getDomains_resultTupleSchemeFactory implements SchemeFactory {
+      public getDomains_resultTupleScheme getScheme() {
+        return new getDomains_resultTupleScheme();
+      }
+    }
+
+    private static class getDomains_resultTupleScheme extends TupleScheme<getDomains_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, getDomains_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetSuccess()) {
+          optionals.set(0);
+        }
+        if (struct.isSetLibvirtException()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetSuccess()) {
+          {
+            oprot.writeI32(struct.success.size());
+            for (DomainInfo _iter28 : struct.success)
+            {
+              _iter28.write(oprot);
+            }
+          }
+        }
+        if (struct.isSetLibvirtException()) {
+          struct.libvirtException.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, getDomains_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(2);
+        if (incoming.get(0)) {
+          {
+            org.apache.thrift.protocol.TList _list29 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new ArrayList<DomainInfo>(_list29.size);
+            for (int _i30 = 0; _i30 < _list29.size; ++_i30)
+            {
+              DomainInfo _elem31; // required
+              _elem31 = new DomainInfo();
+              _elem31.read(iprot);
+              struct.success.add(_elem31);
+            }
+          }
+          struct.setSuccessIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.libvirtException = new LibvirtException();
+          struct.libvirtException.read(iprot);
+          struct.setLibvirtExceptionIsSet(true);
+        }
+      }
+    }
+
+  }
+
   public static class powerOn_args implements org.apache.thrift.TBase<powerOn_args, powerOn_args._Fields>, java.io.Serializable, Cloneable   {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("powerOn_args");
 
@@ -20733,7 +21141,10 @@ public class Aim {
   public static class createISCSIStoragePool_args implements org.apache.thrift.TBase<createISCSIStoragePool_args, createISCSIStoragePool_args._Fields>, java.io.Serializable, Cloneable   {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("createISCSIStoragePool_args");
 
-    private static final org.apache.thrift.protocol.TField XML_DESC_FIELD_DESC = new org.apache.thrift.protocol.TField("xmlDesc", org.apache.thrift.protocol.TType.STRING, (short)1);
+    private static final org.apache.thrift.protocol.TField NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("name", org.apache.thrift.protocol.TType.STRING, (short)1);
+    private static final org.apache.thrift.protocol.TField HOST_FIELD_DESC = new org.apache.thrift.protocol.TField("host", org.apache.thrift.protocol.TType.STRING, (short)2);
+    private static final org.apache.thrift.protocol.TField IQN_FIELD_DESC = new org.apache.thrift.protocol.TField("iqn", org.apache.thrift.protocol.TType.STRING, (short)3);
+    private static final org.apache.thrift.protocol.TField TARGET_PATH_FIELD_DESC = new org.apache.thrift.protocol.TField("targetPath", org.apache.thrift.protocol.TType.STRING, (short)4);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
@@ -20741,11 +21152,17 @@ public class Aim {
       schemes.put(TupleScheme.class, new createISCSIStoragePool_argsTupleSchemeFactory());
     }
 
-    public String xmlDesc; // required
+    public String name; // required
+    public String host; // required
+    public String iqn; // required
+    public String targetPath; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-      XML_DESC((short)1, "xmlDesc");
+      NAME((short)1, "name"),
+      HOST((short)2, "host"),
+      IQN((short)3, "iqn"),
+      TARGET_PATH((short)4, "targetPath");
 
       private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -20760,8 +21177,14 @@ public class Aim {
        */
       public static _Fields findByThriftId(int fieldId) {
         switch(fieldId) {
-          case 1: // XML_DESC
-            return XML_DESC;
+          case 1: // NAME
+            return NAME;
+          case 2: // HOST
+            return HOST;
+          case 3: // IQN
+            return IQN;
+          case 4: // TARGET_PATH
+            return TARGET_PATH;
           default:
             return null;
         }
@@ -20805,7 +21228,13 @@ public class Aim {
     public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.XML_DESC, new org.apache.thrift.meta_data.FieldMetaData("xmlDesc", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+      tmpMap.put(_Fields.NAME, new org.apache.thrift.meta_data.FieldMetaData("name", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.HOST, new org.apache.thrift.meta_data.FieldMetaData("host", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.IQN, new org.apache.thrift.meta_data.FieldMetaData("iqn", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.TARGET_PATH, new org.apache.thrift.meta_data.FieldMetaData("targetPath", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(createISCSIStoragePool_args.class, metaDataMap);
@@ -20815,18 +21244,33 @@ public class Aim {
     }
 
     public createISCSIStoragePool_args(
-      String xmlDesc)
+      String name,
+      String host,
+      String iqn,
+      String targetPath)
     {
       this();
-      this.xmlDesc = xmlDesc;
+      this.name = name;
+      this.host = host;
+      this.iqn = iqn;
+      this.targetPath = targetPath;
     }
 
     /**
      * Performs a deep copy on <i>other</i>.
      */
     public createISCSIStoragePool_args(createISCSIStoragePool_args other) {
-      if (other.isSetXmlDesc()) {
-        this.xmlDesc = other.xmlDesc;
+      if (other.isSetName()) {
+        this.name = other.name;
+      }
+      if (other.isSetHost()) {
+        this.host = other.host;
+      }
+      if (other.isSetIqn()) {
+        this.iqn = other.iqn;
+      }
+      if (other.isSetTargetPath()) {
+        this.targetPath = other.targetPath;
       }
     }
 
@@ -20836,40 +21280,139 @@ public class Aim {
 
     @Override
     public void clear() {
-      this.xmlDesc = null;
+      this.name = null;
+      this.host = null;
+      this.iqn = null;
+      this.targetPath = null;
     }
 
-    public String getXmlDesc() {
-      return this.xmlDesc;
+    public String getName() {
+      return this.name;
     }
 
-    public createISCSIStoragePool_args setXmlDesc(String xmlDesc) {
-      this.xmlDesc = xmlDesc;
+    public createISCSIStoragePool_args setName(String name) {
+      this.name = name;
       return this;
     }
 
-    public void unsetXmlDesc() {
-      this.xmlDesc = null;
+    public void unsetName() {
+      this.name = null;
     }
 
-    /** Returns true if field xmlDesc is set (has been assigned a value) and false otherwise */
-    public boolean isSetXmlDesc() {
-      return this.xmlDesc != null;
+    /** Returns true if field name is set (has been assigned a value) and false otherwise */
+    public boolean isSetName() {
+      return this.name != null;
     }
 
-    public void setXmlDescIsSet(boolean value) {
+    public void setNameIsSet(boolean value) {
       if (!value) {
-        this.xmlDesc = null;
+        this.name = null;
+      }
+    }
+
+    public String getHost() {
+      return this.host;
+    }
+
+    public createISCSIStoragePool_args setHost(String host) {
+      this.host = host;
+      return this;
+    }
+
+    public void unsetHost() {
+      this.host = null;
+    }
+
+    /** Returns true if field host is set (has been assigned a value) and false otherwise */
+    public boolean isSetHost() {
+      return this.host != null;
+    }
+
+    public void setHostIsSet(boolean value) {
+      if (!value) {
+        this.host = null;
+      }
+    }
+
+    public String getIqn() {
+      return this.iqn;
+    }
+
+    public createISCSIStoragePool_args setIqn(String iqn) {
+      this.iqn = iqn;
+      return this;
+    }
+
+    public void unsetIqn() {
+      this.iqn = null;
+    }
+
+    /** Returns true if field iqn is set (has been assigned a value) and false otherwise */
+    public boolean isSetIqn() {
+      return this.iqn != null;
+    }
+
+    public void setIqnIsSet(boolean value) {
+      if (!value) {
+        this.iqn = null;
+      }
+    }
+
+    public String getTargetPath() {
+      return this.targetPath;
+    }
+
+    public createISCSIStoragePool_args setTargetPath(String targetPath) {
+      this.targetPath = targetPath;
+      return this;
+    }
+
+    public void unsetTargetPath() {
+      this.targetPath = null;
+    }
+
+    /** Returns true if field targetPath is set (has been assigned a value) and false otherwise */
+    public boolean isSetTargetPath() {
+      return this.targetPath != null;
+    }
+
+    public void setTargetPathIsSet(boolean value) {
+      if (!value) {
+        this.targetPath = null;
       }
     }
 
     public void setFieldValue(_Fields field, Object value) {
       switch (field) {
-      case XML_DESC:
+      case NAME:
         if (value == null) {
-          unsetXmlDesc();
+          unsetName();
         } else {
-          setXmlDesc((String)value);
+          setName((String)value);
+        }
+        break;
+
+      case HOST:
+        if (value == null) {
+          unsetHost();
+        } else {
+          setHost((String)value);
+        }
+        break;
+
+      case IQN:
+        if (value == null) {
+          unsetIqn();
+        } else {
+          setIqn((String)value);
+        }
+        break;
+
+      case TARGET_PATH:
+        if (value == null) {
+          unsetTargetPath();
+        } else {
+          setTargetPath((String)value);
         }
         break;
 
@@ -20878,8 +21421,17 @@ public class Aim {
 
     public Object getFieldValue(_Fields field) {
       switch (field) {
-      case XML_DESC:
-        return getXmlDesc();
+      case NAME:
+        return getName();
+
+      case HOST:
+        return getHost();
+
+      case IQN:
+        return getIqn();
+
+      case TARGET_PATH:
+        return getTargetPath();
 
       }
       throw new IllegalStateException();
@@ -20892,8 +21444,14 @@ public class Aim {
       }
 
       switch (field) {
-      case XML_DESC:
-        return isSetXmlDesc();
+      case NAME:
+        return isSetName();
+      case HOST:
+        return isSetHost();
+      case IQN:
+        return isSetIqn();
+      case TARGET_PATH:
+        return isSetTargetPath();
       }
       throw new IllegalStateException();
     }
@@ -20911,12 +21469,39 @@ public class Aim {
       if (that == null)
         return false;
 
-      boolean this_present_xmlDesc = true && this.isSetXmlDesc();
-      boolean that_present_xmlDesc = true && that.isSetXmlDesc();
-      if (this_present_xmlDesc || that_present_xmlDesc) {
-        if (!(this_present_xmlDesc && that_present_xmlDesc))
+      boolean this_present_name = true && this.isSetName();
+      boolean that_present_name = true && that.isSetName();
+      if (this_present_name || that_present_name) {
+        if (!(this_present_name && that_present_name))
           return false;
-        if (!this.xmlDesc.equals(that.xmlDesc))
+        if (!this.name.equals(that.name))
+          return false;
+      }
+
+      boolean this_present_host = true && this.isSetHost();
+      boolean that_present_host = true && that.isSetHost();
+      if (this_present_host || that_present_host) {
+        if (!(this_present_host && that_present_host))
+          return false;
+        if (!this.host.equals(that.host))
+          return false;
+      }
+
+      boolean this_present_iqn = true && this.isSetIqn();
+      boolean that_present_iqn = true && that.isSetIqn();
+      if (this_present_iqn || that_present_iqn) {
+        if (!(this_present_iqn && that_present_iqn))
+          return false;
+        if (!this.iqn.equals(that.iqn))
+          return false;
+      }
+
+      boolean this_present_targetPath = true && this.isSetTargetPath();
+      boolean that_present_targetPath = true && that.isSetTargetPath();
+      if (this_present_targetPath || that_present_targetPath) {
+        if (!(this_present_targetPath && that_present_targetPath))
+          return false;
+        if (!this.targetPath.equals(that.targetPath))
           return false;
       }
 
@@ -20936,12 +21521,42 @@ public class Aim {
       int lastComparison = 0;
       createISCSIStoragePool_args typedOther = (createISCSIStoragePool_args)other;
 
-      lastComparison = Boolean.valueOf(isSetXmlDesc()).compareTo(typedOther.isSetXmlDesc());
+      lastComparison = Boolean.valueOf(isSetName()).compareTo(typedOther.isSetName());
       if (lastComparison != 0) {
         return lastComparison;
       }
-      if (isSetXmlDesc()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.xmlDesc, typedOther.xmlDesc);
+      if (isSetName()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.name, typedOther.name);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetHost()).compareTo(typedOther.isSetHost());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetHost()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.host, typedOther.host);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetIqn()).compareTo(typedOther.isSetIqn());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetIqn()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.iqn, typedOther.iqn);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetTargetPath()).compareTo(typedOther.isSetTargetPath());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetTargetPath()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.targetPath, typedOther.targetPath);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -20966,11 +21581,35 @@ public class Aim {
       StringBuilder sb = new StringBuilder("createISCSIStoragePool_args(");
       boolean first = true;
 
-      sb.append("xmlDesc:");
-      if (this.xmlDesc == null) {
+      sb.append("name:");
+      if (this.name == null) {
         sb.append("null");
       } else {
-        sb.append(this.xmlDesc);
+        sb.append(this.name);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("host:");
+      if (this.host == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.host);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("iqn:");
+      if (this.iqn == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.iqn);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("targetPath:");
+      if (this.targetPath == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.targetPath);
       }
       first = false;
       sb.append(")");
@@ -21016,10 +21655,34 @@ public class Aim {
             break;
           }
           switch (schemeField.id) {
-            case 1: // XML_DESC
+            case 1: // NAME
               if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-                struct.xmlDesc = iprot.readString();
-                struct.setXmlDescIsSet(true);
+                struct.name = iprot.readString();
+                struct.setNameIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 2: // HOST
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.host = iprot.readString();
+                struct.setHostIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 3: // IQN
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.iqn = iprot.readString();
+                struct.setIqnIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 4: // TARGET_PATH
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.targetPath = iprot.readString();
+                struct.setTargetPathIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
@@ -21039,9 +21702,24 @@ public class Aim {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
-        if (struct.xmlDesc != null) {
-          oprot.writeFieldBegin(XML_DESC_FIELD_DESC);
-          oprot.writeString(struct.xmlDesc);
+        if (struct.name != null) {
+          oprot.writeFieldBegin(NAME_FIELD_DESC);
+          oprot.writeString(struct.name);
+          oprot.writeFieldEnd();
+        }
+        if (struct.host != null) {
+          oprot.writeFieldBegin(HOST_FIELD_DESC);
+          oprot.writeString(struct.host);
+          oprot.writeFieldEnd();
+        }
+        if (struct.iqn != null) {
+          oprot.writeFieldBegin(IQN_FIELD_DESC);
+          oprot.writeString(struct.iqn);
+          oprot.writeFieldEnd();
+        }
+        if (struct.targetPath != null) {
+          oprot.writeFieldBegin(TARGET_PATH_FIELD_DESC);
+          oprot.writeString(struct.targetPath);
           oprot.writeFieldEnd();
         }
         oprot.writeFieldStop();
@@ -21062,22 +21740,52 @@ public class Aim {
       public void write(org.apache.thrift.protocol.TProtocol prot, createISCSIStoragePool_args struct) throws org.apache.thrift.TException {
         TTupleProtocol oprot = (TTupleProtocol) prot;
         BitSet optionals = new BitSet();
-        if (struct.isSetXmlDesc()) {
+        if (struct.isSetName()) {
           optionals.set(0);
         }
-        oprot.writeBitSet(optionals, 1);
-        if (struct.isSetXmlDesc()) {
-          oprot.writeString(struct.xmlDesc);
+        if (struct.isSetHost()) {
+          optionals.set(1);
+        }
+        if (struct.isSetIqn()) {
+          optionals.set(2);
+        }
+        if (struct.isSetTargetPath()) {
+          optionals.set(3);
+        }
+        oprot.writeBitSet(optionals, 4);
+        if (struct.isSetName()) {
+          oprot.writeString(struct.name);
+        }
+        if (struct.isSetHost()) {
+          oprot.writeString(struct.host);
+        }
+        if (struct.isSetIqn()) {
+          oprot.writeString(struct.iqn);
+        }
+        if (struct.isSetTargetPath()) {
+          oprot.writeString(struct.targetPath);
         }
       }
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, createISCSIStoragePool_args struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
-        BitSet incoming = iprot.readBitSet(1);
+        BitSet incoming = iprot.readBitSet(4);
         if (incoming.get(0)) {
-          struct.xmlDesc = iprot.readString();
-          struct.setXmlDescIsSet(true);
+          struct.name = iprot.readString();
+          struct.setNameIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.host = iprot.readString();
+          struct.setHostIsSet(true);
+        }
+        if (incoming.get(2)) {
+          struct.iqn = iprot.readString();
+          struct.setIqnIsSet(true);
+        }
+        if (incoming.get(3)) {
+          struct.targetPath = iprot.readString();
+          struct.setTargetPathIsSet(true);
         }
       }
     }
@@ -21443,7 +22151,10 @@ public class Aim {
   public static class createNFSStoragePool_args implements org.apache.thrift.TBase<createNFSStoragePool_args, createNFSStoragePool_args._Fields>, java.io.Serializable, Cloneable   {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("createNFSStoragePool_args");
 
-    private static final org.apache.thrift.protocol.TField XML_DESC_FIELD_DESC = new org.apache.thrift.protocol.TField("xmlDesc", org.apache.thrift.protocol.TType.STRING, (short)1);
+    private static final org.apache.thrift.protocol.TField NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("name", org.apache.thrift.protocol.TType.STRING, (short)1);
+    private static final org.apache.thrift.protocol.TField HOST_FIELD_DESC = new org.apache.thrift.protocol.TField("host", org.apache.thrift.protocol.TType.STRING, (short)2);
+    private static final org.apache.thrift.protocol.TField DIR_FIELD_DESC = new org.apache.thrift.protocol.TField("dir", org.apache.thrift.protocol.TType.STRING, (short)3);
+    private static final org.apache.thrift.protocol.TField TARGET_PATH_FIELD_DESC = new org.apache.thrift.protocol.TField("targetPath", org.apache.thrift.protocol.TType.STRING, (short)4);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
@@ -21451,11 +22162,17 @@ public class Aim {
       schemes.put(TupleScheme.class, new createNFSStoragePool_argsTupleSchemeFactory());
     }
 
-    public String xmlDesc; // required
+    public String name; // required
+    public String host; // required
+    public String dir; // required
+    public String targetPath; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-      XML_DESC((short)1, "xmlDesc");
+      NAME((short)1, "name"),
+      HOST((short)2, "host"),
+      DIR((short)3, "dir"),
+      TARGET_PATH((short)4, "targetPath");
 
       private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -21470,8 +22187,14 @@ public class Aim {
        */
       public static _Fields findByThriftId(int fieldId) {
         switch(fieldId) {
-          case 1: // XML_DESC
-            return XML_DESC;
+          case 1: // NAME
+            return NAME;
+          case 2: // HOST
+            return HOST;
+          case 3: // DIR
+            return DIR;
+          case 4: // TARGET_PATH
+            return TARGET_PATH;
           default:
             return null;
         }
@@ -21515,7 +22238,13 @@ public class Aim {
     public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
-      tmpMap.put(_Fields.XML_DESC, new org.apache.thrift.meta_data.FieldMetaData("xmlDesc", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+      tmpMap.put(_Fields.NAME, new org.apache.thrift.meta_data.FieldMetaData("name", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.HOST, new org.apache.thrift.meta_data.FieldMetaData("host", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.DIR, new org.apache.thrift.meta_data.FieldMetaData("dir", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.TARGET_PATH, new org.apache.thrift.meta_data.FieldMetaData("targetPath", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(createNFSStoragePool_args.class, metaDataMap);
@@ -21525,18 +22254,33 @@ public class Aim {
     }
 
     public createNFSStoragePool_args(
-      String xmlDesc)
+      String name,
+      String host,
+      String dir,
+      String targetPath)
     {
       this();
-      this.xmlDesc = xmlDesc;
+      this.name = name;
+      this.host = host;
+      this.dir = dir;
+      this.targetPath = targetPath;
     }
 
     /**
      * Performs a deep copy on <i>other</i>.
      */
     public createNFSStoragePool_args(createNFSStoragePool_args other) {
-      if (other.isSetXmlDesc()) {
-        this.xmlDesc = other.xmlDesc;
+      if (other.isSetName()) {
+        this.name = other.name;
+      }
+      if (other.isSetHost()) {
+        this.host = other.host;
+      }
+      if (other.isSetDir()) {
+        this.dir = other.dir;
+      }
+      if (other.isSetTargetPath()) {
+        this.targetPath = other.targetPath;
       }
     }
 
@@ -21546,40 +22290,139 @@ public class Aim {
 
     @Override
     public void clear() {
-      this.xmlDesc = null;
+      this.name = null;
+      this.host = null;
+      this.dir = null;
+      this.targetPath = null;
     }
 
-    public String getXmlDesc() {
-      return this.xmlDesc;
+    public String getName() {
+      return this.name;
     }
 
-    public createNFSStoragePool_args setXmlDesc(String xmlDesc) {
-      this.xmlDesc = xmlDesc;
+    public createNFSStoragePool_args setName(String name) {
+      this.name = name;
       return this;
     }
 
-    public void unsetXmlDesc() {
-      this.xmlDesc = null;
+    public void unsetName() {
+      this.name = null;
     }
 
-    /** Returns true if field xmlDesc is set (has been assigned a value) and false otherwise */
-    public boolean isSetXmlDesc() {
-      return this.xmlDesc != null;
+    /** Returns true if field name is set (has been assigned a value) and false otherwise */
+    public boolean isSetName() {
+      return this.name != null;
     }
 
-    public void setXmlDescIsSet(boolean value) {
+    public void setNameIsSet(boolean value) {
       if (!value) {
-        this.xmlDesc = null;
+        this.name = null;
+      }
+    }
+
+    public String getHost() {
+      return this.host;
+    }
+
+    public createNFSStoragePool_args setHost(String host) {
+      this.host = host;
+      return this;
+    }
+
+    public void unsetHost() {
+      this.host = null;
+    }
+
+    /** Returns true if field host is set (has been assigned a value) and false otherwise */
+    public boolean isSetHost() {
+      return this.host != null;
+    }
+
+    public void setHostIsSet(boolean value) {
+      if (!value) {
+        this.host = null;
+      }
+    }
+
+    public String getDir() {
+      return this.dir;
+    }
+
+    public createNFSStoragePool_args setDir(String dir) {
+      this.dir = dir;
+      return this;
+    }
+
+    public void unsetDir() {
+      this.dir = null;
+    }
+
+    /** Returns true if field dir is set (has been assigned a value) and false otherwise */
+    public boolean isSetDir() {
+      return this.dir != null;
+    }
+
+    public void setDirIsSet(boolean value) {
+      if (!value) {
+        this.dir = null;
+      }
+    }
+
+    public String getTargetPath() {
+      return this.targetPath;
+    }
+
+    public createNFSStoragePool_args setTargetPath(String targetPath) {
+      this.targetPath = targetPath;
+      return this;
+    }
+
+    public void unsetTargetPath() {
+      this.targetPath = null;
+    }
+
+    /** Returns true if field targetPath is set (has been assigned a value) and false otherwise */
+    public boolean isSetTargetPath() {
+      return this.targetPath != null;
+    }
+
+    public void setTargetPathIsSet(boolean value) {
+      if (!value) {
+        this.targetPath = null;
       }
     }
 
     public void setFieldValue(_Fields field, Object value) {
       switch (field) {
-      case XML_DESC:
+      case NAME:
         if (value == null) {
-          unsetXmlDesc();
+          unsetName();
         } else {
-          setXmlDesc((String)value);
+          setName((String)value);
+        }
+        break;
+
+      case HOST:
+        if (value == null) {
+          unsetHost();
+        } else {
+          setHost((String)value);
+        }
+        break;
+
+      case DIR:
+        if (value == null) {
+          unsetDir();
+        } else {
+          setDir((String)value);
+        }
+        break;
+
+      case TARGET_PATH:
+        if (value == null) {
+          unsetTargetPath();
+        } else {
+          setTargetPath((String)value);
         }
         break;
 
@@ -21588,8 +22431,17 @@ public class Aim {
 
     public Object getFieldValue(_Fields field) {
       switch (field) {
-      case XML_DESC:
-        return getXmlDesc();
+      case NAME:
+        return getName();
+
+      case HOST:
+        return getHost();
+
+      case DIR:
+        return getDir();
+
+      case TARGET_PATH:
+        return getTargetPath();
 
       }
       throw new IllegalStateException();
@@ -21602,8 +22454,14 @@ public class Aim {
       }
 
       switch (field) {
-      case XML_DESC:
-        return isSetXmlDesc();
+      case NAME:
+        return isSetName();
+      case HOST:
+        return isSetHost();
+      case DIR:
+        return isSetDir();
+      case TARGET_PATH:
+        return isSetTargetPath();
       }
       throw new IllegalStateException();
     }
@@ -21621,12 +22479,39 @@ public class Aim {
       if (that == null)
         return false;
 
-      boolean this_present_xmlDesc = true && this.isSetXmlDesc();
-      boolean that_present_xmlDesc = true && that.isSetXmlDesc();
-      if (this_present_xmlDesc || that_present_xmlDesc) {
-        if (!(this_present_xmlDesc && that_present_xmlDesc))
+      boolean this_present_name = true && this.isSetName();
+      boolean that_present_name = true && that.isSetName();
+      if (this_present_name || that_present_name) {
+        if (!(this_present_name && that_present_name))
           return false;
-        if (!this.xmlDesc.equals(that.xmlDesc))
+        if (!this.name.equals(that.name))
+          return false;
+      }
+
+      boolean this_present_host = true && this.isSetHost();
+      boolean that_present_host = true && that.isSetHost();
+      if (this_present_host || that_present_host) {
+        if (!(this_present_host && that_present_host))
+          return false;
+        if (!this.host.equals(that.host))
+          return false;
+      }
+
+      boolean this_present_dir = true && this.isSetDir();
+      boolean that_present_dir = true && that.isSetDir();
+      if (this_present_dir || that_present_dir) {
+        if (!(this_present_dir && that_present_dir))
+          return false;
+        if (!this.dir.equals(that.dir))
+          return false;
+      }
+
+      boolean this_present_targetPath = true && this.isSetTargetPath();
+      boolean that_present_targetPath = true && that.isSetTargetPath();
+      if (this_present_targetPath || that_present_targetPath) {
+        if (!(this_present_targetPath && that_present_targetPath))
+          return false;
+        if (!this.targetPath.equals(that.targetPath))
           return false;
       }
 
@@ -21646,12 +22531,42 @@ public class Aim {
       int lastComparison = 0;
       createNFSStoragePool_args typedOther = (createNFSStoragePool_args)other;
 
-      lastComparison = Boolean.valueOf(isSetXmlDesc()).compareTo(typedOther.isSetXmlDesc());
+      lastComparison = Boolean.valueOf(isSetName()).compareTo(typedOther.isSetName());
       if (lastComparison != 0) {
         return lastComparison;
       }
-      if (isSetXmlDesc()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.xmlDesc, typedOther.xmlDesc);
+      if (isSetName()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.name, typedOther.name);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetHost()).compareTo(typedOther.isSetHost());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetHost()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.host, typedOther.host);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetDir()).compareTo(typedOther.isSetDir());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetDir()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.dir, typedOther.dir);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetTargetPath()).compareTo(typedOther.isSetTargetPath());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetTargetPath()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.targetPath, typedOther.targetPath);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -21676,11 +22591,35 @@ public class Aim {
       StringBuilder sb = new StringBuilder("createNFSStoragePool_args(");
       boolean first = true;
 
-      sb.append("xmlDesc:");
-      if (this.xmlDesc == null) {
+      sb.append("name:");
+      if (this.name == null) {
         sb.append("null");
       } else {
-        sb.append(this.xmlDesc);
+        sb.append(this.name);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("host:");
+      if (this.host == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.host);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("dir:");
+      if (this.dir == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.dir);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("targetPath:");
+      if (this.targetPath == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.targetPath);
       }
       first = false;
       sb.append(")");
@@ -21726,10 +22665,34 @@ public class Aim {
             break;
           }
           switch (schemeField.id) {
-            case 1: // XML_DESC
+            case 1: // NAME
               if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
-                struct.xmlDesc = iprot.readString();
-                struct.setXmlDescIsSet(true);
+                struct.name = iprot.readString();
+                struct.setNameIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 2: // HOST
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.host = iprot.readString();
+                struct.setHostIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 3: // DIR
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.dir = iprot.readString();
+                struct.setDirIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 4: // TARGET_PATH
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.targetPath = iprot.readString();
+                struct.setTargetPathIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
@@ -21749,9 +22712,24 @@ public class Aim {
         struct.validate();
 
         oprot.writeStructBegin(STRUCT_DESC);
-        if (struct.xmlDesc != null) {
-          oprot.writeFieldBegin(XML_DESC_FIELD_DESC);
-          oprot.writeString(struct.xmlDesc);
+        if (struct.name != null) {
+          oprot.writeFieldBegin(NAME_FIELD_DESC);
+          oprot.writeString(struct.name);
+          oprot.writeFieldEnd();
+        }
+        if (struct.host != null) {
+          oprot.writeFieldBegin(HOST_FIELD_DESC);
+          oprot.writeString(struct.host);
+          oprot.writeFieldEnd();
+        }
+        if (struct.dir != null) {
+          oprot.writeFieldBegin(DIR_FIELD_DESC);
+          oprot.writeString(struct.dir);
+          oprot.writeFieldEnd();
+        }
+        if (struct.targetPath != null) {
+          oprot.writeFieldBegin(TARGET_PATH_FIELD_DESC);
+          oprot.writeString(struct.targetPath);
           oprot.writeFieldEnd();
         }
         oprot.writeFieldStop();
@@ -21772,22 +22750,52 @@ public class Aim {
       public void write(org.apache.thrift.protocol.TProtocol prot, createNFSStoragePool_args struct) throws org.apache.thrift.TException {
         TTupleProtocol oprot = (TTupleProtocol) prot;
         BitSet optionals = new BitSet();
-        if (struct.isSetXmlDesc()) {
+        if (struct.isSetName()) {
           optionals.set(0);
         }
-        oprot.writeBitSet(optionals, 1);
-        if (struct.isSetXmlDesc()) {
-          oprot.writeString(struct.xmlDesc);
+        if (struct.isSetHost()) {
+          optionals.set(1);
+        }
+        if (struct.isSetDir()) {
+          optionals.set(2);
+        }
+        if (struct.isSetTargetPath()) {
+          optionals.set(3);
+        }
+        oprot.writeBitSet(optionals, 4);
+        if (struct.isSetName()) {
+          oprot.writeString(struct.name);
+        }
+        if (struct.isSetHost()) {
+          oprot.writeString(struct.host);
+        }
+        if (struct.isSetDir()) {
+          oprot.writeString(struct.dir);
+        }
+        if (struct.isSetTargetPath()) {
+          oprot.writeString(struct.targetPath);
         }
       }
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, createNFSStoragePool_args struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
-        BitSet incoming = iprot.readBitSet(1);
+        BitSet incoming = iprot.readBitSet(4);
         if (incoming.get(0)) {
-          struct.xmlDesc = iprot.readString();
-          struct.setXmlDescIsSet(true);
+          struct.name = iprot.readString();
+          struct.setNameIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.host = iprot.readString();
+          struct.setHostIsSet(true);
+        }
+        if (incoming.get(2)) {
+          struct.dir = iprot.readString();
+          struct.setDirIsSet(true);
+        }
+        if (incoming.get(3)) {
+          struct.targetPath = iprot.readString();
+          struct.setTargetPathIsSet(true);
         }
       }
     }
@@ -22138,6 +23146,3636 @@ public class Aim {
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, createNFSStoragePool_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.libvirtException = new LibvirtException();
+          struct.libvirtException.read(iprot);
+          struct.setLibvirtExceptionIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class createDirStoragePool_args implements org.apache.thrift.TBase<createDirStoragePool_args, createDirStoragePool_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("createDirStoragePool_args");
+
+    private static final org.apache.thrift.protocol.TField NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("name", org.apache.thrift.protocol.TType.STRING, (short)1);
+    private static final org.apache.thrift.protocol.TField TARGET_PATH_FIELD_DESC = new org.apache.thrift.protocol.TField("targetPath", org.apache.thrift.protocol.TType.STRING, (short)2);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new createDirStoragePool_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new createDirStoragePool_argsTupleSchemeFactory());
+    }
+
+    public String name; // required
+    public String targetPath; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      NAME((short)1, "name"),
+      TARGET_PATH((short)2, "targetPath");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // NAME
+            return NAME;
+          case 2: // TARGET_PATH
+            return TARGET_PATH;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.NAME, new org.apache.thrift.meta_data.FieldMetaData("name", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.TARGET_PATH, new org.apache.thrift.meta_data.FieldMetaData("targetPath", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(createDirStoragePool_args.class, metaDataMap);
+    }
+
+    public createDirStoragePool_args() {
+    }
+
+    public createDirStoragePool_args(
+      String name,
+      String targetPath)
+    {
+      this();
+      this.name = name;
+      this.targetPath = targetPath;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public createDirStoragePool_args(createDirStoragePool_args other) {
+      if (other.isSetName()) {
+        this.name = other.name;
+      }
+      if (other.isSetTargetPath()) {
+        this.targetPath = other.targetPath;
+      }
+    }
+
+    public createDirStoragePool_args deepCopy() {
+      return new createDirStoragePool_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.name = null;
+      this.targetPath = null;
+    }
+
+    public String getName() {
+      return this.name;
+    }
+
+    public createDirStoragePool_args setName(String name) {
+      this.name = name;
+      return this;
+    }
+
+    public void unsetName() {
+      this.name = null;
+    }
+
+    /** Returns true if field name is set (has been assigned a value) and false otherwise */
+    public boolean isSetName() {
+      return this.name != null;
+    }
+
+    public void setNameIsSet(boolean value) {
+      if (!value) {
+        this.name = null;
+      }
+    }
+
+    public String getTargetPath() {
+      return this.targetPath;
+    }
+
+    public createDirStoragePool_args setTargetPath(String targetPath) {
+      this.targetPath = targetPath;
+      return this;
+    }
+
+    public void unsetTargetPath() {
+      this.targetPath = null;
+    }
+
+    /** Returns true if field targetPath is set (has been assigned a value) and false otherwise */
+    public boolean isSetTargetPath() {
+      return this.targetPath != null;
+    }
+
+    public void setTargetPathIsSet(boolean value) {
+      if (!value) {
+        this.targetPath = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case NAME:
+        if (value == null) {
+          unsetName();
+        } else {
+          setName((String)value);
+        }
+        break;
+
+      case TARGET_PATH:
+        if (value == null) {
+          unsetTargetPath();
+        } else {
+          setTargetPath((String)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case NAME:
+        return getName();
+
+      case TARGET_PATH:
+        return getTargetPath();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case NAME:
+        return isSetName();
+      case TARGET_PATH:
+        return isSetTargetPath();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof createDirStoragePool_args)
+        return this.equals((createDirStoragePool_args)that);
+      return false;
+    }
+
+    public boolean equals(createDirStoragePool_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_name = true && this.isSetName();
+      boolean that_present_name = true && that.isSetName();
+      if (this_present_name || that_present_name) {
+        if (!(this_present_name && that_present_name))
+          return false;
+        if (!this.name.equals(that.name))
+          return false;
+      }
+
+      boolean this_present_targetPath = true && this.isSetTargetPath();
+      boolean that_present_targetPath = true && that.isSetTargetPath();
+      if (this_present_targetPath || that_present_targetPath) {
+        if (!(this_present_targetPath && that_present_targetPath))
+          return false;
+        if (!this.targetPath.equals(that.targetPath))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(createDirStoragePool_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      createDirStoragePool_args typedOther = (createDirStoragePool_args)other;
+
+      lastComparison = Boolean.valueOf(isSetName()).compareTo(typedOther.isSetName());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetName()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.name, typedOther.name);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetTargetPath()).compareTo(typedOther.isSetTargetPath());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetTargetPath()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.targetPath, typedOther.targetPath);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("createDirStoragePool_args(");
+      boolean first = true;
+
+      sb.append("name:");
+      if (this.name == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.name);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("targetPath:");
+      if (this.targetPath == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.targetPath);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class createDirStoragePool_argsStandardSchemeFactory implements SchemeFactory {
+      public createDirStoragePool_argsStandardScheme getScheme() {
+        return new createDirStoragePool_argsStandardScheme();
+      }
+    }
+
+    private static class createDirStoragePool_argsStandardScheme extends StandardScheme<createDirStoragePool_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, createDirStoragePool_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // NAME
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.name = iprot.readString();
+                struct.setNameIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 2: // TARGET_PATH
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.targetPath = iprot.readString();
+                struct.setTargetPathIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, createDirStoragePool_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.name != null) {
+          oprot.writeFieldBegin(NAME_FIELD_DESC);
+          oprot.writeString(struct.name);
+          oprot.writeFieldEnd();
+        }
+        if (struct.targetPath != null) {
+          oprot.writeFieldBegin(TARGET_PATH_FIELD_DESC);
+          oprot.writeString(struct.targetPath);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class createDirStoragePool_argsTupleSchemeFactory implements SchemeFactory {
+      public createDirStoragePool_argsTupleScheme getScheme() {
+        return new createDirStoragePool_argsTupleScheme();
+      }
+    }
+
+    private static class createDirStoragePool_argsTupleScheme extends TupleScheme<createDirStoragePool_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, createDirStoragePool_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetName()) {
+          optionals.set(0);
+        }
+        if (struct.isSetTargetPath()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetName()) {
+          oprot.writeString(struct.name);
+        }
+        if (struct.isSetTargetPath()) {
+          oprot.writeString(struct.targetPath);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, createDirStoragePool_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(2);
+        if (incoming.get(0)) {
+          struct.name = iprot.readString();
+          struct.setNameIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.targetPath = iprot.readString();
+          struct.setTargetPathIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class createDirStoragePool_result implements org.apache.thrift.TBase<createDirStoragePool_result, createDirStoragePool_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("createDirStoragePool_result");
+
+    private static final org.apache.thrift.protocol.TField LIBVIRT_EXCEPTION_FIELD_DESC = new org.apache.thrift.protocol.TField("libvirtException", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new createDirStoragePool_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new createDirStoragePool_resultTupleSchemeFactory());
+    }
+
+    public LibvirtException libvirtException; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      LIBVIRT_EXCEPTION((short)1, "libvirtException");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // LIBVIRT_EXCEPTION
+            return LIBVIRT_EXCEPTION;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.LIBVIRT_EXCEPTION, new org.apache.thrift.meta_data.FieldMetaData("libvirtException", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(createDirStoragePool_result.class, metaDataMap);
+    }
+
+    public createDirStoragePool_result() {
+    }
+
+    public createDirStoragePool_result(
+      LibvirtException libvirtException)
+    {
+      this();
+      this.libvirtException = libvirtException;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public createDirStoragePool_result(createDirStoragePool_result other) {
+      if (other.isSetLibvirtException()) {
+        this.libvirtException = new LibvirtException(other.libvirtException);
+      }
+    }
+
+    public createDirStoragePool_result deepCopy() {
+      return new createDirStoragePool_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.libvirtException = null;
+    }
+
+    public LibvirtException getLibvirtException() {
+      return this.libvirtException;
+    }
+
+    public createDirStoragePool_result setLibvirtException(LibvirtException libvirtException) {
+      this.libvirtException = libvirtException;
+      return this;
+    }
+
+    public void unsetLibvirtException() {
+      this.libvirtException = null;
+    }
+
+    /** Returns true if field libvirtException is set (has been assigned a value) and false otherwise */
+    public boolean isSetLibvirtException() {
+      return this.libvirtException != null;
+    }
+
+    public void setLibvirtExceptionIsSet(boolean value) {
+      if (!value) {
+        this.libvirtException = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case LIBVIRT_EXCEPTION:
+        if (value == null) {
+          unsetLibvirtException();
+        } else {
+          setLibvirtException((LibvirtException)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case LIBVIRT_EXCEPTION:
+        return getLibvirtException();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case LIBVIRT_EXCEPTION:
+        return isSetLibvirtException();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof createDirStoragePool_result)
+        return this.equals((createDirStoragePool_result)that);
+      return false;
+    }
+
+    public boolean equals(createDirStoragePool_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_libvirtException = true && this.isSetLibvirtException();
+      boolean that_present_libvirtException = true && that.isSetLibvirtException();
+      if (this_present_libvirtException || that_present_libvirtException) {
+        if (!(this_present_libvirtException && that_present_libvirtException))
+          return false;
+        if (!this.libvirtException.equals(that.libvirtException))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(createDirStoragePool_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      createDirStoragePool_result typedOther = (createDirStoragePool_result)other;
+
+      lastComparison = Boolean.valueOf(isSetLibvirtException()).compareTo(typedOther.isSetLibvirtException());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetLibvirtException()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.libvirtException, typedOther.libvirtException);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("createDirStoragePool_result(");
+      boolean first = true;
+
+      sb.append("libvirtException:");
+      if (this.libvirtException == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.libvirtException);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class createDirStoragePool_resultStandardSchemeFactory implements SchemeFactory {
+      public createDirStoragePool_resultStandardScheme getScheme() {
+        return new createDirStoragePool_resultStandardScheme();
+      }
+    }
+
+    private static class createDirStoragePool_resultStandardScheme extends StandardScheme<createDirStoragePool_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, createDirStoragePool_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // LIBVIRT_EXCEPTION
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.libvirtException = new LibvirtException();
+                struct.libvirtException.read(iprot);
+                struct.setLibvirtExceptionIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, createDirStoragePool_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.libvirtException != null) {
+          oprot.writeFieldBegin(LIBVIRT_EXCEPTION_FIELD_DESC);
+          struct.libvirtException.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class createDirStoragePool_resultTupleSchemeFactory implements SchemeFactory {
+      public createDirStoragePool_resultTupleScheme getScheme() {
+        return new createDirStoragePool_resultTupleScheme();
+      }
+    }
+
+    private static class createDirStoragePool_resultTupleScheme extends TupleScheme<createDirStoragePool_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, createDirStoragePool_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetLibvirtException()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetLibvirtException()) {
+          struct.libvirtException.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, createDirStoragePool_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.libvirtException = new LibvirtException();
+          struct.libvirtException.read(iprot);
+          struct.setLibvirtExceptionIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class createDisk_args implements org.apache.thrift.TBase<createDisk_args, createDisk_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("createDisk_args");
+
+    private static final org.apache.thrift.protocol.TField POOL_NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("poolName", org.apache.thrift.protocol.TType.STRING, (short)1);
+    private static final org.apache.thrift.protocol.TField NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("name", org.apache.thrift.protocol.TType.STRING, (short)2);
+    private static final org.apache.thrift.protocol.TField CAPACITY_IN_KB_FIELD_DESC = new org.apache.thrift.protocol.TField("capacityInKb", org.apache.thrift.protocol.TType.DOUBLE, (short)3);
+    private static final org.apache.thrift.protocol.TField ALLOCATION_IN_KB_FIELD_DESC = new org.apache.thrift.protocol.TField("allocationInKb", org.apache.thrift.protocol.TType.DOUBLE, (short)4);
+    private static final org.apache.thrift.protocol.TField FORMAT_FIELD_DESC = new org.apache.thrift.protocol.TField("format", org.apache.thrift.protocol.TType.STRING, (short)5);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new createDisk_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new createDisk_argsTupleSchemeFactory());
+    }
+
+    public String poolName; // required
+    public String name; // required
+    public double capacityInKb; // required
+    public double allocationInKb; // required
+    public String format; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      POOL_NAME((short)1, "poolName"),
+      NAME((short)2, "name"),
+      CAPACITY_IN_KB((short)3, "capacityInKb"),
+      ALLOCATION_IN_KB((short)4, "allocationInKb"),
+      FORMAT((short)5, "format");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // POOL_NAME
+            return POOL_NAME;
+          case 2: // NAME
+            return NAME;
+          case 3: // CAPACITY_IN_KB
+            return CAPACITY_IN_KB;
+          case 4: // ALLOCATION_IN_KB
+            return ALLOCATION_IN_KB;
+          case 5: // FORMAT
+            return FORMAT;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    private static final int __CAPACITYINKB_ISSET_ID = 0;
+    private static final int __ALLOCATIONINKB_ISSET_ID = 1;
+    private byte __isset_bitfield = 0;
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.POOL_NAME, new org.apache.thrift.meta_data.FieldMetaData("poolName", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.NAME, new org.apache.thrift.meta_data.FieldMetaData("name", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.CAPACITY_IN_KB, new org.apache.thrift.meta_data.FieldMetaData("capacityInKb", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
+      tmpMap.put(_Fields.ALLOCATION_IN_KB, new org.apache.thrift.meta_data.FieldMetaData("allocationInKb", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
+      tmpMap.put(_Fields.FORMAT, new org.apache.thrift.meta_data.FieldMetaData("format", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(createDisk_args.class, metaDataMap);
+    }
+
+    public createDisk_args() {
+    }
+
+    public createDisk_args(
+      String poolName,
+      String name,
+      double capacityInKb,
+      double allocationInKb,
+      String format)
+    {
+      this();
+      this.poolName = poolName;
+      this.name = name;
+      this.capacityInKb = capacityInKb;
+      setCapacityInKbIsSet(true);
+      this.allocationInKb = allocationInKb;
+      setAllocationInKbIsSet(true);
+      this.format = format;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public createDisk_args(createDisk_args other) {
+      __isset_bitfield = other.__isset_bitfield;
+      if (other.isSetPoolName()) {
+        this.poolName = other.poolName;
+      }
+      if (other.isSetName()) {
+        this.name = other.name;
+      }
+      this.capacityInKb = other.capacityInKb;
+      this.allocationInKb = other.allocationInKb;
+      if (other.isSetFormat()) {
+        this.format = other.format;
+      }
+    }
+
+    public createDisk_args deepCopy() {
+      return new createDisk_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.poolName = null;
+      this.name = null;
+      setCapacityInKbIsSet(false);
+      this.capacityInKb = 0.0;
+      setAllocationInKbIsSet(false);
+      this.allocationInKb = 0.0;
+      this.format = null;
+    }
+
+    public String getPoolName() {
+      return this.poolName;
+    }
+
+    public createDisk_args setPoolName(String poolName) {
+      this.poolName = poolName;
+      return this;
+    }
+
+    public void unsetPoolName() {
+      this.poolName = null;
+    }
+
+    /** Returns true if field poolName is set (has been assigned a value) and false otherwise */
+    public boolean isSetPoolName() {
+      return this.poolName != null;
+    }
+
+    public void setPoolNameIsSet(boolean value) {
+      if (!value) {
+        this.poolName = null;
+      }
+    }
+
+    public String getName() {
+      return this.name;
+    }
+
+    public createDisk_args setName(String name) {
+      this.name = name;
+      return this;
+    }
+
+    public void unsetName() {
+      this.name = null;
+    }
+
+    /** Returns true if field name is set (has been assigned a value) and false otherwise */
+    public boolean isSetName() {
+      return this.name != null;
+    }
+
+    public void setNameIsSet(boolean value) {
+      if (!value) {
+        this.name = null;
+      }
+    }
+
+    public double getCapacityInKb() {
+      return this.capacityInKb;
+    }
+
+    public createDisk_args setCapacityInKb(double capacityInKb) {
+      this.capacityInKb = capacityInKb;
+      setCapacityInKbIsSet(true);
+      return this;
+    }
+
+    public void unsetCapacityInKb() {
+      __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __CAPACITYINKB_ISSET_ID);
+    }
+
+    /** Returns true if field capacityInKb is set (has been assigned a value) and false otherwise */
+    public boolean isSetCapacityInKb() {
+      return EncodingUtils.testBit(__isset_bitfield, __CAPACITYINKB_ISSET_ID);
+    }
+
+    public void setCapacityInKbIsSet(boolean value) {
+      __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __CAPACITYINKB_ISSET_ID, value);
+    }
+
+    public double getAllocationInKb() {
+      return this.allocationInKb;
+    }
+
+    public createDisk_args setAllocationInKb(double allocationInKb) {
+      this.allocationInKb = allocationInKb;
+      setAllocationInKbIsSet(true);
+      return this;
+    }
+
+    public void unsetAllocationInKb() {
+      __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __ALLOCATIONINKB_ISSET_ID);
+    }
+
+    /** Returns true if field allocationInKb is set (has been assigned a value) and false otherwise */
+    public boolean isSetAllocationInKb() {
+      return EncodingUtils.testBit(__isset_bitfield, __ALLOCATIONINKB_ISSET_ID);
+    }
+
+    public void setAllocationInKbIsSet(boolean value) {
+      __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __ALLOCATIONINKB_ISSET_ID, value);
+    }
+
+    public String getFormat() {
+      return this.format;
+    }
+
+    public createDisk_args setFormat(String format) {
+      this.format = format;
+      return this;
+    }
+
+    public void unsetFormat() {
+      this.format = null;
+    }
+
+    /** Returns true if field format is set (has been assigned a value) and false otherwise */
+    public boolean isSetFormat() {
+      return this.format != null;
+    }
+
+    public void setFormatIsSet(boolean value) {
+      if (!value) {
+        this.format = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case POOL_NAME:
+        if (value == null) {
+          unsetPoolName();
+        } else {
+          setPoolName((String)value);
+        }
+        break;
+
+      case NAME:
+        if (value == null) {
+          unsetName();
+        } else {
+          setName((String)value);
+        }
+        break;
+
+      case CAPACITY_IN_KB:
+        if (value == null) {
+          unsetCapacityInKb();
+        } else {
+          setCapacityInKb((Double)value);
+        }
+        break;
+
+      case ALLOCATION_IN_KB:
+        if (value == null) {
+          unsetAllocationInKb();
+        } else {
+          setAllocationInKb((Double)value);
+        }
+        break;
+
+      case FORMAT:
+        if (value == null) {
+          unsetFormat();
+        } else {
+          setFormat((String)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case POOL_NAME:
+        return getPoolName();
+
+      case NAME:
+        return getName();
+
+      case CAPACITY_IN_KB:
+        return Double.valueOf(getCapacityInKb());
+
+      case ALLOCATION_IN_KB:
+        return Double.valueOf(getAllocationInKb());
+
+      case FORMAT:
+        return getFormat();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case POOL_NAME:
+        return isSetPoolName();
+      case NAME:
+        return isSetName();
+      case CAPACITY_IN_KB:
+        return isSetCapacityInKb();
+      case ALLOCATION_IN_KB:
+        return isSetAllocationInKb();
+      case FORMAT:
+        return isSetFormat();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof createDisk_args)
+        return this.equals((createDisk_args)that);
+      return false;
+    }
+
+    public boolean equals(createDisk_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_poolName = true && this.isSetPoolName();
+      boolean that_present_poolName = true && that.isSetPoolName();
+      if (this_present_poolName || that_present_poolName) {
+        if (!(this_present_poolName && that_present_poolName))
+          return false;
+        if (!this.poolName.equals(that.poolName))
+          return false;
+      }
+
+      boolean this_present_name = true && this.isSetName();
+      boolean that_present_name = true && that.isSetName();
+      if (this_present_name || that_present_name) {
+        if (!(this_present_name && that_present_name))
+          return false;
+        if (!this.name.equals(that.name))
+          return false;
+      }
+
+      boolean this_present_capacityInKb = true;
+      boolean that_present_capacityInKb = true;
+      if (this_present_capacityInKb || that_present_capacityInKb) {
+        if (!(this_present_capacityInKb && that_present_capacityInKb))
+          return false;
+        if (this.capacityInKb != that.capacityInKb)
+          return false;
+      }
+
+      boolean this_present_allocationInKb = true;
+      boolean that_present_allocationInKb = true;
+      if (this_present_allocationInKb || that_present_allocationInKb) {
+        if (!(this_present_allocationInKb && that_present_allocationInKb))
+          return false;
+        if (this.allocationInKb != that.allocationInKb)
+          return false;
+      }
+
+      boolean this_present_format = true && this.isSetFormat();
+      boolean that_present_format = true && that.isSetFormat();
+      if (this_present_format || that_present_format) {
+        if (!(this_present_format && that_present_format))
+          return false;
+        if (!this.format.equals(that.format))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(createDisk_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      createDisk_args typedOther = (createDisk_args)other;
+
+      lastComparison = Boolean.valueOf(isSetPoolName()).compareTo(typedOther.isSetPoolName());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetPoolName()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.poolName, typedOther.poolName);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetName()).compareTo(typedOther.isSetName());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetName()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.name, typedOther.name);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetCapacityInKb()).compareTo(typedOther.isSetCapacityInKb());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetCapacityInKb()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.capacityInKb, typedOther.capacityInKb);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetAllocationInKb()).compareTo(typedOther.isSetAllocationInKb());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetAllocationInKb()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.allocationInKb, typedOther.allocationInKb);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetFormat()).compareTo(typedOther.isSetFormat());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetFormat()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.format, typedOther.format);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("createDisk_args(");
+      boolean first = true;
+
+      sb.append("poolName:");
+      if (this.poolName == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.poolName);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("name:");
+      if (this.name == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.name);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("capacityInKb:");
+      sb.append(this.capacityInKb);
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("allocationInKb:");
+      sb.append(this.allocationInKb);
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("format:");
+      if (this.format == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.format);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
+        __isset_bitfield = 0;
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class createDisk_argsStandardSchemeFactory implements SchemeFactory {
+      public createDisk_argsStandardScheme getScheme() {
+        return new createDisk_argsStandardScheme();
+      }
+    }
+
+    private static class createDisk_argsStandardScheme extends StandardScheme<createDisk_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, createDisk_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // POOL_NAME
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.poolName = iprot.readString();
+                struct.setPoolNameIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 2: // NAME
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.name = iprot.readString();
+                struct.setNameIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 3: // CAPACITY_IN_KB
+              if (schemeField.type == org.apache.thrift.protocol.TType.DOUBLE) {
+                struct.capacityInKb = iprot.readDouble();
+                struct.setCapacityInKbIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 4: // ALLOCATION_IN_KB
+              if (schemeField.type == org.apache.thrift.protocol.TType.DOUBLE) {
+                struct.allocationInKb = iprot.readDouble();
+                struct.setAllocationInKbIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 5: // FORMAT
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.format = iprot.readString();
+                struct.setFormatIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, createDisk_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.poolName != null) {
+          oprot.writeFieldBegin(POOL_NAME_FIELD_DESC);
+          oprot.writeString(struct.poolName);
+          oprot.writeFieldEnd();
+        }
+        if (struct.name != null) {
+          oprot.writeFieldBegin(NAME_FIELD_DESC);
+          oprot.writeString(struct.name);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldBegin(CAPACITY_IN_KB_FIELD_DESC);
+        oprot.writeDouble(struct.capacityInKb);
+        oprot.writeFieldEnd();
+        oprot.writeFieldBegin(ALLOCATION_IN_KB_FIELD_DESC);
+        oprot.writeDouble(struct.allocationInKb);
+        oprot.writeFieldEnd();
+        if (struct.format != null) {
+          oprot.writeFieldBegin(FORMAT_FIELD_DESC);
+          oprot.writeString(struct.format);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class createDisk_argsTupleSchemeFactory implements SchemeFactory {
+      public createDisk_argsTupleScheme getScheme() {
+        return new createDisk_argsTupleScheme();
+      }
+    }
+
+    private static class createDisk_argsTupleScheme extends TupleScheme<createDisk_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, createDisk_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetPoolName()) {
+          optionals.set(0);
+        }
+        if (struct.isSetName()) {
+          optionals.set(1);
+        }
+        if (struct.isSetCapacityInKb()) {
+          optionals.set(2);
+        }
+        if (struct.isSetAllocationInKb()) {
+          optionals.set(3);
+        }
+        if (struct.isSetFormat()) {
+          optionals.set(4);
+        }
+        oprot.writeBitSet(optionals, 5);
+        if (struct.isSetPoolName()) {
+          oprot.writeString(struct.poolName);
+        }
+        if (struct.isSetName()) {
+          oprot.writeString(struct.name);
+        }
+        if (struct.isSetCapacityInKb()) {
+          oprot.writeDouble(struct.capacityInKb);
+        }
+        if (struct.isSetAllocationInKb()) {
+          oprot.writeDouble(struct.allocationInKb);
+        }
+        if (struct.isSetFormat()) {
+          oprot.writeString(struct.format);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, createDisk_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(5);
+        if (incoming.get(0)) {
+          struct.poolName = iprot.readString();
+          struct.setPoolNameIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.name = iprot.readString();
+          struct.setNameIsSet(true);
+        }
+        if (incoming.get(2)) {
+          struct.capacityInKb = iprot.readDouble();
+          struct.setCapacityInKbIsSet(true);
+        }
+        if (incoming.get(3)) {
+          struct.allocationInKb = iprot.readDouble();
+          struct.setAllocationInKbIsSet(true);
+        }
+        if (incoming.get(4)) {
+          struct.format = iprot.readString();
+          struct.setFormatIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class createDisk_result implements org.apache.thrift.TBase<createDisk_result, createDisk_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("createDisk_result");
+
+    private static final org.apache.thrift.protocol.TField LIBVIRT_EXCEPTION_FIELD_DESC = new org.apache.thrift.protocol.TField("libvirtException", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new createDisk_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new createDisk_resultTupleSchemeFactory());
+    }
+
+    public LibvirtException libvirtException; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      LIBVIRT_EXCEPTION((short)1, "libvirtException");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // LIBVIRT_EXCEPTION
+            return LIBVIRT_EXCEPTION;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.LIBVIRT_EXCEPTION, new org.apache.thrift.meta_data.FieldMetaData("libvirtException", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(createDisk_result.class, metaDataMap);
+    }
+
+    public createDisk_result() {
+    }
+
+    public createDisk_result(
+      LibvirtException libvirtException)
+    {
+      this();
+      this.libvirtException = libvirtException;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public createDisk_result(createDisk_result other) {
+      if (other.isSetLibvirtException()) {
+        this.libvirtException = new LibvirtException(other.libvirtException);
+      }
+    }
+
+    public createDisk_result deepCopy() {
+      return new createDisk_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.libvirtException = null;
+    }
+
+    public LibvirtException getLibvirtException() {
+      return this.libvirtException;
+    }
+
+    public createDisk_result setLibvirtException(LibvirtException libvirtException) {
+      this.libvirtException = libvirtException;
+      return this;
+    }
+
+    public void unsetLibvirtException() {
+      this.libvirtException = null;
+    }
+
+    /** Returns true if field libvirtException is set (has been assigned a value) and false otherwise */
+    public boolean isSetLibvirtException() {
+      return this.libvirtException != null;
+    }
+
+    public void setLibvirtExceptionIsSet(boolean value) {
+      if (!value) {
+        this.libvirtException = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case LIBVIRT_EXCEPTION:
+        if (value == null) {
+          unsetLibvirtException();
+        } else {
+          setLibvirtException((LibvirtException)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case LIBVIRT_EXCEPTION:
+        return getLibvirtException();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case LIBVIRT_EXCEPTION:
+        return isSetLibvirtException();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof createDisk_result)
+        return this.equals((createDisk_result)that);
+      return false;
+    }
+
+    public boolean equals(createDisk_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_libvirtException = true && this.isSetLibvirtException();
+      boolean that_present_libvirtException = true && that.isSetLibvirtException();
+      if (this_present_libvirtException || that_present_libvirtException) {
+        if (!(this_present_libvirtException && that_present_libvirtException))
+          return false;
+        if (!this.libvirtException.equals(that.libvirtException))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(createDisk_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      createDisk_result typedOther = (createDisk_result)other;
+
+      lastComparison = Boolean.valueOf(isSetLibvirtException()).compareTo(typedOther.isSetLibvirtException());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetLibvirtException()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.libvirtException, typedOther.libvirtException);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("createDisk_result(");
+      boolean first = true;
+
+      sb.append("libvirtException:");
+      if (this.libvirtException == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.libvirtException);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class createDisk_resultStandardSchemeFactory implements SchemeFactory {
+      public createDisk_resultStandardScheme getScheme() {
+        return new createDisk_resultStandardScheme();
+      }
+    }
+
+    private static class createDisk_resultStandardScheme extends StandardScheme<createDisk_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, createDisk_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // LIBVIRT_EXCEPTION
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.libvirtException = new LibvirtException();
+                struct.libvirtException.read(iprot);
+                struct.setLibvirtExceptionIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, createDisk_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.libvirtException != null) {
+          oprot.writeFieldBegin(LIBVIRT_EXCEPTION_FIELD_DESC);
+          struct.libvirtException.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class createDisk_resultTupleSchemeFactory implements SchemeFactory {
+      public createDisk_resultTupleScheme getScheme() {
+        return new createDisk_resultTupleScheme();
+      }
+    }
+
+    private static class createDisk_resultTupleScheme extends TupleScheme<createDisk_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, createDisk_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetLibvirtException()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetLibvirtException()) {
+          struct.libvirtException.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, createDisk_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.libvirtException = new LibvirtException();
+          struct.libvirtException.read(iprot);
+          struct.setLibvirtExceptionIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class deleteDisk_args implements org.apache.thrift.TBase<deleteDisk_args, deleteDisk_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("deleteDisk_args");
+
+    private static final org.apache.thrift.protocol.TField POOL_NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("poolName", org.apache.thrift.protocol.TType.STRING, (short)1);
+    private static final org.apache.thrift.protocol.TField NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("name", org.apache.thrift.protocol.TType.STRING, (short)2);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new deleteDisk_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new deleteDisk_argsTupleSchemeFactory());
+    }
+
+    public String poolName; // required
+    public String name; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      POOL_NAME((short)1, "poolName"),
+      NAME((short)2, "name");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // POOL_NAME
+            return POOL_NAME;
+          case 2: // NAME
+            return NAME;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.POOL_NAME, new org.apache.thrift.meta_data.FieldMetaData("poolName", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.NAME, new org.apache.thrift.meta_data.FieldMetaData("name", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(deleteDisk_args.class, metaDataMap);
+    }
+
+    public deleteDisk_args() {
+    }
+
+    public deleteDisk_args(
+      String poolName,
+      String name)
+    {
+      this();
+      this.poolName = poolName;
+      this.name = name;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public deleteDisk_args(deleteDisk_args other) {
+      if (other.isSetPoolName()) {
+        this.poolName = other.poolName;
+      }
+      if (other.isSetName()) {
+        this.name = other.name;
+      }
+    }
+
+    public deleteDisk_args deepCopy() {
+      return new deleteDisk_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.poolName = null;
+      this.name = null;
+    }
+
+    public String getPoolName() {
+      return this.poolName;
+    }
+
+    public deleteDisk_args setPoolName(String poolName) {
+      this.poolName = poolName;
+      return this;
+    }
+
+    public void unsetPoolName() {
+      this.poolName = null;
+    }
+
+    /** Returns true if field poolName is set (has been assigned a value) and false otherwise */
+    public boolean isSetPoolName() {
+      return this.poolName != null;
+    }
+
+    public void setPoolNameIsSet(boolean value) {
+      if (!value) {
+        this.poolName = null;
+      }
+    }
+
+    public String getName() {
+      return this.name;
+    }
+
+    public deleteDisk_args setName(String name) {
+      this.name = name;
+      return this;
+    }
+
+    public void unsetName() {
+      this.name = null;
+    }
+
+    /** Returns true if field name is set (has been assigned a value) and false otherwise */
+    public boolean isSetName() {
+      return this.name != null;
+    }
+
+    public void setNameIsSet(boolean value) {
+      if (!value) {
+        this.name = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case POOL_NAME:
+        if (value == null) {
+          unsetPoolName();
+        } else {
+          setPoolName((String)value);
+        }
+        break;
+
+      case NAME:
+        if (value == null) {
+          unsetName();
+        } else {
+          setName((String)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case POOL_NAME:
+        return getPoolName();
+
+      case NAME:
+        return getName();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case POOL_NAME:
+        return isSetPoolName();
+      case NAME:
+        return isSetName();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof deleteDisk_args)
+        return this.equals((deleteDisk_args)that);
+      return false;
+    }
+
+    public boolean equals(deleteDisk_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_poolName = true && this.isSetPoolName();
+      boolean that_present_poolName = true && that.isSetPoolName();
+      if (this_present_poolName || that_present_poolName) {
+        if (!(this_present_poolName && that_present_poolName))
+          return false;
+        if (!this.poolName.equals(that.poolName))
+          return false;
+      }
+
+      boolean this_present_name = true && this.isSetName();
+      boolean that_present_name = true && that.isSetName();
+      if (this_present_name || that_present_name) {
+        if (!(this_present_name && that_present_name))
+          return false;
+        if (!this.name.equals(that.name))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(deleteDisk_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      deleteDisk_args typedOther = (deleteDisk_args)other;
+
+      lastComparison = Boolean.valueOf(isSetPoolName()).compareTo(typedOther.isSetPoolName());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetPoolName()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.poolName, typedOther.poolName);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetName()).compareTo(typedOther.isSetName());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetName()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.name, typedOther.name);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("deleteDisk_args(");
+      boolean first = true;
+
+      sb.append("poolName:");
+      if (this.poolName == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.poolName);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("name:");
+      if (this.name == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.name);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class deleteDisk_argsStandardSchemeFactory implements SchemeFactory {
+      public deleteDisk_argsStandardScheme getScheme() {
+        return new deleteDisk_argsStandardScheme();
+      }
+    }
+
+    private static class deleteDisk_argsStandardScheme extends StandardScheme<deleteDisk_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, deleteDisk_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // POOL_NAME
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.poolName = iprot.readString();
+                struct.setPoolNameIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 2: // NAME
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.name = iprot.readString();
+                struct.setNameIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, deleteDisk_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.poolName != null) {
+          oprot.writeFieldBegin(POOL_NAME_FIELD_DESC);
+          oprot.writeString(struct.poolName);
+          oprot.writeFieldEnd();
+        }
+        if (struct.name != null) {
+          oprot.writeFieldBegin(NAME_FIELD_DESC);
+          oprot.writeString(struct.name);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class deleteDisk_argsTupleSchemeFactory implements SchemeFactory {
+      public deleteDisk_argsTupleScheme getScheme() {
+        return new deleteDisk_argsTupleScheme();
+      }
+    }
+
+    private static class deleteDisk_argsTupleScheme extends TupleScheme<deleteDisk_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, deleteDisk_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetPoolName()) {
+          optionals.set(0);
+        }
+        if (struct.isSetName()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetPoolName()) {
+          oprot.writeString(struct.poolName);
+        }
+        if (struct.isSetName()) {
+          oprot.writeString(struct.name);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, deleteDisk_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(2);
+        if (incoming.get(0)) {
+          struct.poolName = iprot.readString();
+          struct.setPoolNameIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.name = iprot.readString();
+          struct.setNameIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class deleteDisk_result implements org.apache.thrift.TBase<deleteDisk_result, deleteDisk_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("deleteDisk_result");
+
+    private static final org.apache.thrift.protocol.TField LIBVIRT_EXCEPTION_FIELD_DESC = new org.apache.thrift.protocol.TField("libvirtException", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new deleteDisk_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new deleteDisk_resultTupleSchemeFactory());
+    }
+
+    public LibvirtException libvirtException; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      LIBVIRT_EXCEPTION((short)1, "libvirtException");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // LIBVIRT_EXCEPTION
+            return LIBVIRT_EXCEPTION;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.LIBVIRT_EXCEPTION, new org.apache.thrift.meta_data.FieldMetaData("libvirtException", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(deleteDisk_result.class, metaDataMap);
+    }
+
+    public deleteDisk_result() {
+    }
+
+    public deleteDisk_result(
+      LibvirtException libvirtException)
+    {
+      this();
+      this.libvirtException = libvirtException;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public deleteDisk_result(deleteDisk_result other) {
+      if (other.isSetLibvirtException()) {
+        this.libvirtException = new LibvirtException(other.libvirtException);
+      }
+    }
+
+    public deleteDisk_result deepCopy() {
+      return new deleteDisk_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.libvirtException = null;
+    }
+
+    public LibvirtException getLibvirtException() {
+      return this.libvirtException;
+    }
+
+    public deleteDisk_result setLibvirtException(LibvirtException libvirtException) {
+      this.libvirtException = libvirtException;
+      return this;
+    }
+
+    public void unsetLibvirtException() {
+      this.libvirtException = null;
+    }
+
+    /** Returns true if field libvirtException is set (has been assigned a value) and false otherwise */
+    public boolean isSetLibvirtException() {
+      return this.libvirtException != null;
+    }
+
+    public void setLibvirtExceptionIsSet(boolean value) {
+      if (!value) {
+        this.libvirtException = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case LIBVIRT_EXCEPTION:
+        if (value == null) {
+          unsetLibvirtException();
+        } else {
+          setLibvirtException((LibvirtException)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case LIBVIRT_EXCEPTION:
+        return getLibvirtException();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case LIBVIRT_EXCEPTION:
+        return isSetLibvirtException();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof deleteDisk_result)
+        return this.equals((deleteDisk_result)that);
+      return false;
+    }
+
+    public boolean equals(deleteDisk_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_libvirtException = true && this.isSetLibvirtException();
+      boolean that_present_libvirtException = true && that.isSetLibvirtException();
+      if (this_present_libvirtException || that_present_libvirtException) {
+        if (!(this_present_libvirtException && that_present_libvirtException))
+          return false;
+        if (!this.libvirtException.equals(that.libvirtException))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(deleteDisk_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      deleteDisk_result typedOther = (deleteDisk_result)other;
+
+      lastComparison = Boolean.valueOf(isSetLibvirtException()).compareTo(typedOther.isSetLibvirtException());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetLibvirtException()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.libvirtException, typedOther.libvirtException);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("deleteDisk_result(");
+      boolean first = true;
+
+      sb.append("libvirtException:");
+      if (this.libvirtException == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.libvirtException);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class deleteDisk_resultStandardSchemeFactory implements SchemeFactory {
+      public deleteDisk_resultStandardScheme getScheme() {
+        return new deleteDisk_resultStandardScheme();
+      }
+    }
+
+    private static class deleteDisk_resultStandardScheme extends StandardScheme<deleteDisk_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, deleteDisk_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // LIBVIRT_EXCEPTION
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.libvirtException = new LibvirtException();
+                struct.libvirtException.read(iprot);
+                struct.setLibvirtExceptionIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, deleteDisk_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.libvirtException != null) {
+          oprot.writeFieldBegin(LIBVIRT_EXCEPTION_FIELD_DESC);
+          struct.libvirtException.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class deleteDisk_resultTupleSchemeFactory implements SchemeFactory {
+      public deleteDisk_resultTupleScheme getScheme() {
+        return new deleteDisk_resultTupleScheme();
+      }
+    }
+
+    private static class deleteDisk_resultTupleScheme extends TupleScheme<deleteDisk_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, deleteDisk_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetLibvirtException()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetLibvirtException()) {
+          struct.libvirtException.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, deleteDisk_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.libvirtException = new LibvirtException();
+          struct.libvirtException.read(iprot);
+          struct.setLibvirtExceptionIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class resizeVol_args implements org.apache.thrift.TBase<resizeVol_args, resizeVol_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("resizeVol_args");
+
+    private static final org.apache.thrift.protocol.TField POOL_NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("poolName", org.apache.thrift.protocol.TType.STRING, (short)1);
+    private static final org.apache.thrift.protocol.TField NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("name", org.apache.thrift.protocol.TType.STRING, (short)2);
+    private static final org.apache.thrift.protocol.TField CAPACITY_IN_KB_FIELD_DESC = new org.apache.thrift.protocol.TField("capacityInKb", org.apache.thrift.protocol.TType.DOUBLE, (short)3);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new resizeVol_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new resizeVol_argsTupleSchemeFactory());
+    }
+
+    public String poolName; // required
+    public String name; // required
+    public double capacityInKb; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      POOL_NAME((short)1, "poolName"),
+      NAME((short)2, "name"),
+      CAPACITY_IN_KB((short)3, "capacityInKb");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // POOL_NAME
+            return POOL_NAME;
+          case 2: // NAME
+            return NAME;
+          case 3: // CAPACITY_IN_KB
+            return CAPACITY_IN_KB;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    private static final int __CAPACITYINKB_ISSET_ID = 0;
+    private byte __isset_bitfield = 0;
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.POOL_NAME, new org.apache.thrift.meta_data.FieldMetaData("poolName", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.NAME, new org.apache.thrift.meta_data.FieldMetaData("name", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.CAPACITY_IN_KB, new org.apache.thrift.meta_data.FieldMetaData("capacityInKb", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(resizeVol_args.class, metaDataMap);
+    }
+
+    public resizeVol_args() {
+    }
+
+    public resizeVol_args(
+      String poolName,
+      String name,
+      double capacityInKb)
+    {
+      this();
+      this.poolName = poolName;
+      this.name = name;
+      this.capacityInKb = capacityInKb;
+      setCapacityInKbIsSet(true);
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public resizeVol_args(resizeVol_args other) {
+      __isset_bitfield = other.__isset_bitfield;
+      if (other.isSetPoolName()) {
+        this.poolName = other.poolName;
+      }
+      if (other.isSetName()) {
+        this.name = other.name;
+      }
+      this.capacityInKb = other.capacityInKb;
+    }
+
+    public resizeVol_args deepCopy() {
+      return new resizeVol_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.poolName = null;
+      this.name = null;
+      setCapacityInKbIsSet(false);
+      this.capacityInKb = 0.0;
+    }
+
+    public String getPoolName() {
+      return this.poolName;
+    }
+
+    public resizeVol_args setPoolName(String poolName) {
+      this.poolName = poolName;
+      return this;
+    }
+
+    public void unsetPoolName() {
+      this.poolName = null;
+    }
+
+    /** Returns true if field poolName is set (has been assigned a value) and false otherwise */
+    public boolean isSetPoolName() {
+      return this.poolName != null;
+    }
+
+    public void setPoolNameIsSet(boolean value) {
+      if (!value) {
+        this.poolName = null;
+      }
+    }
+
+    public String getName() {
+      return this.name;
+    }
+
+    public resizeVol_args setName(String name) {
+      this.name = name;
+      return this;
+    }
+
+    public void unsetName() {
+      this.name = null;
+    }
+
+    /** Returns true if field name is set (has been assigned a value) and false otherwise */
+    public boolean isSetName() {
+      return this.name != null;
+    }
+
+    public void setNameIsSet(boolean value) {
+      if (!value) {
+        this.name = null;
+      }
+    }
+
+    public double getCapacityInKb() {
+      return this.capacityInKb;
+    }
+
+    public resizeVol_args setCapacityInKb(double capacityInKb) {
+      this.capacityInKb = capacityInKb;
+      setCapacityInKbIsSet(true);
+      return this;
+    }
+
+    public void unsetCapacityInKb() {
+      __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __CAPACITYINKB_ISSET_ID);
+    }
+
+    /** Returns true if field capacityInKb is set (has been assigned a value) and false otherwise */
+    public boolean isSetCapacityInKb() {
+      return EncodingUtils.testBit(__isset_bitfield, __CAPACITYINKB_ISSET_ID);
+    }
+
+    public void setCapacityInKbIsSet(boolean value) {
+      __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __CAPACITYINKB_ISSET_ID, value);
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case POOL_NAME:
+        if (value == null) {
+          unsetPoolName();
+        } else {
+          setPoolName((String)value);
+        }
+        break;
+
+      case NAME:
+        if (value == null) {
+          unsetName();
+        } else {
+          setName((String)value);
+        }
+        break;
+
+      case CAPACITY_IN_KB:
+        if (value == null) {
+          unsetCapacityInKb();
+        } else {
+          setCapacityInKb((Double)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case POOL_NAME:
+        return getPoolName();
+
+      case NAME:
+        return getName();
+
+      case CAPACITY_IN_KB:
+        return Double.valueOf(getCapacityInKb());
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case POOL_NAME:
+        return isSetPoolName();
+      case NAME:
+        return isSetName();
+      case CAPACITY_IN_KB:
+        return isSetCapacityInKb();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof resizeVol_args)
+        return this.equals((resizeVol_args)that);
+      return false;
+    }
+
+    public boolean equals(resizeVol_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_poolName = true && this.isSetPoolName();
+      boolean that_present_poolName = true && that.isSetPoolName();
+      if (this_present_poolName || that_present_poolName) {
+        if (!(this_present_poolName && that_present_poolName))
+          return false;
+        if (!this.poolName.equals(that.poolName))
+          return false;
+      }
+
+      boolean this_present_name = true && this.isSetName();
+      boolean that_present_name = true && that.isSetName();
+      if (this_present_name || that_present_name) {
+        if (!(this_present_name && that_present_name))
+          return false;
+        if (!this.name.equals(that.name))
+          return false;
+      }
+
+      boolean this_present_capacityInKb = true;
+      boolean that_present_capacityInKb = true;
+      if (this_present_capacityInKb || that_present_capacityInKb) {
+        if (!(this_present_capacityInKb && that_present_capacityInKb))
+          return false;
+        if (this.capacityInKb != that.capacityInKb)
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(resizeVol_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      resizeVol_args typedOther = (resizeVol_args)other;
+
+      lastComparison = Boolean.valueOf(isSetPoolName()).compareTo(typedOther.isSetPoolName());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetPoolName()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.poolName, typedOther.poolName);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetName()).compareTo(typedOther.isSetName());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetName()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.name, typedOther.name);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetCapacityInKb()).compareTo(typedOther.isSetCapacityInKb());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetCapacityInKb()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.capacityInKb, typedOther.capacityInKb);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("resizeVol_args(");
+      boolean first = true;
+
+      sb.append("poolName:");
+      if (this.poolName == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.poolName);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("name:");
+      if (this.name == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.name);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("capacityInKb:");
+      sb.append(this.capacityInKb);
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
+        __isset_bitfield = 0;
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class resizeVol_argsStandardSchemeFactory implements SchemeFactory {
+      public resizeVol_argsStandardScheme getScheme() {
+        return new resizeVol_argsStandardScheme();
+      }
+    }
+
+    private static class resizeVol_argsStandardScheme extends StandardScheme<resizeVol_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, resizeVol_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // POOL_NAME
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.poolName = iprot.readString();
+                struct.setPoolNameIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 2: // NAME
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.name = iprot.readString();
+                struct.setNameIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 3: // CAPACITY_IN_KB
+              if (schemeField.type == org.apache.thrift.protocol.TType.DOUBLE) {
+                struct.capacityInKb = iprot.readDouble();
+                struct.setCapacityInKbIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, resizeVol_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.poolName != null) {
+          oprot.writeFieldBegin(POOL_NAME_FIELD_DESC);
+          oprot.writeString(struct.poolName);
+          oprot.writeFieldEnd();
+        }
+        if (struct.name != null) {
+          oprot.writeFieldBegin(NAME_FIELD_DESC);
+          oprot.writeString(struct.name);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldBegin(CAPACITY_IN_KB_FIELD_DESC);
+        oprot.writeDouble(struct.capacityInKb);
+        oprot.writeFieldEnd();
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class resizeVol_argsTupleSchemeFactory implements SchemeFactory {
+      public resizeVol_argsTupleScheme getScheme() {
+        return new resizeVol_argsTupleScheme();
+      }
+    }
+
+    private static class resizeVol_argsTupleScheme extends TupleScheme<resizeVol_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, resizeVol_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetPoolName()) {
+          optionals.set(0);
+        }
+        if (struct.isSetName()) {
+          optionals.set(1);
+        }
+        if (struct.isSetCapacityInKb()) {
+          optionals.set(2);
+        }
+        oprot.writeBitSet(optionals, 3);
+        if (struct.isSetPoolName()) {
+          oprot.writeString(struct.poolName);
+        }
+        if (struct.isSetName()) {
+          oprot.writeString(struct.name);
+        }
+        if (struct.isSetCapacityInKb()) {
+          oprot.writeDouble(struct.capacityInKb);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, resizeVol_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(3);
+        if (incoming.get(0)) {
+          struct.poolName = iprot.readString();
+          struct.setPoolNameIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.name = iprot.readString();
+          struct.setNameIsSet(true);
+        }
+        if (incoming.get(2)) {
+          struct.capacityInKb = iprot.readDouble();
+          struct.setCapacityInKbIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class resizeVol_result implements org.apache.thrift.TBase<resizeVol_result, resizeVol_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("resizeVol_result");
+
+    private static final org.apache.thrift.protocol.TField LIBVIRT_EXCEPTION_FIELD_DESC = new org.apache.thrift.protocol.TField("libvirtException", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new resizeVol_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new resizeVol_resultTupleSchemeFactory());
+    }
+
+    public LibvirtException libvirtException; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      LIBVIRT_EXCEPTION((short)1, "libvirtException");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // LIBVIRT_EXCEPTION
+            return LIBVIRT_EXCEPTION;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.LIBVIRT_EXCEPTION, new org.apache.thrift.meta_data.FieldMetaData("libvirtException", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(resizeVol_result.class, metaDataMap);
+    }
+
+    public resizeVol_result() {
+    }
+
+    public resizeVol_result(
+      LibvirtException libvirtException)
+    {
+      this();
+      this.libvirtException = libvirtException;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public resizeVol_result(resizeVol_result other) {
+      if (other.isSetLibvirtException()) {
+        this.libvirtException = new LibvirtException(other.libvirtException);
+      }
+    }
+
+    public resizeVol_result deepCopy() {
+      return new resizeVol_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.libvirtException = null;
+    }
+
+    public LibvirtException getLibvirtException() {
+      return this.libvirtException;
+    }
+
+    public resizeVol_result setLibvirtException(LibvirtException libvirtException) {
+      this.libvirtException = libvirtException;
+      return this;
+    }
+
+    public void unsetLibvirtException() {
+      this.libvirtException = null;
+    }
+
+    /** Returns true if field libvirtException is set (has been assigned a value) and false otherwise */
+    public boolean isSetLibvirtException() {
+      return this.libvirtException != null;
+    }
+
+    public void setLibvirtExceptionIsSet(boolean value) {
+      if (!value) {
+        this.libvirtException = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case LIBVIRT_EXCEPTION:
+        if (value == null) {
+          unsetLibvirtException();
+        } else {
+          setLibvirtException((LibvirtException)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case LIBVIRT_EXCEPTION:
+        return getLibvirtException();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case LIBVIRT_EXCEPTION:
+        return isSetLibvirtException();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof resizeVol_result)
+        return this.equals((resizeVol_result)that);
+      return false;
+    }
+
+    public boolean equals(resizeVol_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_libvirtException = true && this.isSetLibvirtException();
+      boolean that_present_libvirtException = true && that.isSetLibvirtException();
+      if (this_present_libvirtException || that_present_libvirtException) {
+        if (!(this_present_libvirtException && that_present_libvirtException))
+          return false;
+        if (!this.libvirtException.equals(that.libvirtException))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(resizeVol_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      resizeVol_result typedOther = (resizeVol_result)other;
+
+      lastComparison = Boolean.valueOf(isSetLibvirtException()).compareTo(typedOther.isSetLibvirtException());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetLibvirtException()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.libvirtException, typedOther.libvirtException);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("resizeVol_result(");
+      boolean first = true;
+
+      sb.append("libvirtException:");
+      if (this.libvirtException == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.libvirtException);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class resizeVol_resultStandardSchemeFactory implements SchemeFactory {
+      public resizeVol_resultStandardScheme getScheme() {
+        return new resizeVol_resultStandardScheme();
+      }
+    }
+
+    private static class resizeVol_resultStandardScheme extends StandardScheme<resizeVol_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, resizeVol_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // LIBVIRT_EXCEPTION
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.libvirtException = new LibvirtException();
+                struct.libvirtException.read(iprot);
+                struct.setLibvirtExceptionIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, resizeVol_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.libvirtException != null) {
+          oprot.writeFieldBegin(LIBVIRT_EXCEPTION_FIELD_DESC);
+          struct.libvirtException.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class resizeVol_resultTupleSchemeFactory implements SchemeFactory {
+      public resizeVol_resultTupleScheme getScheme() {
+        return new resizeVol_resultTupleScheme();
+      }
+    }
+
+    private static class resizeVol_resultTupleScheme extends TupleScheme<resizeVol_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, resizeVol_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetLibvirtException()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetLibvirtException()) {
+          struct.libvirtException.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, resizeVol_result struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
