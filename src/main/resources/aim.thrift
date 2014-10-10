@@ -45,6 +45,18 @@ struct DomainInfo
     6:string xmlDesc;
 }
 
+struct Datapoint
+{
+    1:i32 timestamp;
+    2:i64 value;
+}
+
+struct Measure
+{
+    1:string metric;
+    2:list<Datapoint> datapoints;
+}
+
 exception RimpException
 {
     1:string description;
@@ -121,4 +133,7 @@ service Aim
     void deleteDisk(1:string poolName, 2:string name) throws (1:LibvirtException libvirtException),
     void resizeVol(1:string poolName, 2:string name, 3:double capacityInKb) throws (1:LibvirtException libvirtException),
     void resizeDisk(1:string domainName, 2:string diskPath, 3:double diskSizeInKb) throws (1:LibvirtException libvirtException)
+
+    // Metric related methods
+    list<Measure> getDatapoints(1:string domainName, 2:i32 timestamp);
 }
