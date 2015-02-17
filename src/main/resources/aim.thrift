@@ -95,6 +95,7 @@ service Aim
     void copyFromRepositoryToDatastore(1:string virtualImageRepositoryPath, 2:string datastorePath, 3:string virtualMachineUUID) throws (1:RimpException re),
     void deleteVirtualImageFromDatastore(1:string datastorePath, 2:string virtualMachineUUID) throws (1:RimpException re),
     void copyFromDatastoreToRepository(1:string virtualMachineUUID, 2:string snapshot, 3:string destinationRepositoryPath, 4:string sourceDatastorePath) throws (1:RimpException re),
+    void instanceDisk(1:string source, 2:string destination) throws (1:RimpException re),
 
     /** VLan procedures */
     void createVLAN (1:i32 vlanTag, 2:string vlanInterface, 3:string bridgeInterface) throws (1:VLanException ve),

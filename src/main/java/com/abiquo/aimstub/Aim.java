@@ -57,6 +57,8 @@ public class Aim {
 
     public void copyFromDatastoreToRepository(String virtualMachineUUID, String snapshot, String destinationRepositoryPath, String sourceDatastorePath) throws RimpException, org.apache.thrift.TException;
 
+    public void instanceDisk(String source, String destination) throws RimpException, org.apache.thrift.TException;
+
     /**
      * VLan procedures
      * 
@@ -137,6 +139,8 @@ public class Aim {
     public void deleteVirtualImageFromDatastore(String datastorePath, String virtualMachineUUID, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.deleteVirtualImageFromDatastore_call> resultHandler) throws org.apache.thrift.TException;
 
     public void copyFromDatastoreToRepository(String virtualMachineUUID, String snapshot, String destinationRepositoryPath, String sourceDatastorePath, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.copyFromDatastoreToRepository_call> resultHandler) throws org.apache.thrift.TException;
+
+    public void instanceDisk(String source, String destination, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.instanceDisk_call> resultHandler) throws org.apache.thrift.TException;
 
     public void createVLAN(int vlanTag, String vlanInterface, String bridgeInterface, org.apache.thrift.async.AsyncMethodCallback<AsyncClient.createVLAN_call> resultHandler) throws org.apache.thrift.TException;
 
@@ -377,6 +381,30 @@ public class Aim {
     {
       copyFromDatastoreToRepository_result result = new copyFromDatastoreToRepository_result();
       receiveBase(result, "copyFromDatastoreToRepository");
+      if (result.re != null) {
+        throw result.re;
+      }
+      return;
+    }
+
+    public void instanceDisk(String source, String destination) throws RimpException, org.apache.thrift.TException
+    {
+      send_instanceDisk(source, destination);
+      recv_instanceDisk();
+    }
+
+    public void send_instanceDisk(String source, String destination) throws org.apache.thrift.TException
+    {
+      instanceDisk_args args = new instanceDisk_args();
+      args.setSource(source);
+      args.setDestination(destination);
+      sendBase("instanceDisk", args);
+    }
+
+    public void recv_instanceDisk() throws RimpException, org.apache.thrift.TException
+    {
+      instanceDisk_result result = new instanceDisk_result();
+      receiveBase(result, "instanceDisk");
       if (result.re != null) {
         throw result.re;
       }
@@ -1238,6 +1266,41 @@ public class Aim {
         org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
         org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
         (new Client(prot)).recv_copyFromDatastoreToRepository();
+      }
+    }
+
+    public void instanceDisk(String source, String destination, org.apache.thrift.async.AsyncMethodCallback<instanceDisk_call> resultHandler) throws org.apache.thrift.TException {
+      checkReady();
+      instanceDisk_call method_call = new instanceDisk_call(source, destination, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class instanceDisk_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private String source;
+      private String destination;
+      public instanceDisk_call(String source, String destination, org.apache.thrift.async.AsyncMethodCallback<instanceDisk_call> resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.source = source;
+        this.destination = destination;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("instanceDisk", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        instanceDisk_args args = new instanceDisk_args();
+        args.setSource(source);
+        args.setDestination(destination);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public void getResult() throws RimpException, org.apache.thrift.TException {
+        if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        (new Client(prot)).recv_instanceDisk();
       }
     }
 
@@ -2112,6 +2175,7 @@ public class Aim {
       processMap.put("copyFromRepositoryToDatastore", new copyFromRepositoryToDatastore());
       processMap.put("deleteVirtualImageFromDatastore", new deleteVirtualImageFromDatastore());
       processMap.put("copyFromDatastoreToRepository", new copyFromDatastoreToRepository());
+      processMap.put("instanceDisk", new instanceDisk());
       processMap.put("createVLAN", new createVLAN());
       processMap.put("deleteVLAN", new deleteVLAN());
       processMap.put("checkVLANConfiguration", new checkVLANConfiguration());
@@ -2302,6 +2366,30 @@ public class Aim {
         copyFromDatastoreToRepository_result result = new copyFromDatastoreToRepository_result();
         try {
           iface.copyFromDatastoreToRepository(args.virtualMachineUUID, args.snapshot, args.destinationRepositoryPath, args.sourceDatastorePath);
+        } catch (RimpException re) {
+          result.re = re;
+        }
+        return result;
+      }
+    }
+
+    public static class instanceDisk<I extends Iface> extends org.apache.thrift.ProcessFunction<I, instanceDisk_args> {
+      public instanceDisk() {
+        super("instanceDisk");
+      }
+
+      public instanceDisk_args getEmptyArgsInstance() {
+        return new instanceDisk_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public instanceDisk_result getResult(I iface, instanceDisk_args args) throws org.apache.thrift.TException {
+        instanceDisk_result result = new instanceDisk_result();
+        try {
+          iface.instanceDisk(args.source, args.destination);
         } catch (RimpException re) {
           result.re = re;
         }
@@ -8546,6 +8634,816 @@ public class Aim {
 
       @Override
       public void read(org.apache.thrift.protocol.TProtocol prot, copyFromDatastoreToRepository_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.re = new RimpException();
+          struct.re.read(iprot);
+          struct.setReIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class instanceDisk_args implements org.apache.thrift.TBase<instanceDisk_args, instanceDisk_args._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("instanceDisk_args");
+
+    private static final org.apache.thrift.protocol.TField SOURCE_FIELD_DESC = new org.apache.thrift.protocol.TField("source", org.apache.thrift.protocol.TType.STRING, (short)1);
+    private static final org.apache.thrift.protocol.TField DESTINATION_FIELD_DESC = new org.apache.thrift.protocol.TField("destination", org.apache.thrift.protocol.TType.STRING, (short)2);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new instanceDisk_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new instanceDisk_argsTupleSchemeFactory());
+    }
+
+    public String source; // required
+    public String destination; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      SOURCE((short)1, "source"),
+      DESTINATION((short)2, "destination");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // SOURCE
+            return SOURCE;
+          case 2: // DESTINATION
+            return DESTINATION;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SOURCE, new org.apache.thrift.meta_data.FieldMetaData("source", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.DESTINATION, new org.apache.thrift.meta_data.FieldMetaData("destination", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(instanceDisk_args.class, metaDataMap);
+    }
+
+    public instanceDisk_args() {
+    }
+
+    public instanceDisk_args(
+      String source,
+      String destination)
+    {
+      this();
+      this.source = source;
+      this.destination = destination;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public instanceDisk_args(instanceDisk_args other) {
+      if (other.isSetSource()) {
+        this.source = other.source;
+      }
+      if (other.isSetDestination()) {
+        this.destination = other.destination;
+      }
+    }
+
+    public instanceDisk_args deepCopy() {
+      return new instanceDisk_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.source = null;
+      this.destination = null;
+    }
+
+    public String getSource() {
+      return this.source;
+    }
+
+    public instanceDisk_args setSource(String source) {
+      this.source = source;
+      return this;
+    }
+
+    public void unsetSource() {
+      this.source = null;
+    }
+
+    /** Returns true if field source is set (has been assigned a value) and false otherwise */
+    public boolean isSetSource() {
+      return this.source != null;
+    }
+
+    public void setSourceIsSet(boolean value) {
+      if (!value) {
+        this.source = null;
+      }
+    }
+
+    public String getDestination() {
+      return this.destination;
+    }
+
+    public instanceDisk_args setDestination(String destination) {
+      this.destination = destination;
+      return this;
+    }
+
+    public void unsetDestination() {
+      this.destination = null;
+    }
+
+    /** Returns true if field destination is set (has been assigned a value) and false otherwise */
+    public boolean isSetDestination() {
+      return this.destination != null;
+    }
+
+    public void setDestinationIsSet(boolean value) {
+      if (!value) {
+        this.destination = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case SOURCE:
+        if (value == null) {
+          unsetSource();
+        } else {
+          setSource((String)value);
+        }
+        break;
+
+      case DESTINATION:
+        if (value == null) {
+          unsetDestination();
+        } else {
+          setDestination((String)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SOURCE:
+        return getSource();
+
+      case DESTINATION:
+        return getDestination();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SOURCE:
+        return isSetSource();
+      case DESTINATION:
+        return isSetDestination();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof instanceDisk_args)
+        return this.equals((instanceDisk_args)that);
+      return false;
+    }
+
+    public boolean equals(instanceDisk_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_source = true && this.isSetSource();
+      boolean that_present_source = true && that.isSetSource();
+      if (this_present_source || that_present_source) {
+        if (!(this_present_source && that_present_source))
+          return false;
+        if (!this.source.equals(that.source))
+          return false;
+      }
+
+      boolean this_present_destination = true && this.isSetDestination();
+      boolean that_present_destination = true && that.isSetDestination();
+      if (this_present_destination || that_present_destination) {
+        if (!(this_present_destination && that_present_destination))
+          return false;
+        if (!this.destination.equals(that.destination))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(instanceDisk_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      instanceDisk_args typedOther = (instanceDisk_args)other;
+
+      lastComparison = Boolean.valueOf(isSetSource()).compareTo(typedOther.isSetSource());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSource()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.source, typedOther.source);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetDestination()).compareTo(typedOther.isSetDestination());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetDestination()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.destination, typedOther.destination);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("instanceDisk_args(");
+      boolean first = true;
+
+      sb.append("source:");
+      if (this.source == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.source);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("destination:");
+      if (this.destination == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.destination);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class instanceDisk_argsStandardSchemeFactory implements SchemeFactory {
+      public instanceDisk_argsStandardScheme getScheme() {
+        return new instanceDisk_argsStandardScheme();
+      }
+    }
+
+    private static class instanceDisk_argsStandardScheme extends StandardScheme<instanceDisk_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, instanceDisk_args struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // SOURCE
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.source = iprot.readString();
+                struct.setSourceIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 2: // DESTINATION
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.destination = iprot.readString();
+                struct.setDestinationIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, instanceDisk_args struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.source != null) {
+          oprot.writeFieldBegin(SOURCE_FIELD_DESC);
+          oprot.writeString(struct.source);
+          oprot.writeFieldEnd();
+        }
+        if (struct.destination != null) {
+          oprot.writeFieldBegin(DESTINATION_FIELD_DESC);
+          oprot.writeString(struct.destination);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class instanceDisk_argsTupleSchemeFactory implements SchemeFactory {
+      public instanceDisk_argsTupleScheme getScheme() {
+        return new instanceDisk_argsTupleScheme();
+      }
+    }
+
+    private static class instanceDisk_argsTupleScheme extends TupleScheme<instanceDisk_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, instanceDisk_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetSource()) {
+          optionals.set(0);
+        }
+        if (struct.isSetDestination()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetSource()) {
+          oprot.writeString(struct.source);
+        }
+        if (struct.isSetDestination()) {
+          oprot.writeString(struct.destination);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, instanceDisk_args struct) throws org.apache.thrift.TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(2);
+        if (incoming.get(0)) {
+          struct.source = iprot.readString();
+          struct.setSourceIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.destination = iprot.readString();
+          struct.setDestinationIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class instanceDisk_result implements org.apache.thrift.TBase<instanceDisk_result, instanceDisk_result._Fields>, java.io.Serializable, Cloneable   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("instanceDisk_result");
+
+    private static final org.apache.thrift.protocol.TField RE_FIELD_DESC = new org.apache.thrift.protocol.TField("re", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new instanceDisk_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new instanceDisk_resultTupleSchemeFactory());
+    }
+
+    public RimpException re; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      RE((short)1, "re");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // RE
+            return RE;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.RE, new org.apache.thrift.meta_data.FieldMetaData("re", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(instanceDisk_result.class, metaDataMap);
+    }
+
+    public instanceDisk_result() {
+    }
+
+    public instanceDisk_result(
+      RimpException re)
+    {
+      this();
+      this.re = re;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public instanceDisk_result(instanceDisk_result other) {
+      if (other.isSetRe()) {
+        this.re = new RimpException(other.re);
+      }
+    }
+
+    public instanceDisk_result deepCopy() {
+      return new instanceDisk_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.re = null;
+    }
+
+    public RimpException getRe() {
+      return this.re;
+    }
+
+    public instanceDisk_result setRe(RimpException re) {
+      this.re = re;
+      return this;
+    }
+
+    public void unsetRe() {
+      this.re = null;
+    }
+
+    /** Returns true if field re is set (has been assigned a value) and false otherwise */
+    public boolean isSetRe() {
+      return this.re != null;
+    }
+
+    public void setReIsSet(boolean value) {
+      if (!value) {
+        this.re = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case RE:
+        if (value == null) {
+          unsetRe();
+        } else {
+          setRe((RimpException)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case RE:
+        return getRe();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case RE:
+        return isSetRe();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof instanceDisk_result)
+        return this.equals((instanceDisk_result)that);
+      return false;
+    }
+
+    public boolean equals(instanceDisk_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_re = true && this.isSetRe();
+      boolean that_present_re = true && that.isSetRe();
+      if (this_present_re || that_present_re) {
+        if (!(this_present_re && that_present_re))
+          return false;
+        if (!this.re.equals(that.re))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    public int compareTo(instanceDisk_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+      instanceDisk_result typedOther = (instanceDisk_result)other;
+
+      lastComparison = Boolean.valueOf(isSetRe()).compareTo(typedOther.isSetRe());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetRe()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.re, typedOther.re);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws org.apache.thrift.TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws org.apache.thrift.TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("instanceDisk_result(");
+      boolean first = true;
+
+      sb.append("re:");
+      if (this.re == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.re);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws org.apache.thrift.TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (org.apache.thrift.TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class instanceDisk_resultStandardSchemeFactory implements SchemeFactory {
+      public instanceDisk_resultStandardScheme getScheme() {
+        return new instanceDisk_resultStandardScheme();
+      }
+    }
+
+    private static class instanceDisk_resultStandardScheme extends StandardScheme<instanceDisk_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, instanceDisk_result struct) throws org.apache.thrift.TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // RE
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.re = new RimpException();
+                struct.re.read(iprot);
+                struct.setReIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+
+        // check for required fields of primitive type, which can't be checked in the validate method
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, instanceDisk_result struct) throws org.apache.thrift.TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.re != null) {
+          oprot.writeFieldBegin(RE_FIELD_DESC);
+          struct.re.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class instanceDisk_resultTupleSchemeFactory implements SchemeFactory {
+      public instanceDisk_resultTupleScheme getScheme() {
+        return new instanceDisk_resultTupleScheme();
+      }
+    }
+
+    private static class instanceDisk_resultTupleScheme extends TupleScheme<instanceDisk_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, instanceDisk_result struct) throws org.apache.thrift.TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetRe()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetRe()) {
+          struct.re.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, instanceDisk_result struct) throws org.apache.thrift.TException {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(1);
         if (incoming.get(0)) {
