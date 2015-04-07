@@ -55,6 +55,7 @@ struct Measure
 {
     1:string metric;
     2:list<Datapoint> datapoints;
+    3:map<string, string> dimensions;
 }
 
 exception RimpException

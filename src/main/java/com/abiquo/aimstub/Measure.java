@@ -41,6 +41,7 @@ public class Measure implements org.apache.thrift.TBase<Measure, Measure._Fields
 
   private static final org.apache.thrift.protocol.TField METRIC_FIELD_DESC = new org.apache.thrift.protocol.TField("metric", org.apache.thrift.protocol.TType.STRING, (short)1);
   private static final org.apache.thrift.protocol.TField DATAPOINTS_FIELD_DESC = new org.apache.thrift.protocol.TField("datapoints", org.apache.thrift.protocol.TType.LIST, (short)2);
+  private static final org.apache.thrift.protocol.TField DIMENSIONS_FIELD_DESC = new org.apache.thrift.protocol.TField("dimensions", org.apache.thrift.protocol.TType.MAP, (short)3);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
@@ -50,11 +51,13 @@ public class Measure implements org.apache.thrift.TBase<Measure, Measure._Fields
 
   public String metric; // required
   public List<Datapoint> datapoints; // required
+  public Map<String,String> dimensions; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     METRIC((short)1, "metric"),
-    DATAPOINTS((short)2, "datapoints");
+    DATAPOINTS((short)2, "datapoints"),
+    DIMENSIONS((short)3, "dimensions");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -73,6 +76,8 @@ public class Measure implements org.apache.thrift.TBase<Measure, Measure._Fields
           return METRIC;
         case 2: // DATAPOINTS
           return DATAPOINTS;
+        case 3: // DIMENSIONS
+          return DIMENSIONS;
         default:
           return null;
       }
@@ -121,6 +126,10 @@ public class Measure implements org.apache.thrift.TBase<Measure, Measure._Fields
     tmpMap.put(_Fields.DATAPOINTS, new org.apache.thrift.meta_data.FieldMetaData("datapoints", org.apache.thrift.TFieldRequirementType.DEFAULT, 
         new org.apache.thrift.meta_data.ListMetaData(org.apache.thrift.protocol.TType.LIST, 
             new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, Datapoint.class))));
+    tmpMap.put(_Fields.DIMENSIONS, new org.apache.thrift.meta_data.FieldMetaData("dimensions", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+        new org.apache.thrift.meta_data.MapMetaData(org.apache.thrift.protocol.TType.MAP, 
+            new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING), 
+            new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING))));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(Measure.class, metaDataMap);
   }
@@ -130,11 +139,13 @@ public class Measure implements org.apache.thrift.TBase<Measure, Measure._Fields
 
   public Measure(
     String metric,
-    List<Datapoint> datapoints)
+    List<Datapoint> datapoints,
+    Map<String,String> dimensions)
   {
     this();
     this.metric = metric;
     this.datapoints = datapoints;
+    this.dimensions = dimensions;
   }
 
   /**
@@ -151,6 +162,21 @@ public class Measure implements org.apache.thrift.TBase<Measure, Measure._Fields
       }
       this.datapoints = __this__datapoints;
     }
+    if (other.isSetDimensions()) {
+      Map<String,String> __this__dimensions = new HashMap<String,String>();
+      for (Map.Entry<String, String> other_element : other.dimensions.entrySet()) {
+
+        String other_element_key = other_element.getKey();
+        String other_element_value = other_element.getValue();
+
+        String __this__dimensions_copy_key = other_element_key;
+
+        String __this__dimensions_copy_value = other_element_value;
+
+        __this__dimensions.put(__this__dimensions_copy_key, __this__dimensions_copy_value);
+      }
+      this.dimensions = __this__dimensions;
+    }
   }
 
   public Measure deepCopy() {
@@ -161,6 +187,7 @@ public class Measure implements org.apache.thrift.TBase<Measure, Measure._Fields
   public void clear() {
     this.metric = null;
     this.datapoints = null;
+    this.dimensions = null;
   }
 
   public String getMetric() {
@@ -226,6 +253,41 @@ public class Measure implements org.apache.thrift.TBase<Measure, Measure._Fields
     }
   }
 
+  public int getDimensionsSize() {
+    return (this.dimensions == null) ? 0 : this.dimensions.size();
+  }
+
+  public void putToDimensions(String key, String val) {
+    if (this.dimensions == null) {
+      this.dimensions = new HashMap<String,String>();
+    }
+    this.dimensions.put(key, val);
+  }
+
+  public Map<String,String> getDimensions() {
+    return this.dimensions;
+  }
+
+  public Measure setDimensions(Map<String,String> dimensions) {
+    this.dimensions = dimensions;
+    return this;
+  }
+
+  public void unsetDimensions() {
+    this.dimensions = null;
+  }
+
+  /** Returns true if field dimensions is set (has been assigned a value) and false otherwise */
+  public boolean isSetDimensions() {
+    return this.dimensions != null;
+  }
+
+  public void setDimensionsIsSet(boolean value) {
+    if (!value) {
+      this.dimensions = null;
+    }
+  }
+
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
     case METRIC:
@@ -244,6 +306,14 @@ public class Measure implements org.apache.thrift.TBase<Measure, Measure._Fields
       }
       break;
 
+    case DIMENSIONS:
+      if (value == null) {
+        unsetDimensions();
+      } else {
+        setDimensions((Map<String,String>)value);
+      }
+      break;
+
     }
   }
 
@@ -254,6 +324,9 @@ public class Measure implements org.apache.thrift.TBase<Measure, Measure._Fields
 
     case DATAPOINTS:
       return getDatapoints();
+
+    case DIMENSIONS:
+      return getDimensions();
 
     }
     throw new IllegalStateException();
@@ -270,6 +343,8 @@ public class Measure implements org.apache.thrift.TBase<Measure, Measure._Fields
       return isSetMetric();
     case DATAPOINTS:
       return isSetDatapoints();
+    case DIMENSIONS:
+      return isSetDimensions();
     }
     throw new IllegalStateException();
   }
@@ -302,6 +377,15 @@ public class Measure implements org.apache.thrift.TBase<Measure, Measure._Fields
       if (!(this_present_datapoints && that_present_datapoints))
         return false;
       if (!this.datapoints.equals(that.datapoints))
+        return false;
+    }
+
+    boolean this_present_dimensions = true && this.isSetDimensions();
+    boolean that_present_dimensions = true && that.isSetDimensions();
+    if (this_present_dimensions || that_present_dimensions) {
+      if (!(this_present_dimensions && that_present_dimensions))
+        return false;
+      if (!this.dimensions.equals(that.dimensions))
         return false;
     }
 
@@ -341,6 +425,16 @@ public class Measure implements org.apache.thrift.TBase<Measure, Measure._Fields
         return lastComparison;
       }
     }
+    lastComparison = Boolean.valueOf(isSetDimensions()).compareTo(typedOther.isSetDimensions());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetDimensions()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.dimensions, typedOther.dimensions);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
     return 0;
   }
 
@@ -374,6 +468,14 @@ public class Measure implements org.apache.thrift.TBase<Measure, Measure._Fields
       sb.append("null");
     } else {
       sb.append(this.datapoints);
+    }
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("dimensions:");
+    if (this.dimensions == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.dimensions);
     }
     first = false;
     sb.append(")");
@@ -446,6 +548,26 @@ public class Measure implements org.apache.thrift.TBase<Measure, Measure._Fields
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
+          case 3: // DIMENSIONS
+            if (schemeField.type == org.apache.thrift.protocol.TType.MAP) {
+              {
+                org.apache.thrift.protocol.TMap _map3 = iprot.readMapBegin();
+                struct.dimensions = new HashMap<String,String>(2*_map3.size);
+                for (int _i4 = 0; _i4 < _map3.size; ++_i4)
+                {
+                  String _key5; // required
+                  String _val6; // required
+                  _key5 = iprot.readString();
+                  _val6 = iprot.readString();
+                  struct.dimensions.put(_key5, _val6);
+                }
+                iprot.readMapEnd();
+              }
+              struct.setDimensionsIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
           default:
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
         }
@@ -470,11 +592,24 @@ public class Measure implements org.apache.thrift.TBase<Measure, Measure._Fields
         oprot.writeFieldBegin(DATAPOINTS_FIELD_DESC);
         {
           oprot.writeListBegin(new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, struct.datapoints.size()));
-          for (Datapoint _iter3 : struct.datapoints)
+          for (Datapoint _iter7 : struct.datapoints)
           {
-            _iter3.write(oprot);
+            _iter7.write(oprot);
           }
           oprot.writeListEnd();
+        }
+        oprot.writeFieldEnd();
+      }
+      if (struct.dimensions != null) {
+        oprot.writeFieldBegin(DIMENSIONS_FIELD_DESC);
+        {
+          oprot.writeMapBegin(new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, struct.dimensions.size()));
+          for (Map.Entry<String, String> _iter8 : struct.dimensions.entrySet())
+          {
+            oprot.writeString(_iter8.getKey());
+            oprot.writeString(_iter8.getValue());
+          }
+          oprot.writeMapEnd();
         }
         oprot.writeFieldEnd();
       }
@@ -502,16 +637,29 @@ public class Measure implements org.apache.thrift.TBase<Measure, Measure._Fields
       if (struct.isSetDatapoints()) {
         optionals.set(1);
       }
-      oprot.writeBitSet(optionals, 2);
+      if (struct.isSetDimensions()) {
+        optionals.set(2);
+      }
+      oprot.writeBitSet(optionals, 3);
       if (struct.isSetMetric()) {
         oprot.writeString(struct.metric);
       }
       if (struct.isSetDatapoints()) {
         {
           oprot.writeI32(struct.datapoints.size());
-          for (Datapoint _iter4 : struct.datapoints)
+          for (Datapoint _iter9 : struct.datapoints)
           {
-            _iter4.write(oprot);
+            _iter9.write(oprot);
+          }
+        }
+      }
+      if (struct.isSetDimensions()) {
+        {
+          oprot.writeI32(struct.dimensions.size());
+          for (Map.Entry<String, String> _iter10 : struct.dimensions.entrySet())
+          {
+            oprot.writeString(_iter10.getKey());
+            oprot.writeString(_iter10.getValue());
           }
         }
       }
@@ -520,24 +668,39 @@ public class Measure implements org.apache.thrift.TBase<Measure, Measure._Fields
     @Override
     public void read(org.apache.thrift.protocol.TProtocol prot, Measure struct) throws org.apache.thrift.TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
-      BitSet incoming = iprot.readBitSet(2);
+      BitSet incoming = iprot.readBitSet(3);
       if (incoming.get(0)) {
         struct.metric = iprot.readString();
         struct.setMetricIsSet(true);
       }
       if (incoming.get(1)) {
         {
-          org.apache.thrift.protocol.TList _list5 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
-          struct.datapoints = new ArrayList<Datapoint>(_list5.size);
-          for (int _i6 = 0; _i6 < _list5.size; ++_i6)
+          org.apache.thrift.protocol.TList _list11 = new org.apache.thrift.protocol.TList(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+          struct.datapoints = new ArrayList<Datapoint>(_list11.size);
+          for (int _i12 = 0; _i12 < _list11.size; ++_i12)
           {
-            Datapoint _elem7; // required
-            _elem7 = new Datapoint();
-            _elem7.read(iprot);
-            struct.datapoints.add(_elem7);
+            Datapoint _elem13; // required
+            _elem13 = new Datapoint();
+            _elem13.read(iprot);
+            struct.datapoints.add(_elem13);
           }
         }
         struct.setDatapointsIsSet(true);
+      }
+      if (incoming.get(2)) {
+        {
+          org.apache.thrift.protocol.TMap _map14 = new org.apache.thrift.protocol.TMap(org.apache.thrift.protocol.TType.STRING, org.apache.thrift.protocol.TType.STRING, iprot.readI32());
+          struct.dimensions = new HashMap<String,String>(2*_map14.size);
+          for (int _i15 = 0; _i15 < _map14.size; ++_i15)
+          {
+            String _key16; // required
+            String _val17; // required
+            _key16 = iprot.readString();
+            _val17 = iprot.readString();
+            struct.dimensions.put(_key16, _val17);
+          }
+        }
+        struct.setDimensionsIsSet(true);
       }
     }
   }
