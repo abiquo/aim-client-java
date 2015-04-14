@@ -58,6 +58,14 @@ struct Measure
     3:map<string, string> dimensions;
 }
 
+struct DomainBlockInfo
+{
+    1:i64 capacity;
+    2:i64 allocation;
+    3:i64 physical;
+    4:string diskPath;
+}
+
 exception RimpException
 {
     1:string description;
@@ -134,8 +142,9 @@ service Aim
     void createDisk(1:string poolName, 2:string name, 3:double capacityInKb, 4:double allocationInKb, 5:string format) throws (1:LibvirtException libvirtException), 
     void deleteDisk(1:string poolName, 2:string name) throws (1:LibvirtException libvirtException),
     void resizeVol(1:string poolName, 2:string name, 3:double capacityInKb) throws (1:LibvirtException libvirtException),
-    void resizeDisk(1:string domainName, 2:string diskPath, 3:double diskSizeInKb) throws (1:LibvirtException libvirtException)
-
+    void resizeDisk(1:string domainName, 2:string diskPath, 3:double diskSizeInKb) throws (1:LibvirtException libvirtException),
+    DomainBlockInfo getDomainBlockInfo(1:string domainName, 2:string diskPath) throws (1:LibvirtException libvirtException),
+    
     // Metric related methods
     list<Measure> getDatapoints(1:string domainName, 2:i32 timestamp);
 }
