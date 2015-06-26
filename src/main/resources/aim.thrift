@@ -131,6 +131,7 @@ service Aim
     // Change state related methods
     void powerOn(1:string domainName) throws (1:LibvirtException libvirtException),
     void powerOff(1:string domainName) throws (1:LibvirtException libvirtException),
+    void shutdown(1:string domainName) throws (1:LibvirtException libvirtException),
     void reset(1:string domainName) throws (1:LibvirtException libvirtException),
     void pause(1:string domainName) throws (1:LibvirtException libvirtException),
     void resume(1:string domainName) throws (1:LibvirtException libvirtException),
