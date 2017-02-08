@@ -66,6 +66,11 @@ struct DomainBlockInfo
     4:string diskPath;
 }
 
+struct BinaryFile
+{
+    1:binary data;
+}
+
 exception RimpException
 {
     1:string description;
@@ -148,5 +153,7 @@ service Aim
     DomainBlockInfo getDomainBlockInfo(1:string domainName, 2:string diskPath) throws (1:LibvirtException libvirtException),
     
     // Metric related methods
-    list<Measure> getDatapoints(1:string domainName, 2:i32 timestamp);
+    list<Measure> getDatapoints(1:string domainName, 2:i32 timestamp),
+
+    void upload(1:BinaryFile file, 2:string path);
 }
