@@ -31,8 +31,7 @@ import com.abiquo.aimstub.Aim.Iface;
 import com.abiquo.testng.TestConfig;
 
 /**
- * To run the test : an instance of ''AIM'' agent MUST be running on ''host'':''port'' and assure
- * its configuration have the same values for ''datastore'' and ''repository''.
+ * To run the test : an instance of ''AIM'' agent MUST be running on ''host'':''port'' and assure its configuration have the same values for ''datastore'' and ''repository''.
  */
 @Test(groups = TestConfig.ALL_INTEGRATION_TESTS)
 public class RimpStubTest

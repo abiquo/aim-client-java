@@ -12,46 +12,47 @@
  */
 package com.abiquo.aimstub;
 
+public enum DomainState implements org.apache.thrift.TEnum
+{
+    ON(1),
+    OFF(2),
+    PAUSED(3),
+    UNKNOWN(4);
 
-import java.util.Map;
-import java.util.HashMap;
-import org.apache.thrift.TEnum;
+    private final int value;
 
-public enum DomainState implements org.apache.thrift.TEnum {
-  ON(1),
-  OFF(2),
-  PAUSED(3),
-  UNKNOWN(4);
-
-  private final int value;
-
-  private DomainState(int value) {
-    this.value = value;
-  }
-
-  /**
-   * Get the integer value of this enum value, as defined in the Thrift IDL.
-   */
-  public int getValue() {
-    return value;
-  }
-
-  /**
-   * Find a the enum type by its integer value, as defined in the Thrift IDL.
-   * @return null if the value is not found.
-   */
-  public static DomainState findByValue(int value) { 
-    switch (value) {
-      case 1:
-        return ON;
-      case 2:
-        return OFF;
-      case 3:
-        return PAUSED;
-      case 4:
-        return UNKNOWN;
-      default:
-        return null;
+    private DomainState(final int value)
+    {
+        this.value = value;
     }
-  }
+
+    /**
+     * Get the integer value of this enum value, as defined in the Thrift IDL.
+     */
+    public int getValue()
+    {
+        return value;
+    }
+
+    /**
+     * Find a the enum type by its integer value, as defined in the Thrift IDL.
+     * 
+     * @return null if the value is not found.
+     */
+    public static DomainState findByValue(final int value)
+    {
+        switch (value)
+        {
+            case 1:
+                return ON;
+            case 2:
+                return OFF;
+            case 3:
+                return PAUSED;
+            case 4:
+                return UNKNOWN;
+            default:
+                return null;
+        }
+    }
 }

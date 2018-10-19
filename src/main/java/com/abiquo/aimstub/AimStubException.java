@@ -10,12 +10,12 @@ public class AimStubException extends Exception
 {
     private static final long serialVersionUID = -8574961294833045095L;
 
-    public AimStubException(String message)
+    public AimStubException(final String message)
     {
         super(message);
     }
 
-    public AimStubException(String message, Throwable cause)
+    public AimStubException(final String message, final Throwable cause)
     {
         super(message, cause);
     }
