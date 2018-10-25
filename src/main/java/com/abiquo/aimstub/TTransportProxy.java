@@ -31,11 +31,11 @@ public class TTransportProxy implements InvocationHandler
 
     protected int port;
 
-    
     public static Iface getInstance(final String url, final int port)
     {
-        return (Iface) java.lang.reflect.Proxy.newProxyInstance(Thread.currentThread()
-            .getContextClassLoader(), new Class[] {Iface.class}, new TTransportProxy(url, port));
+        return (Iface) java.lang.reflect.Proxy.newProxyInstance(
+            Thread.currentThread().getContextClassLoader(), new Class[] {Iface.class},
+            new TTransportProxy(url, port));
     }
 
     protected TTransportProxy(final String url, final int port)
