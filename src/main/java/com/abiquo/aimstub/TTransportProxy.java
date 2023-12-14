@@ -31,6 +31,7 @@ public class TTransportProxy implements InvocationHandler
 
     protected int port;
 
+    @SuppressWarnings("rawtypes")
     public static Iface getInstance(final String url, final int port)
     {
         return (Iface) java.lang.reflect.Proxy.newProxyInstance(
